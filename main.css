@@ -355,6 +355,34 @@ body {
     color: #888;
 }
 
+.carousel-wrapper {
+    position: relative;
+    max-width: 1000px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.carousel-wrapper::before,
+.carousel-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 80px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.carousel-wrapper::before {
+    left: 0;
+    background: linear-gradient(to right, #0c0c0c, transparent);
+}
+
+.carousel-wrapper::after {
+    right: 0;
+    background: linear-gradient(to left, #0c0c0c, transparent);
+}
+
 .friends-carousel {
     display: flex;
     overflow-x: auto;
