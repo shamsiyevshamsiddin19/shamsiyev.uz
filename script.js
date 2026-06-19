@@ -89,4 +89,20 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 500);
         }, 4000);
     }
+    // Tools Skill Rotator
+    const toolsSkill = document.getElementById('tools-skill');
+    if (toolsSkill) {
+        const toolsLangs = ['Docker', 'Redis', 'Celery'];
+        let toolsIndex = 0;
+        toolsSkill.style.transition = 'opacity 0.5s ease-in-out';
+        
+        setInterval(() => {
+            toolsSkill.style.opacity = 0;
+            setTimeout(() => {
+                toolsIndex = (toolsIndex + 1) % toolsLangs.length;
+                toolsSkill.textContent = toolsLangs[toolsIndex];
+                toolsSkill.style.opacity = 1;
+            }, 500);
+        }, 4000);
+    }
 });
