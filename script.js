@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (sqlSkill) {
         const sqlLangs = ['PostgreSQL', 'SQLite', 'MySQL'];
         let sqlIndex = 0;
-        sqlSkill.style.transition = 'opacity 0.3s ease';
+        sqlSkill.style.transition = 'opacity 0.5s ease-in-out';
         
         setInterval(() => {
             sqlSkill.style.opacity = 0;
@@ -54,15 +54,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 sqlIndex = (sqlIndex + 1) % sqlLangs.length;
                 sqlSkill.textContent = sqlLangs[sqlIndex];
                 sqlSkill.style.opacity = 1;
-            }, 300);
-        }, 2000);
+            }, 500);
+        }, 4000);
     }
     // Python Framework Rotator
     const pySkill = document.getElementById('py-skill');
     if (pySkill) {
         const pyLangs = ['Django', 'FastAPI', 'Flask'];
         let pyIndex = 0;
-        pySkill.style.transition = 'opacity 0.3s ease';
+        pySkill.style.transition = 'opacity 0.5s ease-in-out';
         
         setInterval(() => {
             pySkill.style.opacity = 0;
@@ -70,15 +70,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 pyIndex = (pyIndex + 1) % pyLangs.length;
                 pySkill.textContent = pyLangs[pyIndex];
                 pySkill.style.opacity = 1;
-            }, 300);
-        }, 2000);
+            }, 500);
+        }, 4000);
     }
     // Web Skill Rotator
     const webSkill = document.getElementById('web-skill');
     if (webSkill) {
         const webLangs = ['Node.js', 'HTML', 'CSS', 'TypeScript'];
         let webIndex = 0;
-        webSkill.style.transition = 'opacity 0.3s ease';
+        webSkill.style.transition = 'opacity 0.5s ease-in-out';
         
         setInterval(() => {
             webSkill.style.opacity = 0;
@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 webIndex = (webIndex + 1) % webLangs.length;
                 webSkill.textContent = webLangs[webIndex];
                 webSkill.style.opacity = 1;
-            }, 300);
-        }, 2000);
+            }, 500);
+        }, 4000);
     }
 });
