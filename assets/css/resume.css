@@ -1,4 +1,19 @@
 /* Document Pages (Resume) */
+.back-btn {
+    color: #888;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    transition: color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+.back-btn:hover {
+    color: #fff;
+}
+
 .doc-container {
     max-width: 900px;
     margin: 80px auto;
