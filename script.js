@@ -58,6 +58,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Infinite Friends Marquee Setup
+    const friendsCarousel = document.querySelector('.friends-carousel');
+    if (friendsCarousel) {
+        const cards = Array.from(friendsCarousel.children);
+        if (cards.length > 0) {
+            const group = document.createElement('div');
+            group.className = 'marquee-group';
+            cards.forEach(card => group.appendChild(card));
+            
+            const content = document.createElement('div');
+            content.className = 'marquee-content';
+            content.appendChild(group);
+            content.appendChild(group.cloneNode(true));
+            
+            friendsCarousel.appendChild(content);
+        }
+    }
+
     // SQL Skill Rotator
     const sqlSkill = document.getElementById('sql-skill');
     if (sqlSkill) {
