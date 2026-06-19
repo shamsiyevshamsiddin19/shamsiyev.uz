@@ -57,4 +57,20 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 300);
         }, 2000);
     }
+    // Python Framework Rotator
+    const pySkill = document.getElementById('py-skill');
+    if (pySkill) {
+        const pyLangs = ['Django', 'FastAPI', 'Flask'];
+        let pyIndex = 0;
+        pySkill.style.transition = 'opacity 0.3s ease';
+        
+        setInterval(() => {
+            pySkill.style.opacity = 0;
+            setTimeout(() => {
+                pyIndex = (pyIndex + 1) % pyLangs.length;
+                pySkill.textContent = pyLangs[pyIndex];
+                pySkill.style.opacity = 1;
+            }, 300);
+        }, 2000);
+    }
 });
