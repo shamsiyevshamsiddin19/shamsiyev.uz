@@ -154,42 +154,55 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 500);
         }, 4000);
     }
-    // CV/Resume Rotator
-    const cvText = document.getElementById('cv-text');
-    if (cvText) {
-        const cvTexts = ['DOWNLOAD CV', 'DOWNLOAD RESUME'];
-        let cvIndex = 0;
-        cvText.style.transition = 'opacity 0.5s ease-in-out';
-        const cvBtn = cvText.parentElement;
+    // Premium CV/Resume Magic Button
+    const cvBtn = document.querySelector('.cv-btn');
+    if (cvBtn) {
+        cvBtn.style.position = 'relative';
+        cvBtn.style.width = '240px'; 
+        cvBtn.style.overflow = 'hidden';
+        
+        cvBtn.innerHTML = `
+            <span style="visibility: hidden;">DOWNLOAD RESUME</span>
+            <span id="cv-text-1" style="position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 100%; text-align: center; transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);">DOWNLOAD CV</span>
+            <span id="cv-text-2" style="position: absolute; left: 0; top: 50%; transform: translateY(100%); opacity: 0; width: 100%; text-align: center; transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);">DOWNLOAD RESUME</span>
+        `;
+        
+        const t1 = document.getElementById('cv-text-1');
+        const t2 = document.getElementById('cv-text-2');
+        let state = 0;
         
         setInterval(() => {
-            cvText.style.opacity = 0;
-            setTimeout(() => {
-                // Lock current width
-                const oldWidth = cvBtn.offsetWidth;
-                cvBtn.style.width = oldWidth + 'px';
+            if (state === 0) {
+                // Show 2, hide 1
+                t1.style.transform = 'translateY(-200%)';
+                t1.style.opacity = '0';
                 
-                // Change text
-                cvIndex = (cvIndex + 1) % cvTexts.length;
-                cvText.textContent = cvTexts[cvIndex];
+                t2.style.transition = 'all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+                t2.style.transform = 'translateY(-50%)';
+                t2.style.opacity = '1';
                 
-                // Get new width
-                cvBtn.style.width = 'auto';
-                const newWidth = cvBtn.offsetWidth;
-                
-                // Set back to old width and animate to new
-                cvBtn.style.width = oldWidth + 'px';
-                // Trigger reflow
-                cvBtn.offsetHeight;
-                cvBtn.style.width = newWidth + 'px';
-                
-                cvText.style.opacity = 1;
-                
-                // Remove fixed width after transition finishes
                 setTimeout(() => {
-                    cvBtn.style.width = 'auto';
-                }, 400);
-            }, 500);
-        }, 4000);
+                    t1.style.transition = 'none';
+                    t1.style.transform = 'translateY(100%)';
+                }, 600);
+                
+                state = 1;
+            } else {
+                // Show 1, hide 2
+                t2.style.transform = 'translateY(-200%)';
+                t2.style.opacity = '0';
+                
+                t1.style.transition = 'all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+                t1.style.transform = 'translateY(-50%)';
+                t1.style.opacity = '1';
+                
+                setTimeout(() => {
+                    t2.style.transition = 'none';
+                    t2.style.transform = 'translateY(100%)';
+                }, 600);
+                
+                state = 0;
+            }
+        }, 3000);
     }
 });
