@@ -105,4 +105,36 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 500);
         }, 4000);
     }
+    // C++ Skill Rotator
+    const cppSkill = document.getElementById('cpp-skill');
+    if (cppSkill) {
+        const cppLangs = ['OOP', 'Data Structures', 'Algorithms'];
+        let cppIndex = 0;
+        cppSkill.style.transition = 'opacity 0.5s ease-in-out';
+        
+        setInterval(() => {
+            cppSkill.style.opacity = 0;
+            setTimeout(() => {
+                cppIndex = (cppIndex + 1) % cppLangs.length;
+                cppSkill.textContent = cppLangs[cppIndex];
+                cppSkill.style.opacity = 1;
+            }, 500);
+        }, 4000);
+    }
+    // Git Skill Rotator
+    const gitSkill = document.getElementById('git-skill');
+    if (gitSkill) {
+        const gitLangs = ['Version Control', 'CI/CD', 'GitHub Actions'];
+        let gitIndex = 0;
+        gitSkill.style.transition = 'opacity 0.5s ease-in-out';
+        
+        setInterval(() => {
+            gitSkill.style.opacity = 0;
+            setTimeout(() => {
+                gitIndex = (gitIndex + 1) % gitLangs.length;
+                gitSkill.textContent = gitLangs[gitIndex];
+                gitSkill.style.opacity = 1;
+            }, 500);
+        }, 4000);
+    }
 });
