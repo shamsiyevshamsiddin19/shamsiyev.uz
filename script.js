@@ -163,8 +163,8 @@ document.addEventListener('DOMContentLoaded', () => {
         
         cvBtn.innerHTML = `
             <span style="visibility: hidden;">DOWNLOAD RESUME</span>
-            <span id="cv-text-1" style="position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 100%; text-align: center; transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);">DOWNLOAD CV</span>
-            <span id="cv-text-2" style="position: absolute; left: 0; top: 50%; transform: translateY(100%); opacity: 0; width: 100%; text-align: center; transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);">DOWNLOAD RESUME</span>
+            <span id="cv-text-1" style="position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 100%; text-align: center; transition: all 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);">DOWNLOAD CV</span>
+            <span id="cv-text-2" style="position: absolute; left: 0; top: 50%; transform: translateY(100%); opacity: 0; width: 100%; text-align: center; transition: all 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);">DOWNLOAD RESUME</span>
         `;
         
         const t1 = document.getElementById('cv-text-1');
@@ -177,14 +177,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 t1.style.transform = 'translateY(-200%)';
                 t1.style.opacity = '0';
                 
-                t2.style.transition = 'all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+                t2.style.transition = 'all 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
                 t2.style.transform = 'translateY(-50%)';
                 t2.style.opacity = '1';
                 
                 setTimeout(() => {
                     t1.style.transition = 'none';
                     t1.style.transform = 'translateY(100%)';
-                }, 600);
+                }, 1200);
                 
                 state = 1;
             } else {
@@ -192,17 +192,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 t2.style.transform = 'translateY(-200%)';
                 t2.style.opacity = '0';
                 
-                t1.style.transition = 'all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+                t1.style.transition = 'all 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
                 t1.style.transform = 'translateY(-50%)';
                 t1.style.opacity = '1';
                 
                 setTimeout(() => {
                     t2.style.transition = 'none';
                     t2.style.transform = 'translateY(100%)';
-                }, 600);
+                }, 1200);
                 
                 state = 0;
             }
-        }, 3000);
+        }, 6000);
     }
 });
