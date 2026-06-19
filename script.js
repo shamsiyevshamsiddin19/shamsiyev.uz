@@ -73,4 +73,20 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 300);
         }, 2000);
     }
+    // Web Skill Rotator
+    const webSkill = document.getElementById('web-skill');
+    if (webSkill) {
+        const webLangs = ['Node.js', 'HTML', 'CSS', 'TypeScript'];
+        let webIndex = 0;
+        webSkill.style.transition = 'opacity 0.3s ease';
+        
+        setInterval(() => {
+            webSkill.style.opacity = 0;
+            setTimeout(() => {
+                webIndex = (webIndex + 1) % webLangs.length;
+                webSkill.textContent = webLangs[webIndex];
+                webSkill.style.opacity = 1;
+            }, 300);
+        }, 2000);
+    }
 });
