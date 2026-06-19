@@ -517,6 +517,9 @@ body {
 }
 
 /* Contact Section */
+.contact {
+    background-color: #111;
+}
 .contact-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
