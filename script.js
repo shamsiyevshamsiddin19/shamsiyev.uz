@@ -154,4 +154,20 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 500);
         }, 4000);
     }
+    // CV/Resume Rotator
+    const cvText = document.getElementById('cv-text');
+    if (cvText) {
+        const cvTexts = ['DOWNLOAD CV', 'DOWNLOAD RESUME'];
+        let cvIndex = 0;
+        cvText.style.transition = 'opacity 0.5s ease-in-out';
+        
+        setInterval(() => {
+            cvText.style.opacity = 0;
+            setTimeout(() => {
+                cvIndex = (cvIndex + 1) % cvTexts.length;
+                cvText.textContent = cvTexts[cvIndex];
+                cvText.style.opacity = 1;
+            }, 500);
+        }, 4000);
+    }
 });
