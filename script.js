@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Infinite Friends Marquee Setup
+    // Infinite Native Momentum Marquee Setup
     const friendsCarousel = document.querySelector('.friends-carousel');
     if (friendsCarousel) {
         const cards = Array.from(friendsCarousel.children);
@@ -69,10 +69,58 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const content = document.createElement('div');
             content.className = 'marquee-content';
+            // We use 3 groups to allow endless scrolling in both directions safely
+            content.appendChild(group.cloneNode(true));
             content.appendChild(group);
             content.appendChild(group.cloneNode(true));
             
             friendsCarousel.appendChild(content);
+
+            setTimeout(() => {
+                const groupWidth = content.children[0].offsetWidth;
+                friendsCarousel.scrollLeft = groupWidth;
+
+                let isHovered = false;
+                let isTouching = false;
+                let autoScrollSpeed = 1;
+                let scrollAccumulator = friendsCarousel.scrollLeft;
+
+                friendsCarousel.addEventListener('mouseenter', () => isHovered = true);
+                friendsCarousel.addEventListener('mouseleave', () => isHovered = false);
+                friendsCarousel.addEventListener('touchstart', () => isTouching = true, {passive: true});
+                friendsCarousel.addEventListener('touchend', () => isTouching = false);
+
+                function animate() {
+                    if (!isHovered && !isTouching) {
+                        scrollAccumulator += autoScrollSpeed;
+                        friendsCarousel.scrollLeft = scrollAccumulator;
+                    } else {
+                        scrollAccumulator = friendsCarousel.scrollLeft;
+                    }
+
+                    if (friendsCarousel.scrollLeft >= groupWidth * 2) {
+                        friendsCarousel.scrollLeft -= groupWidth;
+                        scrollAccumulator -= groupWidth;
+                    } else if (friendsCarousel.scrollLeft <= 0) {
+                        friendsCarousel.scrollLeft += groupWidth;
+                        scrollAccumulator += groupWidth;
+                    }
+                    requestAnimationFrame(animate);
+                }
+                
+                requestAnimationFrame(animate);
+
+                friendsCarousel.addEventListener('scroll', () => {
+                    if (friendsCarousel.scrollLeft >= groupWidth * 2) {
+                        friendsCarousel.scrollLeft -= groupWidth;
+                        scrollAccumulator = friendsCarousel.scrollLeft;
+                    } else if (friendsCarousel.scrollLeft <= 0) {
+                        friendsCarousel.scrollLeft += groupWidth;
+                        scrollAccumulator = friendsCarousel.scrollLeft;
+                    }
+                });
+
+            }, 200);
         }
     }
 

@@ -384,32 +384,29 @@ body {
 }
 
 .friends-carousel {
-    overflow: hidden; /* Prevent manual scrolling and hide scrollbars */
+    overflow-x: auto;
     padding-bottom: 40px;
     padding-top: 20px;
     max-width: 1000px;
     width: 100%;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: auto; /* Required for instant JS loop jumps */
+}
+
+.friends-carousel::-webkit-scrollbar {
+    display: none;
 }
 
 .marquee-content {
     display: flex;
     width: max-content;
-    animation: scroll-marquee 25s linear infinite;
-}
-
-.marquee-content:hover {
-    animation-play-state: paused;
 }
 
 .marquee-group {
     display: flex;
     gap: 30px;
     padding-right: 30px; /* Seamless join */
-}
-
-@keyframes scroll-marquee {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
 }
 
 .friend-card {
