@@ -1,8 +1,8 @@
-"use strict";
 document.addEventListener('DOMContentLoaded', () => {
     // Navigation highlighting
     const sections = document.querySelectorAll('section');
     const navLinks = document.querySelectorAll('.nav-link');
+
     window.addEventListener('scroll', () => {
         let current = '';
         sections.forEach(section => {
@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 current = section.getAttribute('id') || '';
             }
         });
+
         navLinks.forEach(link => {
             link.classList.remove('active');
             if (link.getAttribute('href').includes(current)) {
@@ -19,24 +20,28 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+
     // Handle form submission via FormSubmit AJAX
-    const form = document.getElementById('contactForm');
+    const form = document.getElementById('contactForm') as HTMLFormElement | null;
     if (form) {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
-            const btn = form.querySelector('.btn');
+            const btn = form.querySelector('.btn') as HTMLElement;
             const originalText = btn.textContent || '';
             btn.textContent = 'SENDING...';
+            
             const formData = new FormData(form);
+            
             fetch("https://formsubmit.co/ajax/ad5c1a6b8cec65f29d902ec3c0012c9d", {
                 method: "POST",
                 body: formData
             })
-                .then(response => response.json())
-                .then(data => {
+            .then(response => response.json())
+            .then(data => {
                 btn.textContent = 'MESSAGE SENT!';
                 btn.style.background = '#fff';
                 btn.style.color = '#000';
+                
                 setTimeout(() => {
                     btn.textContent = originalText;
                     btn.style.background = 'transparent';
@@ -44,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     form.reset();
                 }, 3000);
             })
-                .catch(error => {
+            .catch(error => {
                 btn.textContent = 'ERROR!';
                 setTimeout(() => {
                     btn.textContent = originalText;
@@ -52,70 +57,80 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
     // Infinite Native Momentum Marquee Setup
-    const friendsCarousel = document.querySelector('.friends-carousel');
+    const friendsCarousel = document.querySelector('.friends-carousel') as HTMLElement | null;
     if (friendsCarousel) {
         const cards = Array.from(friendsCarousel.children);
         if (cards.length > 0) {
             const group = document.createElement('div');
             group.className = 'marquee-group';
             cards.forEach(card => group.appendChild(card));
+            
             const content = document.createElement('div');
             content.className = 'marquee-content';
             // We use 3 groups to allow endless scrolling in both directions safely
             content.appendChild(group.cloneNode(true));
             content.appendChild(group);
             content.appendChild(group.cloneNode(true));
+            
             friendsCarousel.appendChild(content);
+
             setTimeout(() => {
-                const groupWidth = content.children[0].offsetWidth;
+                const groupWidth = (content.children[0] as HTMLElement).offsetWidth;
                 friendsCarousel.scrollLeft = groupWidth;
+
                 let isHovered = false;
                 let isTouching = false;
                 let autoScrollSpeed = 1;
                 let scrollAccumulator = friendsCarousel.scrollLeft;
+
                 friendsCarousel.addEventListener('mouseenter', () => isHovered = true);
                 friendsCarousel.addEventListener('mouseleave', () => isHovered = false);
-                friendsCarousel.addEventListener('touchstart', () => isTouching = true, { passive: true });
+                friendsCarousel.addEventListener('touchstart', () => isTouching = true, {passive: true});
                 friendsCarousel.addEventListener('touchend', () => isTouching = false);
+
                 function animate() {
                     if (!isHovered && !isTouching) {
                         scrollAccumulator += autoScrollSpeed;
                         friendsCarousel.scrollLeft = scrollAccumulator;
-                    }
-                    else {
+                    } else {
                         scrollAccumulator = friendsCarousel.scrollLeft;
                     }
+
                     if (friendsCarousel.scrollLeft >= groupWidth * 2) {
                         friendsCarousel.scrollLeft -= groupWidth;
                         scrollAccumulator -= groupWidth;
-                    }
-                    else if (friendsCarousel.scrollLeft <= 0) {
+                    } else if (friendsCarousel.scrollLeft <= 0) {
                         friendsCarousel.scrollLeft += groupWidth;
                         scrollAccumulator += groupWidth;
                     }
                     requestAnimationFrame(animate);
                 }
+                
                 requestAnimationFrame(animate);
+
                 friendsCarousel.addEventListener('scroll', () => {
                     if (friendsCarousel.scrollLeft >= groupWidth * 2) {
                         friendsCarousel.scrollLeft -= groupWidth;
                         scrollAccumulator = friendsCarousel.scrollLeft;
-                    }
-                    else if (friendsCarousel.scrollLeft <= 0) {
+                    } else if (friendsCarousel.scrollLeft <= 0) {
                         friendsCarousel.scrollLeft += groupWidth;
                         scrollAccumulator = friendsCarousel.scrollLeft;
                     }
                 });
+
             }, 200);
         }
     }
+
     // SQL Skill Rotator
-    const sqlSkill = document.getElementById('sql-skill');
+    const sqlSkill = document.getElementById('sql-skill') as HTMLElement | null;
     if (sqlSkill) {
         const sqlLangs = ['PostgreSQL', 'SQLite', 'MySQL'];
         let sqlIndex = 0;
         sqlSkill.style.transition = 'opacity 0.5s ease-in-out';
+        
         setInterval(() => {
             sqlSkill.style.opacity = 0;
             setTimeout(() => {
@@ -126,11 +141,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 4000);
     }
     // Python Framework Rotator
-    const pySkill = document.getElementById('py-skill');
+    const pySkill = document.getElementById('py-skill') as HTMLElement | null;
     if (pySkill) {
         const pyLangs = ['Django', 'FastAPI', 'Flask'];
         let pyIndex = 0;
         pySkill.style.transition = 'opacity 0.5s ease-in-out';
+        
         setInterval(() => {
             pySkill.style.opacity = 0;
             setTimeout(() => {
@@ -141,11 +157,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 4000);
     }
     // Web Skill Rotator
-    const webSkill = document.getElementById('web-skill');
+    const webSkill = document.getElementById('web-skill') as HTMLElement | null;
     if (webSkill) {
         const webLangs = ['Node.js', 'HTML', 'CSS', 'TypeScript'];
         let webIndex = 0;
         webSkill.style.transition = 'opacity 0.5s ease-in-out';
+        
         setInterval(() => {
             webSkill.style.opacity = 0;
             setTimeout(() => {
@@ -156,11 +173,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 4000);
     }
     // Tools Skill Rotator
-    const toolsSkill = document.getElementById('tools-skill');
+    const toolsSkill = document.getElementById('tools-skill') as HTMLElement | null;
     if (toolsSkill) {
         const toolsLangs = ['Docker', 'Redis', 'Celery'];
         let toolsIndex = 0;
         toolsSkill.style.transition = 'opacity 0.5s ease-in-out';
+        
         setInterval(() => {
             toolsSkill.style.opacity = 0;
             setTimeout(() => {
@@ -171,11 +189,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 4000);
     }
     // C++ Skill Rotator
-    const cppSkill = document.getElementById('cpp-skill');
+    const cppSkill = document.getElementById('cpp-skill') as HTMLElement | null;
     if (cppSkill) {
         const cppLangs = ['OOP', 'Data Structures', 'Algorithms'];
         let cppIndex = 0;
         cppSkill.style.transition = 'opacity 0.5s ease-in-out';
+        
         setInterval(() => {
             cppSkill.style.opacity = 0;
             setTimeout(() => {
@@ -186,11 +205,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 4000);
     }
     // Git Skill Rotator
-    const gitSkill = document.getElementById('git-skill');
+    const gitSkill = document.getElementById('git-skill') as HTMLElement | null;
     if (gitSkill) {
         const gitLangs = ['Version Control', 'CI/CD', 'GitHub Actions'];
         let gitIndex = 0;
         gitSkill.style.transition = 'opacity 0.5s ease-in-out';
+        
         setInterval(() => {
             gitSkill.style.opacity = 0;
             setTimeout(() => {
