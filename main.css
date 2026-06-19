@@ -355,6 +355,35 @@ body {
     color: #888;
 }
 
+.friends-carousel {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    padding-bottom: 20px;
+    max-width: 1000px;
+    width: 100%;
+    scrollbar-width: thin;
+    scrollbar-color: #333 #111;
+}
+
+.friends-carousel::-webkit-scrollbar {
+    height: 8px;
+}
+
+.friends-carousel::-webkit-scrollbar-track {
+    background: #111;
+    border-radius: 4px;
+}
+
+.friends-carousel::-webkit-scrollbar-thumb {
+    background-color: #333;
+    border-radius: 4px;
+}
+
+.friend-card {
+    min-width: 250px;
+}
+
 /* Blog Section */
 .blog {
     flex-direction: column;
