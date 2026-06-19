@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const formData = new FormData(form);
             
-            fetch("https://formsubmit.co/ajax/shamsiyevshamsiddin19@gmail.com", {
+            fetch("https://formsubmit.co/ajax/ad5c1a6b8cec65f29d902ec3c0012c9d", {
                 method: "POST",
                 body: formData
             })
