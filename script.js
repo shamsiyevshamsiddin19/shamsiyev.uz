@@ -40,4 +40,21 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 3000);
         });
     }
+
+    // SQL Skill Rotator
+    const sqlSkill = document.getElementById('sql-skill');
+    if (sqlSkill) {
+        const sqlLangs = ['PostgreSQL', 'SQLite', 'MySQL'];
+        let sqlIndex = 0;
+        sqlSkill.style.transition = 'opacity 0.3s ease';
+        
+        setInterval(() => {
+            sqlSkill.style.opacity = 0;
+            setTimeout(() => {
+                sqlIndex = (sqlIndex + 1) % sqlLangs.length;
+                sqlSkill.textContent = sqlLangs[sqlIndex];
+                sqlSkill.style.opacity = 1;
+            }, 300);
+        }, 2000);
+    }
 });
