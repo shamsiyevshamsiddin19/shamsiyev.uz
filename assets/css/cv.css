@@ -1,11 +1,8 @@
 /* Document Pages (CV) */
 .doc-container {
-    max-width: 800px;
-    margin: 100px auto;
-    padding: 50px;
-    background: #0d0d0d;
-    border: 1px solid #222;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    max-width: 900px;
+    margin: 80px auto;
+    padding: 0 20px;
 }
 .doc-header {
     text-align: center;
