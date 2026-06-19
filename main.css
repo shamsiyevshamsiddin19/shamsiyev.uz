@@ -335,6 +335,7 @@ body {
 /* Portfolio Section */
 .portfolio {
     flex-direction: column;
+    background-color: #111;
 }
 
 .portfolio-carousel {
