@@ -15,7 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         navLinks.forEach(link => {
             link.classList.remove('active');
-            if (link.getAttribute('href').includes(current)) {
+            const href = link.getAttribute('href');
+            if (href && href.includes(current)) {
                 link.classList.add('active');
             }
         });
@@ -78,31 +79,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
             setTimeout(() => {
                 const groupWidth = (content.children[0] as HTMLElement).offsetWidth;
-                friendsCarousel.scrollLeft = groupWidth;
+                friendsCarousel!.scrollLeft = groupWidth;
 
                 let isHovered = false;
                 let isTouching = false;
                 let autoScrollSpeed = 1;
-                let scrollAccumulator = friendsCarousel.scrollLeft;
+                let scrollAccumulator = friendsCarousel!.scrollLeft;
 
-                friendsCarousel.addEventListener('mouseenter', () => isHovered = true);
-                friendsCarousel.addEventListener('mouseleave', () => isHovered = false);
-                friendsCarousel.addEventListener('touchstart', () => isTouching = true, {passive: true});
-                friendsCarousel.addEventListener('touchend', () => isTouching = false);
+                friendsCarousel!.addEventListener('mouseenter', () => isHovered = true);
+                friendsCarousel!.addEventListener('mouseleave', () => isHovered = false);
+                friendsCarousel!.addEventListener('touchstart', () => isTouching = true, {passive: true});
+                friendsCarousel!.addEventListener('touchend', () => isTouching = false);
 
                 function animate() {
                     if (!isHovered && !isTouching) {
                         scrollAccumulator += autoScrollSpeed;
-                        friendsCarousel.scrollLeft = scrollAccumulator;
+                        friendsCarousel!.scrollLeft = scrollAccumulator;
                     } else {
-                        scrollAccumulator = friendsCarousel.scrollLeft;
+                        scrollAccumulator = friendsCarousel!.scrollLeft;
                     }
 
-                    if (friendsCarousel.scrollLeft >= groupWidth * 2) {
-                        friendsCarousel.scrollLeft -= groupWidth;
+                    if (friendsCarousel!.scrollLeft >= groupWidth * 2) {
+                        friendsCarousel!.scrollLeft -= groupWidth;
                         scrollAccumulator -= groupWidth;
-                    } else if (friendsCarousel.scrollLeft <= 0) {
-                        friendsCarousel.scrollLeft += groupWidth;
+                    } else if (friendsCarousel!.scrollLeft <= 0) {
+                        friendsCarousel!.scrollLeft += groupWidth;
                         scrollAccumulator += groupWidth;
                     }
                     requestAnimationFrame(animate);
@@ -110,13 +111,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 requestAnimationFrame(animate);
 
-                friendsCarousel.addEventListener('scroll', () => {
-                    if (friendsCarousel.scrollLeft >= groupWidth * 2) {
-                        friendsCarousel.scrollLeft -= groupWidth;
-                        scrollAccumulator = friendsCarousel.scrollLeft;
-                    } else if (friendsCarousel.scrollLeft <= 0) {
-                        friendsCarousel.scrollLeft += groupWidth;
-                        scrollAccumulator = friendsCarousel.scrollLeft;
+                friendsCarousel!.addEventListener('scroll', () => {
+                    if (friendsCarousel!.scrollLeft >= groupWidth * 2) {
+                        friendsCarousel!.scrollLeft -= groupWidth;
+                        scrollAccumulator = friendsCarousel!.scrollLeft;
+                    } else if (friendsCarousel!.scrollLeft <= 0) {
+                        friendsCarousel!.scrollLeft += groupWidth;
+                        scrollAccumulator = friendsCarousel!.scrollLeft;
                     }
                 });
 
@@ -132,11 +133,11 @@ document.addEventListener('DOMContentLoaded', () => {
         sqlSkill.style.transition = 'opacity 0.5s ease-in-out';
         
         setInterval(() => {
-            sqlSkill.style.opacity = 0;
+            sqlSkill.style.opacity = '0';
             setTimeout(() => {
                 sqlIndex = (sqlIndex + 1) % sqlLangs.length;
                 sqlSkill.textContent = sqlLangs[sqlIndex];
-                sqlSkill.style.opacity = 1;
+                sqlSkill.style.opacity = '1';
             }, 500);
         }, 4000);
     }
@@ -148,11 +149,11 @@ document.addEventListener('DOMContentLoaded', () => {
         pySkill.style.transition = 'opacity 0.5s ease-in-out';
         
         setInterval(() => {
-            pySkill.style.opacity = 0;
+            pySkill.style.opacity = '0';
             setTimeout(() => {
                 pyIndex = (pyIndex + 1) % pyLangs.length;
                 pySkill.textContent = pyLangs[pyIndex];
-                pySkill.style.opacity = 1;
+                pySkill.style.opacity = '1';
             }, 500);
         }, 4000);
     }
@@ -164,11 +165,11 @@ document.addEventListener('DOMContentLoaded', () => {
         webSkill.style.transition = 'opacity 0.5s ease-in-out';
         
         setInterval(() => {
-            webSkill.style.opacity = 0;
+            webSkill.style.opacity = '0';
             setTimeout(() => {
                 webIndex = (webIndex + 1) % webLangs.length;
                 webSkill.textContent = webLangs[webIndex];
-                webSkill.style.opacity = 1;
+                webSkill.style.opacity = '1';
             }, 500);
         }, 4000);
     }
@@ -180,11 +181,11 @@ document.addEventListener('DOMContentLoaded', () => {
         toolsSkill.style.transition = 'opacity 0.5s ease-in-out';
         
         setInterval(() => {
-            toolsSkill.style.opacity = 0;
+            toolsSkill.style.opacity = '0';
             setTimeout(() => {
                 toolsIndex = (toolsIndex + 1) % toolsLangs.length;
                 toolsSkill.textContent = toolsLangs[toolsIndex];
-                toolsSkill.style.opacity = 1;
+                toolsSkill.style.opacity = '1';
             }, 500);
         }, 4000);
     }
@@ -196,11 +197,11 @@ document.addEventListener('DOMContentLoaded', () => {
         cppSkill.style.transition = 'opacity 0.5s ease-in-out';
         
         setInterval(() => {
-            cppSkill.style.opacity = 0;
+            cppSkill.style.opacity = '0';
             setTimeout(() => {
                 cppIndex = (cppIndex + 1) % cppLangs.length;
                 cppSkill.textContent = cppLangs[cppIndex];
-                cppSkill.style.opacity = 1;
+                cppSkill.style.opacity = '1';
             }, 500);
         }, 4000);
     }
@@ -212,11 +213,11 @@ document.addEventListener('DOMContentLoaded', () => {
         gitSkill.style.transition = 'opacity 0.5s ease-in-out';
         
         setInterval(() => {
-            gitSkill.style.opacity = 0;
+            gitSkill.style.opacity = '0';
             setTimeout(() => {
                 gitIndex = (gitIndex + 1) % gitLangs.length;
                 gitSkill.textContent = gitLangs[gitIndex];
-                gitSkill.style.opacity = 1;
+                gitSkill.style.opacity = '1';
             }, 500);
         }, 4000);
     }

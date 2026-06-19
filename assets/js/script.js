@@ -14,7 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         navLinks.forEach(link => {
             link.classList.remove('active');
-            if (link.getAttribute('href').includes(current)) {
+            const href = link.getAttribute('href');
+            if (href && href.includes(current)) {
                 link.classList.add('active');
             }
         });
@@ -117,11 +118,11 @@ document.addEventListener('DOMContentLoaded', () => {
         let sqlIndex = 0;
         sqlSkill.style.transition = 'opacity 0.5s ease-in-out';
         setInterval(() => {
-            sqlSkill.style.opacity = 0;
+            sqlSkill.style.opacity = '0';
             setTimeout(() => {
                 sqlIndex = (sqlIndex + 1) % sqlLangs.length;
                 sqlSkill.textContent = sqlLangs[sqlIndex];
-                sqlSkill.style.opacity = 1;
+                sqlSkill.style.opacity = '1';
             }, 500);
         }, 4000);
     }
@@ -132,11 +133,11 @@ document.addEventListener('DOMContentLoaded', () => {
         let pyIndex = 0;
         pySkill.style.transition = 'opacity 0.5s ease-in-out';
         setInterval(() => {
-            pySkill.style.opacity = 0;
+            pySkill.style.opacity = '0';
             setTimeout(() => {
                 pyIndex = (pyIndex + 1) % pyLangs.length;
                 pySkill.textContent = pyLangs[pyIndex];
-                pySkill.style.opacity = 1;
+                pySkill.style.opacity = '1';
             }, 500);
         }, 4000);
     }
@@ -147,11 +148,11 @@ document.addEventListener('DOMContentLoaded', () => {
         let webIndex = 0;
         webSkill.style.transition = 'opacity 0.5s ease-in-out';
         setInterval(() => {
-            webSkill.style.opacity = 0;
+            webSkill.style.opacity = '0';
             setTimeout(() => {
                 webIndex = (webIndex + 1) % webLangs.length;
                 webSkill.textContent = webLangs[webIndex];
-                webSkill.style.opacity = 1;
+                webSkill.style.opacity = '1';
             }, 500);
         }, 4000);
     }
@@ -162,11 +163,11 @@ document.addEventListener('DOMContentLoaded', () => {
         let toolsIndex = 0;
         toolsSkill.style.transition = 'opacity 0.5s ease-in-out';
         setInterval(() => {
-            toolsSkill.style.opacity = 0;
+            toolsSkill.style.opacity = '0';
             setTimeout(() => {
                 toolsIndex = (toolsIndex + 1) % toolsLangs.length;
                 toolsSkill.textContent = toolsLangs[toolsIndex];
-                toolsSkill.style.opacity = 1;
+                toolsSkill.style.opacity = '1';
             }, 500);
         }, 4000);
     }
@@ -177,11 +178,11 @@ document.addEventListener('DOMContentLoaded', () => {
         let cppIndex = 0;
         cppSkill.style.transition = 'opacity 0.5s ease-in-out';
         setInterval(() => {
-            cppSkill.style.opacity = 0;
+            cppSkill.style.opacity = '0';
             setTimeout(() => {
                 cppIndex = (cppIndex + 1) % cppLangs.length;
                 cppSkill.textContent = cppLangs[cppIndex];
-                cppSkill.style.opacity = 1;
+                cppSkill.style.opacity = '1';
             }, 500);
         }, 4000);
     }
@@ -192,11 +193,11 @@ document.addEventListener('DOMContentLoaded', () => {
         let gitIndex = 0;
         gitSkill.style.transition = 'opacity 0.5s ease-in-out';
         setInterval(() => {
-            gitSkill.style.opacity = 0;
+            gitSkill.style.opacity = '0';
             setTimeout(() => {
                 gitIndex = (gitIndex + 1) % gitLangs.length;
                 gitSkill.textContent = gitLangs[gitIndex];
-                gitSkill.style.opacity = 1;
+                gitSkill.style.opacity = '1';
             }, 500);
         }, 4000);
     }
