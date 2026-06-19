@@ -160,13 +160,35 @@ document.addEventListener('DOMContentLoaded', () => {
         const cvTexts = ['DOWNLOAD CV', 'DOWNLOAD RESUME'];
         let cvIndex = 0;
         cvText.style.transition = 'opacity 0.5s ease-in-out';
+        const cvBtn = cvText.parentElement;
         
         setInterval(() => {
             cvText.style.opacity = 0;
             setTimeout(() => {
+                // Lock current width
+                const oldWidth = cvBtn.offsetWidth;
+                cvBtn.style.width = oldWidth + 'px';
+                
+                // Change text
                 cvIndex = (cvIndex + 1) % cvTexts.length;
                 cvText.textContent = cvTexts[cvIndex];
+                
+                // Get new width
+                cvBtn.style.width = 'auto';
+                const newWidth = cvBtn.offsetWidth;
+                
+                // Set back to old width and animate to new
+                cvBtn.style.width = oldWidth + 'px';
+                // Trigger reflow
+                cvBtn.offsetHeight;
+                cvBtn.style.width = newWidth + 'px';
+                
                 cvText.style.opacity = 1;
+                
+                // Remove fixed width after transition finishes
+                setTimeout(() => {
+                    cvBtn.style.width = 'auto';
+                }, 400);
             }, 500);
         }, 4000);
     }
