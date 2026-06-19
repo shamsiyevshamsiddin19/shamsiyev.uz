@@ -21,23 +21,40 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Prevent form submission for demo
+    // Handle form submission via FormSubmit AJAX
     const form = document.getElementById('contactForm');
     if (form) {
         form.addEventListener('submit', (e) => {
             e.preventDefault();
             const btn = form.querySelector('.btn');
             const originalText = btn.textContent;
-            btn.textContent = 'MESSAGE SENT!';
-            btn.style.background = '#fff';
-            btn.style.color = '#000';
+            btn.textContent = 'SENDING...';
             
-            setTimeout(() => {
-                btn.textContent = originalText;
-                btn.style.background = 'transparent';
-                btn.style.color = '#fff';
-                form.reset();
-            }, 3000);
+            const formData = new FormData(form);
+            
+            fetch("https://formsubmit.co/ajax/shamsiyevshamsiddin19@gmail.com", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                btn.textContent = 'MESSAGE SENT!';
+                btn.style.background = '#fff';
+                btn.style.color = '#000';
+                
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = 'transparent';
+                    btn.style.color = '#fff';
+                    form.reset();
+                }, 3000);
+            })
+            .catch(error => {
+                btn.textContent = 'ERROR!';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                }, 3000);
+            });
         });
     }
 
