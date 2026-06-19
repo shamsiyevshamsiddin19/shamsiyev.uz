@@ -358,30 +358,34 @@ body {
 .friends-carousel {
     display: flex;
     overflow-x: auto;
-    gap: 20px;
-    padding-bottom: 20px;
+    gap: 30px;
+    padding-bottom: 40px;
+    padding-top: 20px;
     max-width: 1000px;
     width: 100%;
-    scrollbar-width: thin;
-    scrollbar-color: #333 #111;
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
 }
 
 .friends-carousel::-webkit-scrollbar {
-    height: 8px;
-}
-
-.friends-carousel::-webkit-scrollbar-track {
-    background: #111;
-    border-radius: 4px;
-}
-
-.friends-carousel::-webkit-scrollbar-thumb {
-    background-color: #333;
-    border-radius: 4px;
+    display: none; /* Hide scrollbar for Chrome/Safari */
 }
 
 .friend-card {
-    min-width: 250px;
+    min-width: 200px;
+    scroll-snap-align: center;
+    background: #0d0d0d;
+    border: 1px solid #1a1a1a;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.friend-card:hover {
+    transform: translateY(-15px) scale(1.03);
+    border-color: #333;
+    background: #111;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.8);
 }
 
 /* Blog Section */
