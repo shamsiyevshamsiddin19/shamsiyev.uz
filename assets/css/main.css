@@ -1232,10 +1232,51 @@ html { scroll-padding-top: 120px; }
 }
 
 .panel-section ul li::before {
-    content: "▹";
+    content: "•";
     color: #777;
     margin-right: 10px;
     font-size: 16px;
+}
+
+.side-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.side-tag {
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 6px 14px;
+    font-size: 13px;
+    color: #ccc;
+    transition: all 0.3s ease;
+    cursor: default;
+}
+
+.side-tag:hover {
+    background: #fff;
+    color: #000;
+    transform: translateY(-2px);
+}
+
+.tag-count {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 10px;
+    margin-left: 8px;
+    transition: all 0.3s ease;
+}
+
+.side-tag:hover .tag-count {
+    background: #000;
+    color: #fff;
 }
 
 /* Responsive */
