@@ -4,7 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SH | Shamsiddin</title>
+    <title>Shamsiddin Shamsiyev — Backend Developer</title>
+    <meta name="description" content="Shamsiddin Shamsiyev — Backend Developer from Tashkent. Python, Django, FastAPI, PostgreSQL, Docker.">
+    <meta property="og:title" content="Shamsiddin Shamsiyev — Backend Developer">
+    <meta property="og:description" content="Backend Developer from Tashkent. Python, Django, FastAPI, PostgreSQL, Docker.">
+    <meta property="og:url" content="https://shamsiyev.uz">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://shamsiyev.uz/assets/images/men.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Shamsiddin Shamsiyev — Backend Developer">
+    <meta name="twitter:description" content="Backend Developer from Tashkent. Python, Django, FastAPI, PostgreSQL, Docker.">
+    <meta name="twitter:image" content="https://shamsiyev.uz/assets/images/men.jpg">
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23111'/><text x='50%' y='55%' dominant-baseline='middle' text-anchor='middle' font-family='Arial, sans-serif' font-size='50' font-weight='bold' fill='%23fff'>SH</text></svg>">
@@ -18,6 +28,9 @@
 <body>
     <header class="header">
         <a href="#home" class="logo" id="logoBtn">SH</a>
+        <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
         <nav class="nav">
             <a href="#about" class="nav-link">ABOUT</a>
             <a href="#skills" class="nav-link">SKILLS</a>
@@ -45,7 +58,7 @@
             <div class="hero-content">
                 <span class="small-text">I AM</span>
                 <h1 class="main-title">SHAMSIDDIN</h1>
-                <span class="small-text bottom-text">BACKEND DEVELOPER</span>
+                <span class="small-text bottom-text"><span id="typewriter"></span><span class="tw-cursor">|</span></span>
                 <div style="margin-top: 30px; display: flex; gap: 20px; justify-content: center;">
                     <a href="cv.html" class="btn">VIEW CV</a>
                     <a href="resume.html" class="btn" style="background: transparent; color: #fff; border: 1px solid #333;">VIEW RESUME</a>
@@ -215,75 +228,85 @@
             </div>
             <div class="carousel-wrapper">
                 <div class="friends-carousel">
-                <a href="#" class="network-card friend-card">
+                <a href="https://github.com/torvalds" class="network-card friend-card" target="_blank" rel="noopener">
                     <div class="network-avatar">
-                        <img src="https://ui-avatars.com/api/?name=Do'st+1&background=111111&color=ffffff&size=200" alt="Do'st 1">
+                        <img src="https://github.com/torvalds.png?size=200" alt="Linus Torvalds" loading="lazy">
                     </div>
-                    <h3>Do'st 1</h3>
-                    <p>Developer</p>
+                    <h3>Linus Torvalds</h3>
+                    <p>Linux &amp; Git</p>
+                    <span class="network-link"><i class="ri-github-fill"></i> GitHub</span>
                 </a>
-                <a href="#" class="network-card friend-card">
+                <a href="https://github.com/gvanrossum" class="network-card friend-card" target="_blank" rel="noopener">
                     <div class="network-avatar">
-                        <img src="https://ui-avatars.com/api/?name=Do'st+2&background=111111&color=ffffff&size=200" alt="Do'st 2">
+                        <img src="https://github.com/gvanrossum.png?size=200" alt="Guido van Rossum" loading="lazy">
                     </div>
-                    <h3>Do'st 2</h3>
-                    <p>Developer</p>
+                    <h3>Guido van Rossum</h3>
+                    <p>Python</p>
+                    <span class="network-link"><i class="ri-github-fill"></i> GitHub</span>
                 </a>
-                <a href="#" class="network-card friend-card">
+                <a href="https://github.com/gaearon" class="network-card friend-card" target="_blank" rel="noopener">
                     <div class="network-avatar">
-                        <img src="https://ui-avatars.com/api/?name=Do'st+3&background=111111&color=ffffff&size=200" alt="Do'st 3">
+                        <img src="https://github.com/gaearon.png?size=200" alt="Dan Abramov" loading="lazy">
                     </div>
-                    <h3>Do'st 3</h3>
-                    <p>Developer</p>
+                    <h3>Dan Abramov</h3>
+                    <p>React / Redux</p>
+                    <span class="network-link"><i class="ri-github-fill"></i> GitHub</span>
                 </a>
-                <a href="#" class="network-card friend-card">
+                <a href="https://github.com/yyx990803" class="network-card friend-card" target="_blank" rel="noopener">
                     <div class="network-avatar">
-                        <img src="https://ui-avatars.com/api/?name=Do'st+4&background=111111&color=ffffff&size=200" alt="Do'st 4">
+                        <img src="https://github.com/yyx990803.png?size=200" alt="Evan You" loading="lazy">
                     </div>
-                    <h3>Do'st 4</h3>
-                    <p>Developer</p>
+                    <h3>Evan You</h3>
+                    <p>Vue.js</p>
+                    <span class="network-link"><i class="ri-github-fill"></i> GitHub</span>
                 </a>
-                <a href="#" class="network-card friend-card">
+                <a href="https://github.com/ry" class="network-card friend-card" target="_blank" rel="noopener">
                     <div class="network-avatar">
-                        <img src="https://ui-avatars.com/api/?name=Do'st+5&background=111111&color=ffffff&size=200" alt="Do'st 5">
+                        <img src="https://github.com/ry.png?size=200" alt="Ryan Dahl" loading="lazy">
                     </div>
-                    <h3>Do'st 5</h3>
-                    <p>Developer</p>
+                    <h3>Ryan Dahl</h3>
+                    <p>Node.js &amp; Deno</p>
+                    <span class="network-link"><i class="ri-github-fill"></i> GitHub</span>
                 </a>
-                <a href="#" class="network-card friend-card">
+                <a href="https://github.com/sindresorhus" class="network-card friend-card" target="_blank" rel="noopener">
                     <div class="network-avatar">
-                        <img src="https://ui-avatars.com/api/?name=Do'st+6&background=111111&color=ffffff&size=200" alt="Do'st 6">
+                        <img src="https://github.com/sindresorhus.png?size=200" alt="Sindre Sorhus" loading="lazy">
                     </div>
-                    <h3>Do'st 6</h3>
-                    <p>Developer</p>
+                    <h3>Sindre Sorhus</h3>
+                    <p>Open Source</p>
+                    <span class="network-link"><i class="ri-github-fill"></i> GitHub</span>
                 </a>
-                <a href="#" class="network-card friend-card">
+                <a href="https://github.com/tj" class="network-card friend-card" target="_blank" rel="noopener">
                     <div class="network-avatar">
-                        <img src="https://ui-avatars.com/api/?name=Do'st+7&background=111111&color=ffffff&size=200" alt="Do'st 7">
+                        <img src="https://github.com/tj.png?size=200" alt="TJ Holowaychuk" loading="lazy">
                     </div>
-                    <h3>Do'st 7</h3>
-                    <p>Developer</p>
+                    <h3>TJ Holowaychuk</h3>
+                    <p>Express.js</p>
+                    <span class="network-link"><i class="ri-github-fill"></i> GitHub</span>
                 </a>
-                <a href="#" class="network-card friend-card">
+                <a href="https://github.com/addyosmani" class="network-card friend-card" target="_blank" rel="noopener">
                     <div class="network-avatar">
-                        <img src="https://ui-avatars.com/api/?name=Do'st+8&background=111111&color=ffffff&size=200" alt="Do'st 8">
+                        <img src="https://github.com/addyosmani.png?size=200" alt="Addy Osmani" loading="lazy">
                     </div>
-                    <h3>Do'st 8</h3>
-                    <p>Developer</p>
+                    <h3>Addy Osmani</h3>
+                    <p>Google Chrome</p>
+                    <span class="network-link"><i class="ri-github-fill"></i> GitHub</span>
                 </a>
-                <a href="#" class="network-card friend-card">
+                <a href="https://github.com/kentcdodds" class="network-card friend-card" target="_blank" rel="noopener">
                     <div class="network-avatar">
-                        <img src="https://ui-avatars.com/api/?name=Do'st+9&background=111111&color=ffffff&size=200" alt="Do'st 9">
+                        <img src="https://github.com/kentcdodds.png?size=200" alt="Kent C. Dodds" loading="lazy">
                     </div>
-                    <h3>Do'st 9</h3>
-                    <p>Developer</p>
+                    <h3>Kent C. Dodds</h3>
+                    <p>React / Testing</p>
+                    <span class="network-link"><i class="ri-github-fill"></i> GitHub</span>
                 </a>
-                <a href="#" class="network-card friend-card">
+                <a href="https://github.com/mojombo" class="network-card friend-card" target="_blank" rel="noopener">
                     <div class="network-avatar">
-                        <img src="https://ui-avatars.com/api/?name=Do'st+10&background=111111&color=ffffff&size=200" alt="Do'st 10">
+                        <img src="https://github.com/mojombo.png?size=200" alt="Tom Preston-Werner" loading="lazy">
                     </div>
-                    <h3>Do'st 10</h3>
-                    <p>Developer</p>
+                    <h3>Tom Preston-Werner</h3>
+                    <p>GitHub asoschisi</p>
+                    <span class="network-link"><i class="ri-github-fill"></i> GitHub</span>
                 </a>
             </div>
             </div>
@@ -329,7 +352,7 @@
 
                     <div class="contact-details">
                         <div class="detail-item">
-                            <h3>Adress</h3>
+                            <h3>Address</h3>
                             <p>Tashkent, Uzbekistan</p>
                         </div>
                         <div class="detail-item">
@@ -365,41 +388,8 @@
         </footer>
     </main>
 
-    <!-- 3D Glassmorphism Side Panel -->
-    <div class="side-panel" id="sidePanel">
-        <div class="side-panel-header">
-            <h3>Hobbies & Interests</h3>
-            <button class="close-btn" id="closePanelBtn"><i class="ri-close-line"></i></button>
-        </div>
-        <div class="side-panel-content">
-            <div class="panel-section">
-                <h4><i class="ri-book-open-line"></i> O'qigan kitoblarim</h4>
-                <ul>
-                    <li>Halqa</li>
-                    <li>Raqamli Qal'a</li>
-                    <li>Sariq devni minib</li>
-                    <li>Atomic Habits</li>
-                </ul>
-            </div>
-            <div class="panel-section">
-                <h4><i class="ri-football-line"></i> Sport turlari</h4>
-                <ul>
-                    <li>Futbol</li>
-                    <li>Voleybol</li>
-                    <li>Shaxmat</li>
-                </ul>
-            </div>
-            <div class="panel-section">
-                <h4><i class="ri-gamepad-line"></i> Boshqalar</h4>
-                <ul>
-                    <li>Muammo yechish (Logic)</li>
-                    <li>Sayr qilish</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-    <script src="assets/js/script.js"></script>
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="assets/js/script.js"></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v833ccba57c9e4d2798f2e76cebdd09a11778172276447" integrity="sha512-57MDmcccJXYtNnH+ZiBwzC4jb2rvgVCEokYN+L/nLlmO8rfYT/gIpW2A569iJ/3b+0UEasghjuZH/ma3wIs/EQ==" data-cf-beacon='{"version":"2024.11.0","token":"91bcbcfd5e7d4338a1b0852ea215d79f","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
 </body>
 
 </html>
