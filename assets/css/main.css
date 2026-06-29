@@ -1189,17 +1189,6 @@ html { scroll-padding-top: 120px; }
 
 .panel-section {
     margin-bottom: 30px;
-    background: rgba(255, 255, 255, 0.03);
-    padding: 20px;
-    border-radius: 15px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    transition: transform 0.3s ease, background 0.3s ease;
-}
-
-.panel-section:hover {
-    transform: translateY(-5px);
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(255,255,255,0.1);
 }
 
 .panel-section h4 {
@@ -1232,7 +1221,7 @@ html { scroll-padding-top: 120px; }
 }
 
 .panel-section ul li::before {
-    content: "•";
+    content: "\25B8";
     color: #777;
     margin-right: 10px;
     font-size: 16px;
