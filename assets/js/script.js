@@ -345,3 +345,123 @@ document.addEventListener('DOMContentLoaded', () => {
         if (window.innerWidth > 800) setOpen(false);
     });
 });
+
+// === Typewriter effect ===
+(function () {
+    const el = document.getElementById('typewriter');
+    if (!el) return;
+    const words = ['BACKEND DEVELOPER', 'PYTHON ENGINEER', 'API BUILDER', 'DJANGO / FASTAPI'];
+    let wi = 0, ci = 0, deleting = false;
+    function tick() {
+        const word = words[wi];
+        if (!deleting) {
+            el.textContent = word.slice(0, ci + 1);
+            ci++;
+            if (ci === word.length) { deleting = true; setTimeout(tick, 1800); return; }
+        } else {
+            el.textContent = word.slice(0, ci - 1);
+            ci--;
+            if (ci === 0) { deleting = false; wi = (wi + 1) % words.length; }
+        }
+        setTimeout(tick, deleting ? 50 : 95);
+    }
+    tick();
+})();
+
+// === Stat counter animation ===
+(function () {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const statEls = document.querySelectorAll('.stat h3');
+    if (!statEls.length) return;
+    const parsed = Array.from(statEls).map(el => {
+        const raw = el.textContent.trim();
+        const num = parseFloat(raw);
+        const suffix = raw.replace(/[\d.]/g, '');
+        return { el, num, suffix };
+    });
+    let done = false;
+    const obs = new IntersectionObserver(entries => {
+        if (done || !entries.some(e => e.isIntersecting)) return;
+        done = true;
+        parsed.forEach(({ el, num, suffix }) => {
+            const start = performance.now();
+            const dur = 1400;
+            (function tick(now) {
+                const t = Math.min((now - start) / dur, 1);
+                const ease = 1 - Math.pow(1 - t, 3);
+                el.textContent = Math.floor(ease * num) + suffix;
+                if (t < 1) requestAnimationFrame(tick);
+            })(start);
+        });
+        obs.disconnect();
+    }, { threshold: 0.6 });
+    statEls.forEach(el => obs.observe(el));
+})();
+
+// === Scroll-reveal animations (added) ===
+document.addEventListener('DOMContentLoaded', () => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!('IntersectionObserver' in window)) return;
+
+    const selectors = [
+        '.about-image', '.about-text',
+        '.skills-container > h2', '.skill-card',
+        '.portfolio-info', '.project-card',
+        '.network-grid > .network-card', '.carousel-wrapper',
+        '.blog-card',
+        '.contact-info', '.contact-form'
+    ];
+
+    const els = [];
+    selectors.forEach(sel => document.querySelectorAll(sel).forEach(el => {
+        if (!el.classList.contains('reveal')) { el.classList.add('reveal'); els.push(el); }
+    }));
+
+    // Stagger cards within their grids
+    document.querySelectorAll('.skills-grid, .project-grid, .blog-grid, .network-grid').forEach(grid => {
+        Array.from(grid.children).forEach((child, idx) => {
+            if (child.classList.contains('reveal')) child.style.transitionDelay = (idx * 0.09).toFixed(2) + 's';
+        });
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            const el = entry.target;
+            el.classList.add('visible');
+            observer.unobserve(el);
+            // After the reveal finishes, strip the helper classes so each
+            // element returns to its natural CSS (hover transitions intact).
+            setTimeout(() => {
+                el.classList.remove('reveal', 'visible');
+                el.style.transitionDelay = '';
+                el.style.willChange = '';
+            }, 1500);
+        });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+
+    els.forEach(el => observer.observe(el));
+});
+
+// === Mobile nav (hamburger) toggle (added) ===
+document.addEventListener('DOMContentLoaded', () => {
+    const toggle = document.querySelector('.nav-toggle');
+    const nav = document.querySelector('.nav');
+    if (!toggle || !nav) return;
+
+    const setOpen = (open) => {
+        nav.classList.toggle('open', open);
+        toggle.classList.toggle('open', open);
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        document.body.style.overflow = open ? 'hidden' : '';
+    };
+
+    toggle.addEventListener('click', () => setOpen(!nav.classList.contains('open')));
+    nav.querySelectorAll('.nav-link').forEach(link =>
+        link.addEventListener('click', () => setOpen(false))
+    );
+    // Close menu if resized back to desktop
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 800) setOpen(false);
+    });
+});
