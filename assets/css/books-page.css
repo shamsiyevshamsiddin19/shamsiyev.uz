@@ -1,6 +1,16 @@
 /* books-page.css */
+.header {
+    padding: 15px 5% !important;
+}
+
+.header .logo {
+    font-size: 16px !important;
+    font-weight: 500 !important;
+    letter-spacing: 1px !important;
+}
+
 .books-container {
-    padding: 100px 20px 50px 20px;
+    padding: 80px 20px 50px 20px; /* Reduced top padding since header is smaller */
     max-width: 1200px;
     margin: 0 auto;
     min-height: 100vh;
