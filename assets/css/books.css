@@ -101,62 +101,72 @@
 
 .books-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
     gap: 25px;
 }
 
 .book-card {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 15px;
+    border-radius: 12px;
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.4s ease;
     display: flex;
     flex-direction: column;
 }
 
 .book-card:hover {
-    transform: translateY(-10px);
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+    transform: translateY(-8px);
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
 }
 
 .book-cover {
     width: 100%;
-    aspect-ratio: 2 / 3;
+    aspect-ratio: 3 / 4;
     overflow: hidden;
+    background: #111;
 }
 
 .book-cover img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s ease;
+    object-position: top center;
+    transition: transform 0.6s ease, filter 0.4s ease;
 }
 
 .book-card:hover .book-cover img {
-    transform: scale(1.05);
+    transform: scale(1.08);
 }
 
 .book-info {
-    padding: 20px;
+    padding: 18px;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
 }
 
 .book-info h3 {
-    font-size: 18px;
+    font-size: 17px;
     color: #fff;
-    margin-bottom: 5px;
-    line-height: 1.4;
+    margin-bottom: 4px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    letter-spacing: 0.5px;
 }
 
 .book-info .author {
     color: #aaa;
-    font-size: 14px;
-    margin-bottom: 15px;
+    font-size: 12px;
+    margin-bottom: 12px;
+    font-weight: 300;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .book-info .meta {
