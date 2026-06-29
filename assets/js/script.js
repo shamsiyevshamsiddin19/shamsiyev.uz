@@ -201,4 +201,27 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 500);
         }, 4000);
     }
+
+    // Side Panel Toggle Logic
+    const logoBtn = document.getElementById('logoBtn');
+    const sidePanel = document.getElementById('sidePanel');
+    const closePanelBtn = document.getElementById('closePanelBtn');
+
+    if (logoBtn && sidePanel && closePanelBtn) {
+        logoBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            sidePanel.classList.add('open');
+        });
+
+        closePanelBtn.addEventListener('click', () => {
+            sidePanel.classList.remove('open');
+        });
+
+        // Close on clicking outside
+        document.addEventListener('click', (e) => {
+            if (sidePanel.classList.contains('open') && !sidePanel.contains(e.target) && !logoBtn.contains(e.target)) {
+                sidePanel.classList.remove('open');
+            }
+        });
+    }
 });
