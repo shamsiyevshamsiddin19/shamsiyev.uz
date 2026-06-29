@@ -465,3 +465,37 @@ document.addEventListener('DOMContentLoaded', () => {
         if (window.innerWidth > 800) setOpen(false);
     });
 });
+
+// === Books Modal ===
+document.addEventListener('DOMContentLoaded', () => {
+    const badiiyBtn = document.getElementById('badiiy-btn');
+    const booksModal = document.getElementById('booksModal');
+    const closeBooksModal = document.getElementById('closeBooksModal');
+
+    if (!badiiyBtn || !booksModal || !closeBooksModal) return;
+
+    badiiyBtn.addEventListener('click', () => {
+        booksModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    });
+
+    closeBooksModal.addEventListener('click', () => {
+        booksModal.classList.remove('active');
+        document.body.style.overflow = '';
+    });
+
+    booksModal.addEventListener('click', (e) => {
+        if (e.target === booksModal) {
+            booksModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && booksModal.classList.contains('active')) {
+            booksModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+});
