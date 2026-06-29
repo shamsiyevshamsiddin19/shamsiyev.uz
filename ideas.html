@@ -5,50 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Loyihalar va G'oyalar — Shamsiddin</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23111'/><text x='50%' y='55%' dominant-baseline='middle' text-anchor='middle' font-family='Arial, sans-serif' font-size='50' font-weight='bold' fill='%23fff'>SH</text></svg>">
-    <link rel="stylesheet" href="assets/css/main.css?v=2">
+    <link rel="stylesheet" href="assets/css/main.css?v=3">
+    <link rel="stylesheet" href="assets/css/books-page.css?v=1">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-    <style>
-        .coming-soon-container {
-            min-height: 80vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 20px;
-        }
-        .coming-soon-container i {
-            font-size: 80px;
-            color: #ff3366;
-            margin-bottom: 20px;
-            opacity: 0.8;
-        }
-        .coming-soon-container h1 {
-            font-size: 40px;
-            color: #fff;
-            margin-bottom: 15px;
-            letter-spacing: 2px;
-        }
-        .coming-soon-container p {
-            color: #aaa;
-            font-size: 18px;
-            max-width: 500px;
-            line-height: 1.6;
-        }
-    </style>
 </head>
 <body style="background-color: #080808;">
-    <header class="header" style="position: sticky; top: 0; background: rgba(8, 8, 8, 0.9); border-bottom: 1px solid #222;">
+    <header class="header" style="position: sticky; top: 0; background: rgba(8, 8, 8, 0.9); border-bottom: 1px solid #222; z-index: 100;">
         <a href="index.html" class="logo"><i class="ri-arrow-left-line"></i> Back to Portfolio</a>
     </header>
 
-    <main class="container">
-        <div class="coming-soon-container">
-            <i class="ri-lightbulb-flash-line"></i>
+    <main class="books-container">
+        <div class="books-hero">
             <h1>Loyihalar va G'oyalar</h1>
-            <p>Kelajakdagi maqsadlarim, startap g'oyalarim va qiziqarli texnologik yechimlar haqida ma'lumotlar tez kunda qo'shiladi.</p>
+            <p>Kelajakdagi startaplar, IT loyihalar va biznes g'oyalar qoralamasi.</p>
+        </div>
+
+        <!-- Horizontal Navigator for Categories -->
+        <div class="category-navigator">
+            <button class="category-btn active" data-category="all">Barchasi</button>
+            <button class="category-btn" data-category="startap">Startap</button>
+            <button class="category-btn" data-category="it">IT Loyihalar</button>
+            <button class="category-btn" data-category="dizayn">Dizayn</button>
+            <button class="category-btn" data-category="biznes">Biznes</button>
+        </div>
+
+        <div class="books-grid" id="ideasGrid">
+            <!-- Ideas items will be injected here via JS -->
         </div>
     </main>
+
+    <script src="assets/js/ideas.js?v=1"></script>
 </body>
 </html>
