@@ -194,6 +194,13 @@ body {
     filter: grayscale(0%) brightness(1.05);
 }
 
+
+.about-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
 .about-text h2 {
     font-size: 32px;
     font-weight: 700;
@@ -332,12 +339,6 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: grayscale(100%);
-    transition: filter 0.3s ease;
-}
-
-.network-card:hover .network-avatar img {
-    filter: grayscale(0%);
 }
 
 .network-card h3 {
@@ -599,12 +600,6 @@ body {
     width: 100%;
     height: 250px;
     overflow: hidden;
-    filter: grayscale(100%);
-    transition: filter 0.5s ease;
-}
-
-.project-card:hover .project-img {
-    filter: grayscale(0%);
 }
 
 .project-img img {
@@ -757,7 +752,8 @@ body {
     margin-bottom: 30px;
 }
 
-.input-group input {
+.input-group input,
+.input-group textarea {
     width: 100%;
     background: transparent;
     border: none;
@@ -770,11 +766,19 @@ body {
     transition: border-color 0.3s ease;
 }
 
-.input-group input:focus {
+.input-group textarea {
+    resize: none;
+    min-height: 72px;
+    line-height: 1.6;
+}
+
+.input-group input:focus,
+.input-group textarea:focus {
     border-bottom-color: #fff;
 }
 
-.input-group input::placeholder {
+.input-group input::placeholder,
+.input-group textarea::placeholder {
     color: #555;
     font-weight: 300;
 }
@@ -802,13 +806,321 @@ body {
     letter-spacing: 1px;
 }
 
+/* Typewriter cursor */
+.tw-cursor {
+    display: inline-block;
+    color: #777;
+    font-weight: 300;
+    animation: blink 1s step-end infinite;
+    margin-left: 2px;
+}
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+}
+
 /* Animations */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* 3D Glassmorphism Side Panel */
+/* Responsive */
+@media (max-width: 1024px) {
+    .contact-grid {
+        gap: 50px;
+    }
+    .section {
+        padding: 100px 100px;
+    }
+}
+
+@media (max-width: 800px) {
+    .header {
+        padding: 30px;
+    }
+    .social-links, .scroll-indicator {
+        display: none;
+    }
+    .section {
+        padding: 100px 30px;
+    }
+    .main-title {
+        font-size: 18vw;
+    }
+    .portfolio-carousel {
+        flex-direction: column;
+        gap: 30px;
+    }
+    .portfolio-item, .portfolio-item.center {
+        width: 100%;
+        max-width: 400px;
+        aspect-ratio: auto;
+        height: 300px;
+        transform: scale(1);
+    }
+    .portfolio-item.center:hover {
+        transform: scale(1.02);
+    }
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+    .contact-info {
+        max-width: 100%;
+    }
+    .contact-info > p {
+        max-width: 100%;
+    }
+}
+
+/* ============================================================
+   VISUAL ENHANCEMENTS  (animations & polish — added)
+   ============================================================ */
+
+html { scroll-padding-top: 120px; }
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #0c0c0c; }
+::-webkit-scrollbar-thumb { background: #222; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #333; }
+
+/* --- Scroll reveal (JS adds .reveal, then .visible; classes removed after) --- */
+@media (prefers-reduced-motion: no-preference) {
+    .reveal {
+        opacity: 0;
+        transform: translateY(45px);
+        transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+                    transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+        will-change: opacity, transform;
+    }
+    .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* --- Hero: staggered entrance + soft glow --- */
+.hero { position: relative; overflow: hidden; }
+.hero-content { position: relative; z-index: 1; }
+
+@media (prefers-reduced-motion: no-preference) {
+    .hero-content { animation: none; }
+    .hero-content > * {
+        opacity: 0;
+        transform: translateY(30px);
+        animation: heroUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    .hero-content > *:nth-child(1) { animation-delay: 0.20s; }
+    .hero-content > *:nth-child(2) { animation-delay: 0.35s; }
+    .hero-content > *:nth-child(3) { animation-delay: 0.50s; }
+    .hero-content > *:nth-child(4) { animation-delay: 0.70s; }
+
+    .hero::before {
+        content: '';
+        position: absolute;
+        top: 50%; left: 50%;
+        width: 70vw; height: 70vw;
+        max-width: 850px; max-height: 850px;
+        transform: translate(-50%, -50%);
+        background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0) 62%);
+        pointer-events: none;
+        z-index: 0;
+        animation: glowPulse 6s ease-in-out infinite;
+    }
+}
+
+@keyframes heroUp {
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes glowPulse {
+    0%, 100% { opacity: 0.55; transform: translate(-50%, -50%) scale(1); }
+    50%      { opacity: 1;    transform: translate(-50%, -50%) scale(1.18); }
+}
+
+/* Subtle gradient sheen on the big title (supported browsers only) */
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+    .main-title {
+        background: linear-gradient(180deg, #ffffff 0%, #c9c9c9 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+}
+
+/* --- Nav: animated underline --- */
+.nav a { position: relative; }
+.nav a::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: -7px;
+    width: 0; height: 1px;
+    background: #fff;
+    transition: width 0.3s ease;
+}
+.nav a:hover::after, .nav a.active::after { width: 100%; }
+
+/* --- Card hover polish (depth) --- */
+.skill-card:hover,
+.blog-card:hover,
+.network-grid .network-card:hover,
+.project-card:hover {
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.55);
+}
+.skill-card i { transition: color 0.3s ease, transform 0.3s ease; }
+.skill-card:hover i { transform: translateY(-4px) scale(1.12); }
+
+/* --- Button: lift + glow --- */
+.btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(255, 255, 255, 0.10);
+}
+
+/* --- Scroll indicator: travelling line --- */
+.scroll-indicator .line { position: relative; overflow: hidden; }
+.scroll-indicator .line::after {
+    content: '';
+    position: absolute;
+    top: -30px; left: 0;
+    width: 100%; height: 30px;
+    background: #fff;
+    animation: scrollLine 2.2s ease-in-out infinite;
+}
+@keyframes scrollLine {
+    0%   { top: -30px; }
+    100% { top: 30px; }
+}
+
+/* --- Respect reduced motion --- */
+@media (prefers-reduced-motion: reduce) {
+    .hero::before,
+    .scroll-indicator .line::after { animation: none; }
+    .hero-content > * { opacity: 1; transform: none; animation: none; }
+    * { scroll-behavior: auto !important; }
+}
+
+/* ============================================================
+   MOBILE  (hamburger nav + responsive fixes — added)
+   ============================================================ */
+
+/* Hamburger button (hidden on desktop) */
+.nav-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6px;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 200;
+}
+.nav-toggle span {
+    display: block;
+    width: 26px;
+    height: 2px;
+    background: #fff;
+    border-radius: 2px;
+    transition: transform 0.35s ease, opacity 0.25s ease;
+}
+
+@media (max-width: 800px) {
+    /* Show hamburger, turn nav into a full-screen overlay */
+    .nav-toggle { display: flex; }
+
+    .nav {
+        position: fixed;
+        inset: 0;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 36px;
+        background: rgba(10, 10, 10, 0.97);
+        -webkit-backdrop-filter: blur(8px);
+        backdrop-filter: blur(8px);
+        transform: translateX(100%);
+        transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+        z-index: 150;
+    }
+    .nav.open { transform: translateX(0); }
+    .nav a { font-size: 17px; letter-spacing: 3px; }
+
+    /* Burger -> X */
+    .nav-toggle.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+    /* Sections fit content (no forced full-height gaps), hero stays full */
+    .section { padding: 110px 24px 70px; min-height: auto; }
+    .hero { min-height: 100vh; padding-top: 0; padding-bottom: 0; }
+
+    /* Hero title fits the screen (long name -> conservative size) */
+    .main-title { font-size: 12vw; letter-spacing: -2px; }
+    .hero-content > div { flex-wrap: wrap; gap: 15px !important; }
+    .btn { padding: 15px 34px; }
+
+    /* About: single column, centered */
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .about-image {
+    width: 100%;
+    max-width: 380px;
+    aspect-ratio: 4/5;
+    margin: 0 auto;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.8), 0 0 40px rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+}
+
+.about-image:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 45px rgba(0,0,0,0.9), 0 0 60px rgba(255,255,255,0.08);
+    border-color: rgba(255,255,255,0.15);
+}
+
+.about-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease, filter 0.5s ease;
+    filter: grayscale(20%) brightness(0.9);
+}
+
+.about-image:hover img {
+    transform: scale(1.05);
+    filter: grayscale(0%) brightness(1.05);
+}
+
+    .about-text { text-align: center; }
+    .stats { justify-content: center; gap: 30px; flex-wrap: wrap; }
+
+    /* Headings a touch smaller */
+    .about-text h2,
+    .skills-container h2,
+    .portfolio-info h2,
+    .contact-info h2,
+    .contact-form h2 { font-size: 26px; }
+
+    .contact-form { padding: 35px 25px; }
+}
+
+@media (max-width: 480px) {
+    .header { padding: 22px 22px; }
+    .section { padding: 100px 20px 60px; }
+    .skills-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+    .skill-card { padding: 28px 14px; }
+    .skill-card i { font-size: 34px; }
+    .stats { gap: 22px; }
+    .stat h3 { font-size: 24px; }
+    .contact-form { padding: 28px 20px; }
+    .footer { font-size: 20px; }
+}
+
+
 .side-panel {
     position: fixed;
     top: 0;
