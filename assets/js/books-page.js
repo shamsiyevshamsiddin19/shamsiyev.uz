@@ -46,7 +46,7 @@ const booksDatabase = [
         author: "X. To'xtaboyev",
         year: "1992",
         category: "badiiy",
-        image: "assets/images/books/on_besh_yoshli_millioner.png"
+        image: "assets/images/books/15_yoshli_millioner.png"
     },
     {
         title: "Atom odatlar",
