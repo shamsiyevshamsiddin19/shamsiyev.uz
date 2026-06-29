@@ -346,4 +346,58 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// === Mobile Swipe Gestures (added) ===
+document.addEventListener('DOMContentLoaded', () => {
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const swipeThreshold = 60; // minimum px distance for swipe
 
+    const nav = document.querySelector('.nav');
+    const toggle = document.querySelector('.nav-toggle');
+    const sidePanel = document.getElementById('sidePanel');
+
+    document.addEventListener('touchstart', e => {
+        // Prevent capturing horizontal swipe if we are inside a horizontally scrolling container (like carousel or genres)
+        if (e.target.closest('.friends-carousel') || e.target.closest('.category-navigator') || e.target.closest('.genres-navigator')) {
+            return;
+        }
+        touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    document.addEventListener('touchend', e => {
+        if (e.target.closest('.friends-carousel') || e.target.closest('.category-navigator') || e.target.closest('.genres-navigator')) {
+            return;
+        }
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+    }, { passive: true });
+
+    function handleSwipe() {
+        const diff = Math.abs(touchEndX - touchStartX);
+        if (diff < swipeThreshold) return;
+
+        // Swipe Right (Left to Right) -> Open Left Nav Menu
+        if (touchEndX > touchStartX) {
+            if (sidePanel && sidePanel.classList.contains('open')) {
+                sidePanel.classList.remove('open');
+            } else if (nav && toggle && window.innerWidth <= 800 && !nav.classList.contains('open')) {
+                nav.classList.add('open');
+                toggle.classList.add('open');
+                toggle.setAttribute('aria-expanded', 'true');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+        
+        // Swipe Left (Right to Left) -> Open Right Side Panel
+        if (touchStartX > touchEndX) {
+            if (nav && nav.classList.contains('open') && window.innerWidth <= 800) {
+                nav.classList.remove('open');
+                toggle.classList.remove('open');
+                toggle.setAttribute('aria-expanded', 'false');
+                document.body.style.overflow = '';
+            } else if (sidePanel && !sidePanel.classList.contains('open')) {
+                sidePanel.classList.add('open');
+            }
+        }
+    }
+});
