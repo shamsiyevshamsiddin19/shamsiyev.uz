@@ -15,6 +15,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     const grid = document.getElementById('moviesGrid');
     const dynamicGenres = document.getElementById('dynamic-genres');
     
+    // Parse URL parameters for initial genre
+    const urlParams = new URLSearchParams(window.location.search);
+    const initialGenre = urlParams.get('genre');
+    if (initialGenre) {
+        currentGenre = initialGenre;
+    }
+    
     try {
         // Fetch genres
         const genresRes = await fetch('https://api.themoviedb.org/3/genre/movie/list?language=en-US', API_OPTIONS);
@@ -26,6 +33,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             btn.className = 'genre-btn';
             btn.dataset.genre = g.id;
             btn.textContent = g.name;
+            if (g.id.toString() === currentGenre) {
+                btn.classList.add('active');
+                document.querySelector('.genre-btn[data-genre="all"]').classList.remove('active');
+            }
             dynamicGenres.appendChild(btn);
         });
 
@@ -36,6 +47,11 @@ document.addEventListener('DOMContentLoaded', async () => {
                 e.target.classList.add('active');
                 currentGenre = e.target.dataset.genre;
                 renderMovies();
+                
+                // Update URL without refreshing
+                const newUrl = new URL(window.location);
+                newUrl.searchParams.set('genre', currentGenre);
+                window.history.pushState({}, '', newUrl);
             });
         });
 
