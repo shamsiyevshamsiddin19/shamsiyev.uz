@@ -101,8 +101,8 @@
 
 .books-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 25px;
 }
 
 .book-card {
@@ -124,7 +124,7 @@
 
 .book-cover {
     width: 100%;
-    height: 350px;
+    aspect-ratio: 2 / 3;
     overflow: hidden;
 }
 
@@ -188,13 +188,40 @@
         width: 95%;
     }
     .books-grid {
-        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
         gap: 15px;
-    }
-    .book-cover {
-        height: 240px;
     }
     .modal-header h2 {
         font-size: 22px;
+    }
+    .book-info {
+        padding: 12px;
+    }
+    .book-info h3 {
+        font-size: 14px;
+    }
+    .book-info .author {
+        font-size: 11px;
+        margin-bottom: 8px;
+    }
+    .book-info .meta .year {
+        font-size: 10px;
+        padding: 2px 6px;
+    }
+    .book-info .meta .rating {
+        font-size: 9px;
+    }
+}
+
+@media (max-width: 480px) {
+    .books-grid {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 10px;
+    }
+    .book-info {
+        padding: 10px;
+    }
+    .book-info h3 {
+        font-size: 12px;
     }
 }
