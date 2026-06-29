@@ -1188,43 +1188,62 @@ html { scroll-padding-top: 120px; }
 }
 
 .panel-section {
-    margin-bottom: 30px;
+    margin-bottom: 35px;
 }
 
 .panel-section h4 {
-    font-size: 14px;
-    color: #aaa;
-    margin-bottom: 15px;
-    letter-spacing: 1px;
+    font-size: 13px;
+    color: #fff;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
     text-transform: uppercase;
+    font-weight: 700;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 12px;
+    opacity: 0.8;
 }
 
 .panel-section h4 i {
     font-size: 18px;
     color: #fff;
+    opacity: 0.5;
 }
 
 .panel-section ul {
     list-style: none;
-    padding-left: 5px;
+    padding-left: 0;
 }
 
 .panel-section ul li {
-    font-size: 14px;
-    color: #ddd;
-    margin-bottom: 10px;
+    font-size: 15px;
+    color: #aaa;
+    margin-bottom: 15px;
     display: flex;
     align-items: center;
+    font-weight: 400;
+    transition: color 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+}
+
+.panel-section ul li:hover {
+    color: #fff;
+    transform: translateX(5px);
 }
 
 .panel-section ul li::before {
-    content: "\25B8";
-    color: #777;
-    margin-right: 10px;
-    font-size: 16px;
+    content: "\2014";
+    color: #ff3366;
+    margin-right: 15px;
+    font-size: 14px;
+    font-weight: 700;
+    transition: width 0.3s ease;
+    display: inline-block;
+    width: 15px;
+}
+
+.panel-section ul li:hover::before {
+    width: 25px;
 }
 
 /* Responsive */
