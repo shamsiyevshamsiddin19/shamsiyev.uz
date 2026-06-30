@@ -54,6 +54,13 @@ const booksDatabase = [
         year: "2018",
         category: "shaxsiy",
         image: "assets/images/books/atom_odatlar.png"
+    },
+    {
+        title: "Molxona",
+        author: "J. Oruell",
+        year: "1945",
+        category: "badiiy",
+        image: "assets/images/books/molxona.png"
     }
 ];
 
