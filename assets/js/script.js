@@ -160,28 +160,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-// Side Panel Toggle Logic
-    const logoBtn = document.getElementById('logoBtn');
-    const sidePanel = document.getElementById('sidePanel');
-    const closePanelBtn = document.getElementById('closePanelBtn');
-
-    if (logoBtn && sidePanel && closePanelBtn) {
-        logoBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            sidePanel.classList.add('open');
-        });
-
-        closePanelBtn.addEventListener('click', () => {
-            sidePanel.classList.remove('open');
-        });
-
-        // Close on clicking outside
-        document.addEventListener('click', (e) => {
-            if (sidePanel.classList.contains('open') && !sidePanel.contains(e.target) && !logoBtn.contains(e.target)) {
-                sidePanel.classList.remove('open');
-            }
-        });
-    }
+    // Side drawers (nav overlay + interests panel) are handled by the
+    // consolidated controller further down.
 });
 
 // === Typewriter effect ===
@@ -281,26 +261,57 @@ document.addEventListener('DOMContentLoaded', () => {
     els.forEach(el => observer.observe(el));
 });
 
-// === Mobile nav (hamburger) toggle (added) ===
+// === Side drawers: mobile nav overlay + interests side panel ===
 document.addEventListener('DOMContentLoaded', () => {
-    const toggle = document.querySelector('.nav-toggle');
     const nav = document.querySelector('.nav');
-    if (!toggle || !nav) return;
+    const toggle = document.querySelector('.nav-toggle');
+    const panel = document.getElementById('sidePanel');
+    const logoBtn = document.getElementById('logoBtn');
+    const closePanelBtn = document.getElementById('closePanelBtn');
+    const overlay = document.getElementById('drawerOverlay');
 
-    const setOpen = (open) => {
+    const isNavOpen = () => !!(nav && nav.classList.contains('open'));
+    const isPanelOpen = () => !!(panel && panel.classList.contains('open'));
+
+    const setNav = (open) => {
+        if (!nav || !toggle) return;
         nav.classList.toggle('open', open);
         toggle.classList.toggle('open', open);
         toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-        document.body.style.overflow = open ? 'hidden' : '';
+    };
+    const setPanel = (open) => {
+        if (!panel) return;
+        panel.classList.toggle('open', open);
+        panel.setAttribute('aria-hidden', open ? 'false' : 'true');
+    };
+    const sync = () => {
+        // The overlay only backs the partial side panel; the nav is full-screen.
+        if (overlay) overlay.classList.toggle('show', isPanelOpen());
+        document.body.classList.toggle('drawer-open', isNavOpen() || isPanelOpen());
     };
 
-    toggle.addEventListener('click', () => setOpen(!nav.classList.contains('open')));
-    nav.querySelectorAll('.nav-link').forEach(link =>
-        link.addEventListener('click', () => setOpen(false))
-    );
-    // Close menu if resized back to desktop
+    // Opening one drawer always closes the other.
+    const openNav = () => { setPanel(false); setNav(true); sync(); };
+    const openPanel = () => { setNav(false); setPanel(true); sync(); };
+    const closeAll = () => { setNav(false); setPanel(false); sync(); };
+
+    // Expose for the swipe handler below.
+    window.__drawers = { openNav, openPanel, closeAll, isNavOpen, isPanelOpen };
+
+    if (toggle) toggle.addEventListener('click', () => (isNavOpen() ? closeAll() : openNav()));
+    if (logoBtn) logoBtn.addEventListener('click', (e) => { e.preventDefault(); isPanelOpen() ? closeAll() : openPanel(); });
+    if (closePanelBtn) closePanelBtn.addEventListener('click', closeAll);
+    if (overlay) overlay.addEventListener('click', closeAll);
+    if (nav) nav.querySelectorAll('.nav-link').forEach((link) => link.addEventListener('click', closeAll));
+
+    // Escape closes whichever drawer is open.
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && (isNavOpen() || isPanelOpen())) closeAll();
+    });
+
+    // Back to desktop width: make sure nothing stays stuck open.
     window.addEventListener('resize', () => {
-        if (window.innerWidth > 800) setOpen(false);
+        if (window.innerWidth > 800) closeAll();
     });
 });
 
@@ -309,10 +320,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let touchStartX = 0;
     let touchEndX = 0;
     const swipeThreshold = 60; // minimum px distance for swipe
-
-    const nav = document.querySelector('.nav');
-    const toggle = document.querySelector('.nav-toggle');
-    const sidePanel = document.getElementById('sidePanel');
 
     document.addEventListener('touchstart', e => {
         // Prevent capturing horizontal swipe if we are inside a horizontally scrolling container (like carousel or genres)
@@ -334,28 +341,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const diff = Math.abs(touchEndX - touchStartX);
         if (diff < swipeThreshold) return;
 
-        // Swipe Right (Left to Right) -> Open Left Nav Menu
+        const D = window.__drawers;
+        if (!D || window.innerWidth > 800) return;
+
+        // Swipe right: close the side panel if open, else open the nav.
         if (touchEndX > touchStartX) {
-            if (sidePanel && sidePanel.classList.contains('open')) {
-                sidePanel.classList.remove('open');
-            } else if (nav && toggle && window.innerWidth <= 800 && !nav.classList.contains('open')) {
-                nav.classList.add('open');
-                toggle.classList.add('open');
-                toggle.setAttribute('aria-expanded', 'true');
-                document.body.style.overflow = 'hidden';
-            }
+            if (D.isPanelOpen()) D.closeAll();
+            else if (!D.isNavOpen()) D.openNav();
         }
-        
-        // Swipe Left (Right to Left) -> Open Right Side Panel
-        if (touchStartX > touchEndX) {
-            if (nav && nav.classList.contains('open') && window.innerWidth <= 800) {
-                nav.classList.remove('open');
-                toggle.classList.remove('open');
-                toggle.setAttribute('aria-expanded', 'false');
-                document.body.style.overflow = '';
-            } else if (sidePanel && !sidePanel.classList.contains('open')) {
-                sidePanel.classList.add('open');
-            }
+        // Swipe left: close the nav if open, else open the side panel.
+        else if (touchStartX > touchEndX) {
+            if (D.isNavOpen()) D.closeAll();
+            else if (!D.isPanelOpen()) D.openPanel();
         }
     }
 });

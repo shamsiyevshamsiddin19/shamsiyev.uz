@@ -24,7 +24,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
-    <link rel="stylesheet" href="assets/css/main.css?v=7">
+    <link rel="stylesheet" href="assets/css/main.css?v=8">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
@@ -339,12 +339,15 @@
         </footer>
     </main>
 
+    <!-- Dimmed backdrop shared by the drawers -->
+    <div class="drawer-overlay" id="drawerOverlay"></div>
+
     <!-- Side Panel -->
-    <div class="side-panel" id="sidePanel" lang="uz">
+    <div class="side-panel" id="sidePanel" lang="uz" role="dialog" aria-label="Mening qiziqishlarim" aria-hidden="true">
         <div class="side-panel-header">
             <h3>Mening Qiziqishlarim</h3>
-            <button class="close-panel" id="closePanelBtn">
-                <i class="ri-close-line"></i>
+            <button class="close-panel" id="closePanelBtn" type="button" aria-label="Yopish">
+                <i class="ri-close-line" aria-hidden="true"></i>
             </button>
         </div>
         <div class="side-panel-content">
@@ -397,7 +400,7 @@
     </div>
     
     <script src="assets/js/showcase.js?v=3"></script>
-    <script src="assets/js/script.js?v=5"></script>
+    <script src="assets/js/script.js?v=6"></script>
 </body>
 
 </html>
