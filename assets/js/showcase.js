@@ -196,10 +196,16 @@ function initFanDeck(deckId, stageId, dotsId, label) {
     if (next) next.addEventListener("click", () => go(1));
     dots.forEach((dot, i) => dot.addEventListener("click", () => { front = i; render(); }));
 
-    // Clicking a card that is not in front brings it forward (and blocks its link).
+    // Click behaviour: a card behind the front comes forward; clicking the front
+    // card advances to the next one — but a tap on the Source Code link still
+    // opens it normally.
     cards.forEach((card, i) => {
         card.addEventListener("click", (e) => {
-            if (card.dataset.front !== "1") {
+            if (card.dataset.front === "1") {
+                if (e.target.closest("a")) return;
+                e.preventDefault();
+                go(1);
+            } else {
                 e.preventDefault();
                 front = i;
                 render();
