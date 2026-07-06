@@ -603,10 +603,12 @@ body {
     overflow: hidden;
 }
 
-.project-img img {
+.project-img img,
+.project-img .cover-svg {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
 }
 
 .project-content {

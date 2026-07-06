@@ -24,7 +24,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
-    <link rel="stylesheet" href="assets/css/main.css?v=4">
+    <link rel="stylesheet" href="assets/css/main.css?v=6">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
@@ -40,7 +40,7 @@
             <a href="#about" class="nav-link">ABOUT</a>
             <a href="#skills" class="nav-link">SKILLS</a>
             <a href="#projects" class="nav-link">PROJECTS</a>
-            <a href="#blog" class="nav-link">BLOG</a>
+            <a href="#certificates" class="nav-link">CERTIFICATES</a>
             <a href="#contact" class="nav-link">CONTACT</a>
         </nav>
     </header>
@@ -144,64 +144,8 @@
                 <h2>FEATURED PROJECTS</h2>
                 <p>SOME OF MY RECENT BACKEND WORK</p>
             </div>
-            <div class="project-grid">
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="assets/images/projects/subtitr-bot.svg" alt="Subtitr Bot" loading="lazy" width="400" height="250">
-                    </div>
-                    <div class="project-content">
-                        <h3>Subtitr Bot</h3>
-                        <p>AI-powered Telegram bot that generates dual-layer subtitles with a floating vocabulary
-                            mode. Supports YouTube, tariffs &amp; payments, a background worker queue and a mini-app.</p>
-                        <div class="tags"><span class="tag">Python</span><span class="tag">aiogram</span><span
-                                class="tag">PostgreSQL</span><span class="tag">AI</span></div>
-                        <a href="https://github.com/shamsiyevshamsiddin19/vibe-coding/tree/main/subtitr-bot" target="_blank" rel="noopener" class="project-link"><i
-                                class="ri-github-line"></i> Source Code</a>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="assets/images/projects/mustaqilbot.svg" alt="Talaba Xizmatlari Bot" loading="lazy" width="400" height="250">
-                    </div>
-                    <div class="project-content">
-                        <h3>Talaba Xizmatlari Bot</h3>
-                        <p>Telegram bot for students that generates independent-study work with AI, handles payments
-                            and integrates with a web bridge. Backend built on Python with a PostgreSQL database.</p>
-                        <div class="tags"><span class="tag">Python</span><span class="tag">FastAPI</span><span
-                                class="tag">PostgreSQL</span><span class="tag">AI</span></div>
-                        <a href="https://github.com/shamsiyevshamsiddin19/vibe-coding/tree/main/mustaqilbot" target="_blank" rel="noopener" class="project-link"><i
-                                class="ri-github-line"></i> Source Code</a>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="assets/images/projects/tatu-bots.svg" alt="TATU LMS Bots" loading="lazy" width="400" height="250">
-                    </div>
-                    <div class="project-content">
-                        <h3>TATU LMS Bots</h3>
-                        <p>A suite of Telegram bots built around a shared core, integrating with a university LMS to
-                            deliver course data and notifications to students.</p>
-                        <div class="tags"><span class="tag">Python</span><span class="tag">Telegram</span><span
-                                class="tag">LMS</span></div>
-                        <a href="https://github.com/shamsiyevshamsiddin19/vibe-coding/tree/main/tatu-bots" target="_blank" rel="noopener" class="project-link"><i
-                                class="ri-github-line"></i> Source Code</a>
-                    </div>
-                </div>
-                <div class="project-card">
-                    <div class="project-img">
-                        <img src="assets/images/projects/subtitr-desktop.svg" alt="Subtitr Desktop" loading="lazy" width="400" height="250">
-                    </div>
-                    <div class="project-content">
-                        <h3>Subtitr Desktop</h3>
-                        <p>Desktop application that produces dual subtitles offline, paired with a Chrome extension
-                            and a packaged Windows installer for one-click setup.</p>
-                        <div class="tags"><span class="tag">Python</span><span class="tag">FFmpeg</span><span
-                                class="tag">Desktop</span><span class="tag">Chrome Ext</span></div>
-                        <a href="https://github.com/shamsiyevshamsiddin19/vibe-coding/tree/main/subtitr-desktop" target="_blank" rel="noopener" class="project-link"><i
-                                class="ri-github-line"></i> Source Code</a>
-                    </div>
-                </div>
-            </div>
+            <!-- Cards are rendered from the PROJECTS array in assets/js/showcase.js -->
+            <div class="project-grid" id="projectGrid"></div>
         </section>
 
         <!-- Mentors & Friends Section -->
@@ -325,34 +269,14 @@
             </div>
         </section>
 
-        <!-- Blog Section -->
-        <section class="section blog" id="blog">
+        <!-- Certificates Section -->
+        <section class="section blog" id="certificates">
             <div class="portfolio-info" style="margin-bottom: 50px;">
-                <h2>LATEST ARTICLES</h2>
-                <p>MY THOUGHTS ON BACKEND DEVELOPMENT</p>
+                <h2>CERTIFICATES</h2>
+                <p>LICENSES &amp; ACHIEVEMENTS</p>
             </div>
-            <div class="blog-grid">
-                <div class="blog-card" aria-disabled="true">
-                    <div class="blog-date">Coming soon</div>
-                    <h3>Understanding Microservices Architecture</h3>
-                    <p>A deep dive into transitioning from monolithic to microservices and when it makes sense for your
-                        project.</p>
-                    <span class="read-more">Coming soon <i class="ri-time-line"></i></span>
-                </div>
-                <div class="blog-card" aria-disabled="true">
-                    <div class="blog-date">Coming soon</div>
-                    <h3>Optimizing PostgreSQL Queries</h3>
-                    <p>How to use database indexes properly to speed up your query performance by up to 10x.</p>
-                    <span class="read-more">Coming soon <i class="ri-time-line"></i></span>
-                </div>
-                <div class="blog-card" aria-disabled="true">
-                    <div class="blog-date">Coming soon</div>
-                    <h3>Dockerizing Your Django App</h3>
-                    <p>A step-by-step guide to writing the perfect Dockerfile and docker-compose for Python
-                        applications.</p>
-                    <span class="read-more">Coming soon <i class="ri-time-line"></i></span>
-                </div>
-            </div>
+            <!-- Cards are rendered from the CERTIFICATES array in assets/js/showcase.js -->
+            <div class="blog-grid" id="certGrid"></div>
         </section>
 
         <!-- Contact Section -->
@@ -458,6 +382,7 @@
         </div>
     </div>
     
+    <script src="assets/js/showcase.js?v=1"></script>
     <script src="assets/js/script.js?v=5"></script>
 </body>
 
