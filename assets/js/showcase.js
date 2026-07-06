@@ -151,16 +151,22 @@ function initFanDeck(deckId, stageId, dotsId, label) {
 
     const render = () => {
         cards.forEach((card, i) => {
-            // signed slot: 0 = front, +ve fans right, -ve fans left
-            let d = (i - front + n) % n;
-            if (d > n - d) d -= n;
-            const ad = Math.abs(d);
+            const r = (i - front + n) % n;                 // 0 = front card
+            const k = Math.min(r, n - r);                  // depth into the stack
+            // side: +1 fans right, -1 fans left, 0 stays on the vertical axis.
+            // The card exactly opposite the front (r === n - r) sits centred & behind,
+            // so the fan is always mirror-symmetric about the vertical axis.
+            const side = (r === 0 || r === n - r) ? 0 : (r < n - r ? 1 : -1);
+            const h = side * k;                            // signed horizontal fan units
             card.style.transform =
-                `translateX(calc(var(--fan-x) * ${d})) rotate(calc(var(--fan-a) * ${d})) scale(${(1 - ad * 0.06).toFixed(3)})`;
-            card.style.zIndex = String(100 - ad);
-            card.style.opacity = String(Math.max(0, 1 - ad * 0.24));
-            card.dataset.front = d === 0 ? "1" : "0";
-            card.setAttribute("aria-hidden", d === 0 ? "false" : "true");
+                `translateX(calc(var(--fan-x) * ${h})) ` +
+                `translateY(calc(var(--fan-y) * ${-k})) ` +
+                `rotate(calc(var(--fan-a) * ${h})) ` +
+                `scale(${(1 - k * 0.06).toFixed(3)})`;
+            card.style.zIndex = String(100 - k);
+            card.style.opacity = String(Math.max(0, 1 - k * 0.22));
+            card.dataset.front = r === 0 ? "1" : "0";
+            card.setAttribute("aria-hidden", r === 0 ? "false" : "true");
         });
         dots.forEach((dot, i) => dot.classList.toggle("active", i === front));
     };
