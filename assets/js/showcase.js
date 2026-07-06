@@ -53,6 +53,14 @@ const PROJECTS = [
         icon: "desktop",
         accent: "#34d399",
     },
+    {
+        title: "Quiz Bot",
+        desc: "Telegram quiz bot with a PostgreSQL-backed question bank and an admin panel for managing quizzes, questions and users.",
+        tags: ["Python", "aiogram", "PostgreSQL"],
+        link: "https://github.com/shamsiyevshamsiddin19/vibe-coding",
+        icon: "web",
+        accent: "#f472b6",
+    },
 ];
 
 const CERTIFICATES = [

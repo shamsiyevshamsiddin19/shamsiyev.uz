@@ -805,15 +805,15 @@ body {
    ============================================================ */
 .pdeck {
     width: 100%;
-    max-width: 660px;
+    max-width: 900px;
     margin: 0 auto;
     /* Spread — overridden smaller on narrow screens */
-    --fan-x: 88px;
-    --fan-y: 30px;
+    --fan-x: 122px;
+    --fan-y: 34px;
 }
 .pdeck-stage {
     position: relative;
-    height: 492px;
+    height: 500px;
     perspective: 1600px;
     margin-bottom: 30px;
 }
@@ -821,10 +821,10 @@ body {
     position: absolute;
     left: 0;
     right: 0;
-    top: 66px;
+    top: 50px;
     margin: 0 auto;
-    width: 88%;
-    max-width: 380px;
+    width: 300px;
+    max-width: 82%;
     height: 372px;
     background: #0c0c0c;
     border: 1px solid #1e1e1e;
@@ -906,13 +906,14 @@ body {
     transform: scale(1.08);
 }
 @media (max-width: 800px) {
-    .pdeck { --fan-x: 42px; --fan-y: 22px; }
+    .pdeck { --fan-x: 40px; --fan-y: 24px; }
     .pdeck-stage { overflow: hidden; }   /* keep the spread from spilling past the screen */
+    .pcard { width: 84%; max-width: 340px; }
 }
 @media (max-width: 480px) {
-    .pdeck { --fan-x: 26px; --fan-y: 18px; }
+    .pdeck { --fan-x: 24px; --fan-y: 18px; }
     .pdeck-stage { height: 458px; }
-    .pcard { height: 356px; width: 82%; top: 58px; }
+    .pcard { height: 356px; width: 84%; top: 56px; }
     .pcard-cover { height: 150px; }
     .pcard-body { padding: 18px 20px 22px; }
     .pcard-body h3 { font-size: 18px; }
