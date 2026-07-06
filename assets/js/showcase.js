@@ -153,18 +153,19 @@ function initFanDeck(deckId, stageId, dotsId, label) {
         cards.forEach((card, i) => {
             const r = (i - front + n) % n;                 // 0 = front card
             const k = Math.min(r, n - r);                  // depth into the stack
-            // side: +1 fans right, -1 fans left, 0 stays on the vertical axis.
-            // The card exactly opposite the front (r === n - r) sits centred & behind,
-            // so the fan is always mirror-symmetric about the vertical axis.
+            // side: +1 spreads right, -1 spreads left, 0 stays on the vertical axis.
+            // The card exactly opposite the front (r === n - r) sits on the axis,
+            // so the layout is always mirror-symmetric about the vertical centre.
             const side = (r === 0 || r === n - r) ? 0 : (r < n - r ? 1 : -1);
-            const h = side * k;                            // signed horizontal fan units
+            const x = side * k;                            // signed horizontal units
+            const y = side === 0 ? -k : k;                 // axis cards peek up; side cards drop down
+            // Cards stay upright — no rotation.
             card.style.transform =
-                `translateX(calc(var(--fan-x) * ${h})) ` +
-                `translateY(calc(var(--fan-y) * ${-k})) ` +
-                `rotate(calc(var(--fan-a) * ${h})) ` +
-                `scale(${(1 - k * 0.06).toFixed(3)})`;
+                `translateX(calc(var(--fan-x) * ${x})) ` +
+                `translateY(calc(var(--fan-y) * ${y})) ` +
+                `scale(${(1 - k * 0.055).toFixed(3)})`;
             card.style.zIndex = String(100 - k);
-            card.style.opacity = String(Math.max(0, 1 - k * 0.22));
+            card.style.opacity = String(Math.max(0, 1 - k * 0.2));
             card.dataset.front = r === 0 ? "1" : "0";
             card.setAttribute("aria-hidden", r === 0 ? "false" : "true");
         });
