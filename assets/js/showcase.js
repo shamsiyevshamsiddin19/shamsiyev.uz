@@ -173,7 +173,16 @@ function initFanDeck(deckId, stageId, dotsId, label) {
                 `translateY(calc(var(--fan-y) * ${y})) ` +
                 `scale(${(1 - k * 0.055).toFixed(3)})`;
             card.style.zIndex = String(100 - k);
-            card.style.opacity = String(Math.max(0, 1 - k * 0.2));
+            // Only the front card is crisp. Cards behind it recede into a soft,
+            // dimmed, blurred backdrop so their text never competes with the front.
+            if (k === 0) {
+                card.style.opacity = "1";
+                card.style.filter = "none";
+                card.style.pointerEvents = "auto";
+            } else {
+                card.style.opacity = String(Math.max(0.18, 0.5 - (k - 1) * 0.17));
+                card.style.filter = `blur(${2 + k * 2.5}px) brightness(${(1 - k * 0.14).toFixed(2)})`;
+            }
             card.dataset.front = r === 0 ? "1" : "0";
             card.setAttribute("aria-hidden", r === 0 ? "false" : "true");
         });
