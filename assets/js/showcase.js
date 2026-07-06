@@ -128,12 +128,13 @@ function stackCard(p, i, total) {
     </article>`;
 }
 
-// Wire the stacked "pyramid" deck: one card in front, the rest fanned behind.
-// Arrows, dots, click-a-back-card and swipe all cycle which card is in front.
-function initDeck() {
-    const deck = document.getElementById("projectDeck");
-    const stage = document.getElementById("projectGrid");
-    const dotsWrap = document.getElementById("projectDots");
+// Wire a two-sided "fan" deck: the front card sits centred & upright, the rest
+// fan out symmetrically to the left and right. Arrows, dots, clicking a side
+// card and swipe all cycle which card is in front. Reused by projects & certs.
+function initFanDeck(deckId, stageId, dotsId, label) {
+    const deck = document.getElementById(deckId);
+    const stage = document.getElementById(stageId);
+    const dotsWrap = document.getElementById(dotsId);
     if (!deck || !stage) return;
     const cards = Array.from(stage.children);
     const n = cards.length;
@@ -143,18 +144,25 @@ function initDeck() {
 
     if (dotsWrap) {
         dotsWrap.innerHTML = cards
-            .map((_, i) => `<button class="spot-dot${i === 0 ? " active" : ""}" type="button" aria-label="Project ${i + 1}"></button>`)
+            .map((_, i) => `<button class="spot-dot${i === 0 ? " active" : ""}" type="button" aria-label="${esc(label || "Item")} ${i + 1}"></button>`)
             .join("");
     }
     const dots = dotsWrap ? Array.from(dotsWrap.children) : [];
 
     const render = () => {
         cards.forEach((card, i) => {
-            const pos = (i - front + n) % n;
-            card.setAttribute("data-pos", pos > 3 ? "hidden" : String(pos));
-            card.setAttribute("aria-hidden", pos === 0 ? "false" : "true");
+            // signed slot: 0 = front, +ve fans right, -ve fans left
+            let d = (i - front + n) % n;
+            if (d > n - d) d -= n;
+            const ad = Math.abs(d);
+            card.style.transform =
+                `translateX(calc(var(--fan-x) * ${d})) rotate(calc(var(--fan-a) * ${d})) scale(${(1 - ad * 0.06).toFixed(3)})`;
+            card.style.zIndex = String(100 - ad);
+            card.style.opacity = String(Math.max(0, 1 - ad * 0.24));
+            card.dataset.front = d === 0 ? "1" : "0";
+            card.setAttribute("aria-hidden", d === 0 ? "false" : "true");
         });
-        dots.forEach((d, i) => d.classList.toggle("active", i === front));
+        dots.forEach((dot, i) => dot.classList.toggle("active", i === front));
     };
     const go = (step) => { front = (front + step + n) % n; render(); };
 
@@ -162,12 +170,12 @@ function initDeck() {
     const next = deck.querySelector(".pdeck-arrow.next");
     if (prev) prev.addEventListener("click", () => go(-1));
     if (next) next.addEventListener("click", () => go(1));
-    dots.forEach((d, i) => d.addEventListener("click", () => { front = i; render(); }));
+    dots.forEach((dot, i) => dot.addEventListener("click", () => { front = i; render(); }));
 
     // Clicking a card that is not in front brings it forward (and blocks its link).
     cards.forEach((card, i) => {
         card.addEventListener("click", (e) => {
-            if (card.getAttribute("data-pos") !== "0") {
+            if (card.dataset.front !== "1") {
                 e.preventDefault();
                 front = i;
                 render();
@@ -185,7 +193,7 @@ function initDeck() {
         sx = null;
     }, { passive: true });
 
-    // Only one project: nothing to navigate
+    // Only one card: nothing to navigate
     if (n < 2) {
         const controls = deck.querySelector(".pdeck-controls");
         if (controls) controls.style.display = "none";
@@ -194,28 +202,37 @@ function initDeck() {
     render();
 }
 
-function certCard(c) {
+function certFanCard(c, i, total) {
+    const accent = (c && c.accent) || "#fbbf24";
+    const num = String(i + 1).padStart(2, "0");
+    const tot = String(total).padStart(2, "0");
     if (!c) {
-        return `<div class="blog-card" aria-disabled="true">
-            <div class="blog-date">Coming soon</div>
-            <h3>Certificate</h3>
-            <p>Professional certificates and achievements will appear here soon.</p>
-            <span class="read-more">Coming soon <i class="ri-time-line" aria-hidden="true"></i></span>
-        </div>`;
+        const cover = coverSVG({ title: "Certificate", icon: "star", accent, tags: ["Coming soon"] }, "c" + i);
+        return `<article class="pcard" style="--accent:${accent}" aria-disabled="true">
+            <div class="pcard-cover">${cover}</div>
+            <div class="pcard-body">
+                <div class="pcard-index">${num} / ${tot}</div>
+                <h3>Certificate</h3>
+                <p>Professional certificates and achievements will appear here soon.</p>
+                <span class="project-link" style="opacity:.65"><i class="ri-time-line" aria-hidden="true"></i> Coming soon</span>
+            </div>
+        </article>`;
     }
-    const thumb = c.image
-        ? `<img src="${esc(c.image)}" alt="${esc(c.title)}" loading="lazy" style="width:100%;border-radius:8px;margin-bottom:18px;display:block;">`
-        : "";
+    const cover = c.image
+        ? `<img src="${esc(c.image)}" alt="${esc(c.title)}" loading="lazy">`
+        : coverSVG({ title: c.title, icon: c.icon || "star", accent, category: c.issuer }, "c" + i);
     const cta = c.link
-        ? `<a class="read-more" href="${esc(c.link)}" target="_blank" rel="noopener">View credential <i class="ri-external-link-line" aria-hidden="true"></i></a>`
-        : `<span class="read-more">${esc(c.issuer || "")}</span>`;
-    return `<div class="blog-card">
-        ${thumb}
-        <div class="blog-date">${esc(c.date || "")}${c.issuer ? " · " + esc(c.issuer) : ""}</div>
-        <h3>${esc(c.title)}</h3>
-        <p>${esc(c.desc || "")}</p>
-        ${cta}
-    </div>`;
+        ? `<a class="project-link" href="${esc(c.link)}" target="_blank" rel="noopener"><i class="ri-external-link-line" aria-hidden="true"></i> View credential</a>`
+        : `<span class="project-link">${esc(c.issuer || "")}</span>`;
+    return `<article class="pcard" style="--accent:${accent}">
+        <div class="pcard-cover">${cover}</div>
+        <div class="pcard-body">
+            <div class="pcard-index">${esc(c.date || "")}${c.issuer ? " · " + esc(c.issuer) : ""}</div>
+            <h3>${esc(c.title)}</h3>
+            <p>${esc(c.desc || "")}</p>
+            ${cta}
+        </div>
+    </article>`;
 }
 
 // --- render (runs immediately, grids already exist above this script) ----
@@ -223,13 +240,15 @@ function certCard(c) {
     const projectStage = document.getElementById("projectGrid");
     if (projectStage) {
         projectStage.innerHTML = PROJECTS.map((p, i) => stackCard(p, i, PROJECTS.length)).join("");
-        initDeck();
+        initFanDeck("projectDeck", "projectGrid", "projectDots", "Project");
     }
-    const certGrid = document.getElementById("certGrid");
-    if (certGrid) {
+    const certStage = document.getElementById("certGrid");
+    if (certStage) {
+        const total = CERTIFICATES.length || CERT_PLACEHOLDERS;
         const items = CERTIFICATES.length
-            ? CERTIFICATES.map(certCard)
-            : Array.from({ length: CERT_PLACEHOLDERS }, () => certCard(null));
-        certGrid.innerHTML = items.join("");
+            ? CERTIFICATES.map((c, i) => certFanCard(c, i, total))
+            : Array.from({ length: CERT_PLACEHOLDERS }, (_, i) => certFanCard(null, i, total));
+        certStage.innerHTML = items.join("");
+        initFanDeck("certDeck", "certGrid", "certDots", "Certificate");
     }
 })();

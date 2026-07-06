@@ -283,7 +283,14 @@
                 <p>LICENSES &amp; ACHIEVEMENTS</p>
             </div>
             <!-- Cards are rendered from the CERTIFICATES array in assets/js/showcase.js -->
-            <div class="blog-grid" id="certGrid"></div>
+            <div class="pdeck" id="certDeck">
+                <div class="pdeck-stage" id="certGrid"></div>
+                <div class="pdeck-controls">
+                    <button class="pdeck-arrow prev" type="button" aria-label="Previous certificate"><i class="ri-arrow-left-line" aria-hidden="true"></i></button>
+                    <div class="spot-dots" id="certDots"></div>
+                    <button class="pdeck-arrow next" type="button" aria-label="Next certificate"><i class="ri-arrow-right-line" aria-hidden="true"></i></button>
+                </div>
+            </div>
         </section>
 
         <!-- Contact Section -->

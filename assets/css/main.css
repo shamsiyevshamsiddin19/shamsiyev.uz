@@ -805,28 +805,32 @@ body {
    ============================================================ */
 .pdeck {
     width: 100%;
-    max-width: 480px;
+    max-width: 640px;
     margin: 0 auto;
+    /* Fan spread — overridden smaller on narrow screens */
+    --fan-a: 9deg;
+    --fan-x: 30px;
 }
 .pdeck-stage {
     position: relative;
-    height: 500px;
-    padding-top: 84px;          /* room for the receding back cards */
+    height: 460px;
     perspective: 1600px;
-    margin-bottom: 34px;
+    margin-bottom: 30px;
 }
 .pcard {
     position: absolute;
     left: 0;
     right: 0;
-    top: 84px;
+    top: 16px;
     margin: 0 auto;
-    width: 100%;
+    width: 88%;
+    max-width: 380px;
+    height: 412px;
     background: #0c0c0c;
     border: 1px solid #1e1e1e;
     border-radius: 12px;
     overflow: hidden;
-    transform-origin: center top;
+    transform-origin: bottom center;
     transition: transform 0.55s cubic-bezier(0.22, 0.61, 0.36, 1),
                 opacity 0.5s ease, box-shadow 0.5s ease, filter 0.5s ease;
     will-change: transform, opacity;
@@ -870,14 +874,10 @@ body {
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
-/* Stacked positions (0 = front). Set by showcase.js via data-pos. */
-.pcard[data-pos="0"] { transform: translateY(0)     scale(1);    opacity: 1;    z-index: 5; }
-.pcard[data-pos="1"] { transform: translateY(-30px) scale(0.93); opacity: 0.75; z-index: 4; filter: brightness(0.8); }
-.pcard[data-pos="2"] { transform: translateY(-54px) scale(0.86); opacity: 0.5;  z-index: 3; filter: brightness(0.6); }
-.pcard[data-pos="3"] { transform: translateY(-74px) scale(0.80); opacity: 0.28; z-index: 2; filter: brightness(0.45); }
-.pcard[data-pos="hidden"] { transform: translateY(-84px) scale(0.78); opacity: 0; z-index: 1; pointer-events: none; }
-.pcard:not([data-pos="0"]) { cursor: pointer; }
-.pcard[data-pos="0"] { cursor: default; }
+/* Fan transforms (translateX/rotate/scale + z-index/opacity) are set inline
+   by showcase.js so the spread stays symmetric for any number of cards. */
+.pcard[data-front="0"] { cursor: pointer; }
+.pcard[data-front="1"] { cursor: default; }
 
 .pdeck-controls {
     display: flex;
@@ -905,11 +905,17 @@ body {
     border-color: #555;
     transform: scale(1.08);
 }
+@media (max-width: 800px) {
+    .pdeck { --fan-a: 5deg; --fan-x: 14px; }
+    .pdeck-stage { overflow: hidden; }   /* keep the fan from spilling past the screen */
+}
 @media (max-width: 480px) {
-    .pdeck-stage { height: 470px; }
-    .pcard-cover { height: 158px; }
-    .pcard-body { padding: 20px 22px 24px; }
-    .pcard-body h3 { font-size: 19px; }
+    .pdeck { --fan-a: 4deg; --fan-x: 7px; }
+    .pdeck-stage { height: 430px; }
+    .pcard { height: 392px; width: 82%; }
+    .pcard-cover { height: 152px; }
+    .pcard-body { padding: 18px 20px 22px; }
+    .pcard-body h3 { font-size: 18px; }
     .pdeck-arrow { width: 42px; height: 42px; font-size: 18px; }
 }
 
