@@ -24,7 +24,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdn.jsdelivr.net">
-    <link rel="stylesheet" href="assets/css/main.css?v=6">
+    <link rel="stylesheet" href="assets/css/main.css?v=7">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
@@ -145,7 +145,15 @@
                 <p>SOME OF MY RECENT BACKEND WORK</p>
             </div>
             <!-- Cards are rendered from the PROJECTS array in assets/js/showcase.js -->
-            <div class="project-grid" id="projectGrid"></div>
+            <!-- Slides are rendered from the PROJECTS array in assets/js/showcase.js -->
+            <div class="spotlight" id="projectSpotlight">
+                <button class="spot-arrow prev" type="button" aria-label="Previous project">&#8249;</button>
+                <div class="spot-viewport">
+                    <div class="spot-track" id="projectGrid"></div>
+                </div>
+                <button class="spot-arrow next" type="button" aria-label="Next project">&#8250;</button>
+                <div class="spot-dots" id="projectDots"></div>
+            </div>
         </section>
 
         <!-- Mentors & Friends Section -->
@@ -382,7 +390,7 @@
         </div>
     </div>
     
-    <script src="assets/js/showcase.js?v=1"></script>
+    <script src="assets/js/showcase.js?v=2"></script>
     <script src="assets/js/script.js?v=5"></script>
 </body>
 

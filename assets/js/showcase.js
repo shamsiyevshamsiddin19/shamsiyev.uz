@@ -108,20 +108,68 @@ function coverSVG(p, i) {
     </svg>`;
 }
 
-function projectCard(p, i) {
+function spotSlide(p, i, total) {
     const cover = p.image
-        ? `<img src="${esc(p.image)}" alt="${esc(p.title)}" loading="lazy" width="400" height="250">`
+        ? `<img src="${esc(p.image)}" alt="${esc(p.title)}" loading="lazy">`
         : coverSVG(p, i);
     const tags = (p.tags || []).map((t) => `<span class="tag">${esc(t)}</span>`).join("");
-    return `<div class="project-card">
-        <div class="project-img">${cover}</div>
-        <div class="project-content">
+    const num = String(i + 1).padStart(2, "0");
+    const tot = String(total).padStart(2, "0");
+    return `<div class="spot-slide">
+        <div class="spot-cover">${cover}</div>
+        <div class="spot-info">
+            <div class="spot-index">${num} / ${tot}</div>
             <h3>${esc(p.title)}</h3>
             <p>${esc(p.desc)}</p>
             <div class="tags">${tags}</div>
             <a href="${esc(p.link)}" target="_blank" rel="noopener" class="project-link"><i class="ri-github-line" aria-hidden="true"></i> Source Code</a>
         </div>
     </div>`;
+}
+
+// Wire the spotlight arrows, dots, keyboard and swipe once the slides exist.
+function initSpotlight() {
+    const root = document.getElementById("projectSpotlight");
+    const track = document.getElementById("projectGrid");
+    const dotsWrap = document.getElementById("projectDots");
+    if (!root || !track) return;
+    const slides = Array.from(track.children);
+    if (!slides.length) return;
+
+    let idx = 0;
+    if (dotsWrap) {
+        dotsWrap.innerHTML = slides
+            .map((_, i) => `<button class="spot-dot${i === 0 ? " active" : ""}" type="button" aria-label="Project ${i + 1}"></button>`)
+            .join("");
+    }
+    const dots = dotsWrap ? Array.from(dotsWrap.children) : [];
+    const prev = root.querySelector(".spot-arrow.prev");
+    const next = root.querySelector(".spot-arrow.next");
+
+    const go = (n) => {
+        idx = (n + slides.length) % slides.length;
+        track.style.transform = `translateX(-${idx * 100}%)`;
+        dots.forEach((d, i) => d.classList.toggle("active", i === idx));
+    };
+
+    if (prev) prev.addEventListener("click", () => go(idx - 1));
+    if (next) next.addEventListener("click", () => go(idx + 1));
+    dots.forEach((d, i) => d.addEventListener("click", () => go(i)));
+
+    // Touch swipe
+    let sx = null;
+    track.addEventListener("touchstart", (e) => { sx = e.changedTouches[0].screenX; }, { passive: true });
+    track.addEventListener("touchend", (e) => {
+        if (sx == null) return;
+        const dx = e.changedTouches[0].screenX - sx;
+        if (Math.abs(dx) > 50) go(idx + (dx < 0 ? 1 : -1));
+        sx = null;
+    }, { passive: true });
+
+    // Only one project: nothing to navigate
+    if (slides.length < 2) {
+        [prev, next, dotsWrap].forEach((el) => el && (el.style.display = "none"));
+    }
 }
 
 function certCard(c) {
@@ -150,9 +198,10 @@ function certCard(c) {
 
 // --- render (runs immediately, grids already exist above this script) ----
 (function render() {
-    const projectGrid = document.getElementById("projectGrid");
-    if (projectGrid) {
-        projectGrid.innerHTML = PROJECTS.map(projectCard).join("");
+    const projectTrack = document.getElementById("projectGrid");
+    if (projectTrack) {
+        projectTrack.innerHTML = PROJECTS.map((p, i) => spotSlide(p, i, PROJECTS.length)).join("");
+        initSpotlight();
     }
     const certGrid = document.getElementById("certGrid");
     if (certGrid) {
