@@ -3,7 +3,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Navigation highlighting
     const sections = document.querySelectorAll('section');
     const navLinks = document.querySelectorAll('.nav-link');
-    window.addEventListener('scroll', () => {
+    // Throttle with requestAnimationFrame so the handler runs at most once per frame
+    let navTicking = false;
+    const updateActiveNav = () => {
+        navTicking = false;
         let current = '';
         sections.forEach(section => {
             const sectionTop = section.offsetTop;
@@ -19,7 +22,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 link.classList.add('active');
             }
         });
-    });
+    };
+    window.addEventListener('scroll', () => {
+        if (!navTicking) {
+            navTicking = true;
+            requestAnimationFrame(updateActiveNav);
+        }
+    }, { passive: true });
     // Handle form submission via FormSubmit AJAX
     const form = document.getElementById('contactForm');
     if (form) {
@@ -31,10 +40,18 @@ document.addEventListener('DOMContentLoaded', () => {
             const formData = new FormData(form);
             fetch("https://formsubmit.co/ajax/ad5c1a6b8cec65f29d902ec3c0012c9d", {
                 method: "POST",
+                headers: { 'Accept': 'application/json' },
                 body: formData
             })
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) throw new Error('HTTP ' + response.status);
+                    return response.json();
+                })
                 .then(data => {
+                // FormSubmit returns { success: "true", ... } on success
+                if (String(data.success) !== 'true') {
+                    throw new Error(data.message || 'Submission failed');
+                }
                 btn.textContent = 'MESSAGE SENT!';
                 btn.style.background = '#fff';
                 btn.style.color = '#000';
@@ -46,7 +63,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 }, 3000);
             })
                 .catch(error => {
-                btn.textContent = 'ERROR!';
+                btn.textContent = 'ERROR — TRY AGAIN';
+                btn.style.background = 'transparent';
+                btn.style.color = '#fff';
                 setTimeout(() => {
                     btn.textContent = originalText;
                 }, 3000);
@@ -69,6 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
             content.appendChild(group.cloneNode(true));
             friendsCarousel.appendChild(content);
             setTimeout(() => {
+                const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
                 const groupWidth = content.children[0].offsetWidth;
                 friendsCarousel.scrollLeft = groupWidth;
                 let isHovered = false;
@@ -80,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 friendsCarousel.addEventListener('touchstart', () => isTouching = true, { passive: true });
                 friendsCarousel.addEventListener('touchend', () => isTouching = false);
                 function animate() {
-                    if (!isHovered && !isTouching) {
+                    if (!isHovered && !isTouching && !prefersReduced && !document.hidden) {
                         scrollAccumulator += autoScrollSpeed;
                         friendsCarousel.scrollLeft = scrollAccumulator;
                     }
@@ -111,95 +131,33 @@ document.addEventListener('DOMContentLoaded', () => {
             }, 200);
         }
     }
-    // SQL Skill Rotator
-    const sqlSkill = document.getElementById('sql-skill');
-    if (sqlSkill) {
-        const sqlLangs = ['PostgreSQL', 'SQLite', 'MySQL'];
-        let sqlIndex = 0;
-        sqlSkill.style.transition = 'opacity 0.5s ease-in-out';
-        setInterval(() => {
-            sqlSkill.style.opacity = '0';
-            setTimeout(() => {
-                sqlIndex = (sqlIndex + 1) % sqlLangs.length;
-                sqlSkill.textContent = sqlLangs[sqlIndex];
-                sqlSkill.style.opacity = '1';
-            }, 500);
-        }, 4000);
-    }
-    // Python Framework Rotator
-    const pySkill = document.getElementById('py-skill');
-    if (pySkill) {
-        const pyLangs = ['Django', 'FastAPI', 'Flask'];
-        let pyIndex = 0;
-        pySkill.style.transition = 'opacity 0.5s ease-in-out';
-        setInterval(() => {
-            pySkill.style.opacity = '0';
-            setTimeout(() => {
-                pyIndex = (pyIndex + 1) % pyLangs.length;
-                pySkill.textContent = pyLangs[pyIndex];
-                pySkill.style.opacity = '1';
-            }, 500);
-        }, 4000);
-    }
-    // Web Skill Rotator
-    const webSkill = document.getElementById('web-skill');
-    if (webSkill) {
-        const webLangs = ['Node.js', 'HTML', 'CSS', 'TypeScript'];
-        let webIndex = 0;
-        webSkill.style.transition = 'opacity 0.5s ease-in-out';
-        setInterval(() => {
-            webSkill.style.opacity = '0';
-            setTimeout(() => {
-                webIndex = (webIndex + 1) % webLangs.length;
-                webSkill.textContent = webLangs[webIndex];
-                webSkill.style.opacity = '1';
-            }, 500);
-        }, 4000);
-    }
-    // Tools Skill Rotator
-    const toolsSkill = document.getElementById('tools-skill');
-    if (toolsSkill) {
-        const toolsLangs = ['Docker', 'Redis', 'Celery'];
-        let toolsIndex = 0;
-        toolsSkill.style.transition = 'opacity 0.5s ease-in-out';
-        setInterval(() => {
-            toolsSkill.style.opacity = '0';
-            setTimeout(() => {
-                toolsIndex = (toolsIndex + 1) % toolsLangs.length;
-                toolsSkill.textContent = toolsLangs[toolsIndex];
-                toolsSkill.style.opacity = '1';
-            }, 500);
-        }, 4000);
-    }
-    // C++ Skill Rotator
-    const cppSkill = document.getElementById('cpp-skill');
-    if (cppSkill) {
-        const cppLangs = ['OOP', 'Data Structures', 'Algorithms'];
-        let cppIndex = 0;
-        cppSkill.style.transition = 'opacity 0.5s ease-in-out';
-        setInterval(() => {
-            cppSkill.style.opacity = '0';
-            setTimeout(() => {
-                cppIndex = (cppIndex + 1) % cppLangs.length;
-                cppSkill.textContent = cppLangs[cppIndex];
-                cppSkill.style.opacity = '1';
-            }, 500);
-        }, 4000);
-    }
-    // Git Skill Rotator
-    const gitSkill = document.getElementById('git-skill');
-    if (gitSkill) {
-        const gitLangs = ['Version Control', 'CI/CD', 'GitHub Actions'];
-        let gitIndex = 0;
-        gitSkill.style.transition = 'opacity 0.5s ease-in-out';
-        setInterval(() => {
-            gitSkill.style.opacity = '0';
-            setTimeout(() => {
-                gitIndex = (gitIndex + 1) % gitLangs.length;
-                gitSkill.textContent = gitLangs[gitIndex];
-                gitSkill.style.opacity = '1';
-            }, 500);
-        }, 4000);
+    // Skill Rotators — single config-driven loop instead of 6 duplicated blocks.
+    // Respects prefers-reduced-motion and pauses while the tab is hidden.
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduceMotion) {
+        const rotators = [
+            { id: 'sql-skill', items: ['PostgreSQL', 'SQLite', 'MySQL'] },
+            { id: 'py-skill', items: ['Django', 'FastAPI', 'Flask'] },
+            { id: 'web-skill', items: ['Node.js', 'HTML', 'CSS', 'TypeScript'] },
+            { id: 'tools-skill', items: ['Docker', 'Redis', 'Celery'] },
+            { id: 'cpp-skill', items: ['OOP', 'Data Structures', 'Algorithms'] },
+            { id: 'git-skill', items: ['Version Control', 'CI/CD', 'GitHub Actions'] },
+        ];
+        rotators.forEach(({ id, items }) => {
+            const el = document.getElementById(id);
+            if (!el) return;
+            let index = 0;
+            el.style.transition = 'opacity 0.5s ease-in-out';
+            setInterval(() => {
+                if (document.hidden) return; // don't animate in a background tab
+                el.style.opacity = '0';
+                setTimeout(() => {
+                    index = (index + 1) % items.length;
+                    el.textContent = items[index];
+                    el.style.opacity = '1';
+                }, 500);
+            }, 4000);
+        });
     }
 
 // Side Panel Toggle Logic

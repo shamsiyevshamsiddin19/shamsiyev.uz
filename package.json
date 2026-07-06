@@ -1,24 +1,21 @@
 {
   "name": "shamsiyev.uz",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Personal portfolio website of Shamsiddin Shamsiyev — Backend Developer. Static site (HTML/CSS/JS) deployed on Cloudflare Pages.",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npx serve ."
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/shamsiyevshamsiddin19/shamsiyev.uz.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["portfolio", "backend-developer", "static-site"],
+  "author": "Shamsiddin Shamsiyev",
+  "license": "MIT",
   "type": "commonjs",
   "bugs": {
     "url": "https://github.com/shamsiyevshamsiddin19/shamsiyev.uz/issues"
   },
-  "homepage": "https://github.com/shamsiyevshamsiddin19/shamsiyev.uz#readme",
-  "devDependencies": {
-    "typescript": "^6.0.3"
-  }
+  "homepage": "https://shamsiyev.uz"
 }

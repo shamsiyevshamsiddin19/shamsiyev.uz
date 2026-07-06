@@ -847,7 +847,10 @@ body {
         padding: 100px 30px;
     }
     .main-title {
-        font-size: 18vw;
+        font-size: clamp(2.4rem, 12.5vw, 4.5rem);
+        letter-spacing: -1px;
+        overflow-wrap: break-word;
+        max-width: 100%;
     }
     .portfolio-carousel {
         flex-direction: column;
@@ -1267,7 +1270,10 @@ html { scroll-padding-top: 120px; }
         padding: 100px 30px;
     }
     .main-title {
-        font-size: 18vw;
+        font-size: clamp(2.4rem, 12.5vw, 4.5rem);
+        letter-spacing: -1px;
+        overflow-wrap: break-word;
+        max-width: 100%;
     }
     .portfolio-carousel {
         flex-direction: column;
