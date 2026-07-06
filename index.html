@@ -145,14 +145,13 @@
                 <p>SOME OF MY RECENT BACKEND WORK</p>
             </div>
             <!-- Cards are rendered from the PROJECTS array in assets/js/showcase.js -->
-            <!-- Slides are rendered from the PROJECTS array in assets/js/showcase.js -->
-            <div class="spotlight" id="projectSpotlight">
-                <button class="spot-arrow prev" type="button" aria-label="Previous project">&#8249;</button>
-                <div class="spot-viewport">
-                    <div class="spot-track" id="projectGrid"></div>
+            <div class="pdeck" id="projectDeck">
+                <div class="pdeck-stage" id="projectGrid"></div>
+                <div class="pdeck-controls">
+                    <button class="pdeck-arrow prev" type="button" aria-label="Previous project"><i class="ri-arrow-left-line" aria-hidden="true"></i></button>
+                    <div class="spot-dots" id="projectDots"></div>
+                    <button class="pdeck-arrow next" type="button" aria-label="Next project"><i class="ri-arrow-right-line" aria-hidden="true"></i></button>
                 </div>
-                <button class="spot-arrow next" type="button" aria-label="Next project">&#8250;</button>
-                <div class="spot-dots" id="projectDots"></div>
             </div>
         </section>
 

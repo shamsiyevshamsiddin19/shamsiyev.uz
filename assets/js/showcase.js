@@ -108,68 +108,90 @@ function coverSVG(p, i) {
     </svg>`;
 }
 
-function spotSlide(p, i, total) {
+function stackCard(p, i, total) {
     const cover = p.image
         ? `<img src="${esc(p.image)}" alt="${esc(p.title)}" loading="lazy">`
         : coverSVG(p, i);
     const tags = (p.tags || []).map((t) => `<span class="tag">${esc(t)}</span>`).join("");
     const num = String(i + 1).padStart(2, "0");
     const tot = String(total).padStart(2, "0");
-    return `<div class="spot-slide">
-        <div class="spot-cover">${cover}</div>
-        <div class="spot-info">
-            <div class="spot-index">${num} / ${tot}</div>
+    const accent = p.accent || "#38bdf8";
+    return `<article class="pcard" style="--accent:${esc(accent)}">
+        <div class="pcard-cover">${cover}</div>
+        <div class="pcard-body">
+            <div class="pcard-index">${num} / ${tot}</div>
             <h3>${esc(p.title)}</h3>
             <p>${esc(p.desc)}</p>
             <div class="tags">${tags}</div>
             <a href="${esc(p.link)}" target="_blank" rel="noopener" class="project-link"><i class="ri-github-line" aria-hidden="true"></i> Source Code</a>
         </div>
-    </div>`;
+    </article>`;
 }
 
-// Wire the spotlight arrows, dots, keyboard and swipe once the slides exist.
-function initSpotlight() {
-    const root = document.getElementById("projectSpotlight");
-    const track = document.getElementById("projectGrid");
+// Wire the stacked "pyramid" deck: one card in front, the rest fanned behind.
+// Arrows, dots, click-a-back-card and swipe all cycle which card is in front.
+function initDeck() {
+    const deck = document.getElementById("projectDeck");
+    const stage = document.getElementById("projectGrid");
     const dotsWrap = document.getElementById("projectDots");
-    if (!root || !track) return;
-    const slides = Array.from(track.children);
-    if (!slides.length) return;
+    if (!deck || !stage) return;
+    const cards = Array.from(stage.children);
+    const n = cards.length;
+    if (!n) return;
 
-    let idx = 0;
+    let front = 0;
+
     if (dotsWrap) {
-        dotsWrap.innerHTML = slides
+        dotsWrap.innerHTML = cards
             .map((_, i) => `<button class="spot-dot${i === 0 ? " active" : ""}" type="button" aria-label="Project ${i + 1}"></button>`)
             .join("");
     }
     const dots = dotsWrap ? Array.from(dotsWrap.children) : [];
-    const prev = root.querySelector(".spot-arrow.prev");
-    const next = root.querySelector(".spot-arrow.next");
 
-    const go = (n) => {
-        idx = (n + slides.length) % slides.length;
-        track.style.transform = `translateX(-${idx * 100}%)`;
-        dots.forEach((d, i) => d.classList.toggle("active", i === idx));
+    const render = () => {
+        cards.forEach((card, i) => {
+            const pos = (i - front + n) % n;
+            card.setAttribute("data-pos", pos > 3 ? "hidden" : String(pos));
+            card.setAttribute("aria-hidden", pos === 0 ? "false" : "true");
+        });
+        dots.forEach((d, i) => d.classList.toggle("active", i === front));
     };
+    const go = (step) => { front = (front + step + n) % n; render(); };
 
-    if (prev) prev.addEventListener("click", () => go(idx - 1));
-    if (next) next.addEventListener("click", () => go(idx + 1));
-    dots.forEach((d, i) => d.addEventListener("click", () => go(i)));
+    const prev = deck.querySelector(".pdeck-arrow.prev");
+    const next = deck.querySelector(".pdeck-arrow.next");
+    if (prev) prev.addEventListener("click", () => go(-1));
+    if (next) next.addEventListener("click", () => go(1));
+    dots.forEach((d, i) => d.addEventListener("click", () => { front = i; render(); }));
 
-    // Touch swipe
+    // Clicking a card that is not in front brings it forward (and blocks its link).
+    cards.forEach((card, i) => {
+        card.addEventListener("click", (e) => {
+            if (card.getAttribute("data-pos") !== "0") {
+                e.preventDefault();
+                front = i;
+                render();
+            }
+        });
+    });
+
+    // Touch swipe on the stage
     let sx = null;
-    track.addEventListener("touchstart", (e) => { sx = e.changedTouches[0].screenX; }, { passive: true });
-    track.addEventListener("touchend", (e) => {
+    stage.addEventListener("touchstart", (e) => { sx = e.changedTouches[0].screenX; }, { passive: true });
+    stage.addEventListener("touchend", (e) => {
         if (sx == null) return;
         const dx = e.changedTouches[0].screenX - sx;
-        if (Math.abs(dx) > 50) go(idx + (dx < 0 ? 1 : -1));
+        if (Math.abs(dx) > 45) go(dx < 0 ? 1 : -1);
         sx = null;
     }, { passive: true });
 
     // Only one project: nothing to navigate
-    if (slides.length < 2) {
-        [prev, next, dotsWrap].forEach((el) => el && (el.style.display = "none"));
+    if (n < 2) {
+        const controls = deck.querySelector(".pdeck-controls");
+        if (controls) controls.style.display = "none";
     }
+
+    render();
 }
 
 function certCard(c) {
@@ -198,10 +220,10 @@ function certCard(c) {
 
 // --- render (runs immediately, grids already exist above this script) ----
 (function render() {
-    const projectTrack = document.getElementById("projectGrid");
-    if (projectTrack) {
-        projectTrack.innerHTML = PROJECTS.map((p, i) => spotSlide(p, i, PROJECTS.length)).join("");
-        initSpotlight();
+    const projectStage = document.getElementById("projectGrid");
+    if (projectStage) {
+        projectStage.innerHTML = PROJECTS.map((p, i) => stackCard(p, i, PROJECTS.length)).join("");
+        initDeck();
     }
     const certGrid = document.getElementById("certGrid");
     if (certGrid) {

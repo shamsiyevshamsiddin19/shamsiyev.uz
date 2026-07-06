@@ -316,14 +316,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener('touchstart', e => {
         // Prevent capturing horizontal swipe if we are inside a horizontally scrolling container (like carousel or genres)
-        if (e.target.closest('.friends-carousel') || e.target.closest('.category-navigator') || e.target.closest('.genres-navigator') || e.target.closest('.spotlight')) {
+        if (e.target.closest('.friends-carousel') || e.target.closest('.category-navigator') || e.target.closest('.genres-navigator') || e.target.closest('.pdeck')) {
             return;
         }
         touchStartX = e.changedTouches[0].screenX;
     }, { passive: true });
 
     document.addEventListener('touchend', e => {
-        if (e.target.closest('.friends-carousel') || e.target.closest('.category-navigator') || e.target.closest('.genres-navigator') || e.target.closest('.spotlight')) {
+        if (e.target.closest('.friends-carousel') || e.target.closest('.category-navigator') || e.target.closest('.genres-navigator') || e.target.closest('.pdeck')) {
             return;
         }
         touchEndX = e.changedTouches[0].screenX;
