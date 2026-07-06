@@ -315,44 +315,23 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// === Mobile Swipe Gestures (added) ===
+// === Swipe to DISMISS an open drawer (never to open — that fired accidentally
+//     during normal scrolling and clashed with the browser back-gesture) ===
 document.addEventListener('DOMContentLoaded', () => {
     let touchStartX = 0;
-    let touchEndX = 0;
-    const swipeThreshold = 60; // minimum px distance for swipe
+    const swipeThreshold = 60; // minimum px distance for a swipe
 
     document.addEventListener('touchstart', e => {
-        // Prevent capturing horizontal swipe if we are inside a horizontally scrolling container (like carousel or genres)
-        if (e.target.closest('.friends-carousel') || e.target.closest('.category-navigator') || e.target.closest('.genres-navigator') || e.target.closest('.pdeck')) {
-            return;
-        }
         touchStartX = e.changedTouches[0].screenX;
     }, { passive: true });
 
     document.addEventListener('touchend', e => {
-        if (e.target.closest('.friends-carousel') || e.target.closest('.category-navigator') || e.target.closest('.genres-navigator') || e.target.closest('.pdeck')) {
-            return;
-        }
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
-    }, { passive: true });
-
-    function handleSwipe() {
-        const diff = Math.abs(touchEndX - touchStartX);
-        if (diff < swipeThreshold) return;
-
         const D = window.__drawers;
-        if (!D || window.innerWidth > 800) return;
-
-        // Swipe right: close the side panel if open, else open the nav.
-        if (touchEndX > touchStartX) {
-            if (D.isPanelOpen()) D.closeAll();
-            else if (!D.isNavOpen()) D.openNav();
-        }
-        // Swipe left: close the nav if open, else open the side panel.
-        else if (touchStartX > touchEndX) {
-            if (D.isNavOpen()) D.closeAll();
-            else if (!D.isPanelOpen()) D.openPanel();
-        }
-    }
+        if (!D || !(D.isPanelOpen() || D.isNavOpen())) return; // only act while a drawer is open
+        const dx = e.changedTouches[0].screenX - touchStartX;
+        if (Math.abs(dx) < swipeThreshold) return;
+        // Left panel dismissed by swiping left; full-screen nav dismissed by swiping right.
+        if (D.isPanelOpen() && dx < 0) D.closeAll();
+        else if (D.isNavOpen() && dx > 0) D.closeAll();
+    }, { passive: true });
 });
