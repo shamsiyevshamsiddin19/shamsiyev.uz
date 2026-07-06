@@ -11,6 +11,19 @@ let allMovies = [];
 let genresMap = {};
 let currentGenre = 'all';
 
+// Escape user/API-provided strings before injecting into innerHTML
+function escapeHtml(str) {
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+// Inline SVG placeholder (via.placeholder.com is discontinued)
+const NO_POSTER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='500' height='750'%3E%3Crect width='100%25' height='100%25' fill='%23111'/%3E%3Ctext x='50%25' y='50%25' fill='%23555' font-family='Arial' font-size='28' text-anchor='middle' dominant-baseline='middle'%3ENo Poster%3C/text%3E%3C/svg%3E";
+
 document.addEventListener('DOMContentLoaded', async () => {
     const grid = document.getElementById('moviesGrid');
     const dynamicGenres = document.getElementById('dynamic-genres');
@@ -55,9 +68,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             });
         });
 
-        // Fetch movies (500 movies = 25 pages)
+        // Fetch movies (8 pages = 160 movies — enough for genre filtering, far lighter than 25 requests)
         const fetchPromises = [];
-        for (let i = 1; i <= 25; i++) {
+        for (let i = 1; i <= 8; i++) {
             fetchPromises.push(
                 fetch(`https://api.themoviedb.org/3/movie/popular?language=en-US&page=${i}`, API_OPTIONS)
                 .then(res => res.json())
@@ -101,20 +114,21 @@ function renderMovies() {
         const card = document.createElement('div');
         card.className = 'movie-card';
         
-        const posterUrl = movie.poster_path 
+        const posterUrl = movie.poster_path
             ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-            : 'https://via.placeholder.com/500x750/111/555?text=No+Poster';
-            
+            : NO_POSTER;
+
         const year = movie.release_date ? movie.release_date.split('-')[0] : 'N/A';
         const rating = movie.vote_average ? movie.vote_average.toFixed(1) : 'N/A';
-        
+        const safeTitle = escapeHtml(movie.title || 'Untitled');
+
         card.innerHTML = `
             <div class="movie-poster">
-                <img src="${posterUrl}" alt="${movie.title}" loading="lazy">
+                <img src="${posterUrl}" alt="${safeTitle}" loading="lazy">
                 <div class="movie-rating"><i class="ri-star-fill"></i> ${rating}</div>
             </div>
             <div class="movie-info">
-                <h3 title="${movie.title}">${movie.title}</h3>
+                <h3 title="${safeTitle}">${safeTitle}</h3>
                 <div class="movie-meta">
                     <span>${year}</span>
                 </div>
