@@ -57,14 +57,105 @@ const PROJECTS = [
         title: "Quiz Bot",
         desc: "Telegram quiz bot with a PostgreSQL-backed question bank and an admin panel for managing quizzes, questions and users.",
         tags: ["Python", "aiogram", "PostgreSQL"],
-        link: "https://github.com/shamsiyevshamsiddin19/vibe-coding",
+        link: "https://t.me/tez_quizbot",
+        linkLabel: "Open Bot",
+        linkIcon: "ri-telegram-line",
         icon: "web",
         accent: "#f472b6",
     },
 ];
 
 const CERTIFICATES = [
-    // { title: "Certificate name", issuer: "Issuer", date: "2026", link: "", image: "" },
+    {
+        title: "Data Analysis with Python",
+        issuer: "IBM",
+        date: "May 2025",
+        desc: "Data analysis with Python — Pandas, NumPy, data cleaning and visualization.",
+        link: "https://coursera.org/verify/0EGBV79CGC20",
+        image: "assets/images/certificates/ibm-data-analysis-python.jpg",
+        accent: "#1f70c1",
+    },
+    {
+        title: "Introduction to Large Language Models",
+        issuer: "Google Cloud",
+        date: "May 2025",
+        desc: "How large language models work, their use cases and prompt design.",
+        link: "https://coursera.org/verify/64V4YNO2LTJF",
+        image: "assets/images/certificates/gcp-large-language-models.jpg",
+        accent: "#4285f4",
+    },
+    {
+        title: "Introduction to Generative AI",
+        issuer: "Google Cloud",
+        date: "May 2025",
+        desc: "Foundations of generative AI — models, applications and Google Cloud tooling.",
+        link: "https://coursera.org/verify/N0A65Q2TO1AX",
+        image: "assets/images/certificates/gcp-generative-ai.jpg",
+        accent: "#4285f4",
+    },
+    {
+        title: "Responsible AI: Applying AI Principles",
+        issuer: "Google Cloud",
+        date: "May 2025",
+        desc: "Applying Google's AI principles to build responsible AI systems.",
+        link: "https://coursera.org/verify/PIC628894E7X",
+        image: "assets/images/certificates/gcp-responsible-ai-applying.jpg",
+        accent: "#4285f4",
+    },
+    {
+        title: "Introduction to Responsible AI",
+        issuer: "Google Cloud",
+        date: "May 2025",
+        desc: "Foundations of fair, transparent and responsible AI.",
+        link: "https://coursera.org/verify/VCFL16J43U4Z",
+        image: "assets/images/certificates/gcp-intro-responsible-ai.jpg",
+        accent: "#4285f4",
+    },
+    {
+        title: "The Science of Well-Being",
+        issuer: "Yale University",
+        date: "Feb 2026",
+        desc: "Science-based habits for well-being, focus and productivity.",
+        link: "https://coursera.org/verify/LA35MCYABAF8",
+        image: "assets/images/certificates/yale-science-of-well-being.jpg",
+        accent: "#5b8def",
+    },
+    {
+        title: "Work Smarter, Not Harder: Time Management",
+        issuer: "UC Irvine",
+        date: "Feb 2026",
+        desc: "Time-management and productivity techniques for focused work.",
+        link: "https://coursera.org/verify/51O1ENK8M9YK",
+        image: "assets/images/certificates/uci-time-management.jpg",
+        accent: "#2563eb",
+    },
+    {
+        title: "Getting Started with Microsoft Excel",
+        issuer: "Coursera Project",
+        date: "Feb 2026",
+        desc: "Spreadsheet fundamentals — formulas, formatting and data basics.",
+        link: "https://coursera.org/verify/3A1G0HAN5Q5M",
+        image: "assets/images/certificates/excel-getting-started.jpg",
+        accent: "#21a366",
+    },
+    {
+        title: "Build Your Business Brand Using Canva",
+        issuer: "Coursera Project",
+        date: "Feb 2026",
+        desc: "Building a business brand and visual identity with Canva.",
+        link: "https://coursera.org/verify/I9Y6YOZMRQFY",
+        image: "assets/images/certificates/canva-business-brand.jpg",
+        accent: "#7d2ae8",
+    },
+    {
+        title: "IQ Test Certificate (Score 118)",
+        issuer: "myIQ",
+        date: "May 2025",
+        desc: "Standardized cognitive assessment — measured IQ score of 118.",
+        link: "",
+        image: "assets/images/certificates/myiq-iq-test.jpg",
+        accent: "#2563eb",
+    },
 ];
 
 // How many placeholder cards to show while CERTIFICATES is empty.
@@ -124,6 +215,8 @@ function stackCard(p, i, total) {
     const num = String(i + 1).padStart(2, "0");
     const tot = String(total).padStart(2, "0");
     const accent = p.accent || "#38bdf8";
+    const linkIcon = p.linkIcon || "ri-github-line";
+    const linkLabel = p.linkLabel || "Source Code";
     return `<article class="pcard" style="--accent:${esc(accent)}">
         <div class="pcard-cover">${cover}</div>
         <div class="pcard-body">
@@ -131,7 +224,7 @@ function stackCard(p, i, total) {
             <h3>${esc(p.title)}</h3>
             <p>${esc(p.desc)}</p>
             <div class="tags">${tags}</div>
-            <a href="${esc(p.link)}" target="_blank" rel="noopener" class="project-link"><i class="ri-github-line" aria-hidden="true"></i> Source Code</a>
+            <a href="${esc(p.link)}" target="_blank" rel="noopener" class="project-link"><i class="${esc(linkIcon)}" aria-hidden="true"></i> ${esc(linkLabel)}</a>
         </div>
     </article>`;
 }
@@ -249,7 +342,7 @@ function certFanCard(c, i, total) {
         </article>`;
     }
     const cover = c.image
-        ? `<img src="${esc(c.image)}" alt="${esc(c.title)}" loading="lazy">`
+        ? `<img src="${esc(c.image)}" alt="${esc(c.title)}" loading="lazy" style="object-position:top;background:#fff">`
         : coverSVG({ title: c.title, icon: c.icon || "star", accent, category: c.issuer }, "c" + i);
     const cta = c.link
         ? `<a class="project-link" href="${esc(c.link)}" target="_blank" rel="noopener"><i class="ri-external-link-line" aria-hidden="true"></i> View credential</a>`
