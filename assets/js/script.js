@@ -335,3 +335,9 @@ document.addEventListener('DOMContentLoaded', () => {
         else if (D.isNavOpen() && dx > 0) D.closeAll();
     }, { passive: true });
 });
+
+// === Footer: keep the copyright year current ===
+(function () {
+    var y = document.getElementById('footerYear');
+    if (y) y.textContent = new Date().getFullYear();
+})();
