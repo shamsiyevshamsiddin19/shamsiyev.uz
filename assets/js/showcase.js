@@ -67,6 +67,15 @@ const PROJECTS = [
 
 const CERTIFICATES = [
     {
+        title: "Five Million AI Leaders",
+        issuer: "Gov. of Uzbekistan & UAE",
+        date: "Feb 2026",
+        desc: "Government initiative (Uzbekistan & UAE) training AI leaders in prompt engineering for AI systems.",
+        link: "",
+        image: "assets/images/certificates/five-million-ai-leaders.jpg",
+        accent: "#2f6bff",
+    },
+    {
         title: "Data Analysis with Python",
         issuer: "IBM",
         date: "May 2025",
@@ -342,10 +351,12 @@ function certFanCard(c, i, total) {
         </article>`;
     }
     const cover = c.image
-        ? `<img src="${esc(c.image)}" alt="${esc(c.title)}" loading="lazy" style="object-position:top;background:#fff">`
+        ? `<img src="${esc(c.image)}" alt="${esc(c.title)}" loading="${i === 0 ? "eager" : "lazy"}" decoding="async" style="object-position:top;background:#fff">`
         : coverSVG({ title: c.title, icon: c.icon || "star", accent, category: c.issuer }, "c" + i);
     const cta = c.link
         ? `<a class="project-link" href="${esc(c.link)}" target="_blank" rel="noopener"><i class="ri-external-link-line" aria-hidden="true"></i> View credential</a>`
+        : c.image
+        ? `<a class="project-link" href="${esc(c.image)}" target="_blank" rel="noopener"><i class="ri-image-line" aria-hidden="true"></i> View certificate</a>`
         : `<span class="project-link">${esc(c.issuer || "")}</span>`;
     return `<article class="pcard" style="--accent:${accent}">
         <div class="pcard-cover">${cover}</div>
