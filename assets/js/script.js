@@ -261,58 +261,27 @@ document.addEventListener('DOMContentLoaded', () => {
     els.forEach(el => observer.observe(el));
 });
 
-// === Side drawers: mobile nav overlay + interests side panel ===
+// === Mobile nav drawer (hamburger) ===
 document.addEventListener('DOMContentLoaded', () => {
     const nav = document.querySelector('.nav');
     const toggle = document.querySelector('.nav-toggle');
-    const panel = document.getElementById('sidePanel');
-    const logoBtn = document.getElementById('logoBtn');
-    const closePanelBtn = document.getElementById('closePanelBtn');
-    const overlay = document.getElementById('drawerOverlay');
+    if (!nav || !toggle) return;
 
-    const isNavOpen = () => !!(nav && nav.classList.contains('open'));
-    const isPanelOpen = () => !!(panel && panel.classList.contains('open'));
-
-    const setNav = (open) => {
-        if (!nav || !toggle) return;
+    const isNavOpen = () => nav.classList.contains('open');
+    const setOpen = (open) => {
         nav.classList.toggle('open', open);
         toggle.classList.toggle('open', open);
         toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-    };
-    const setPanel = (open) => {
-        if (!panel) return;
-        panel.classList.toggle('open', open);
-        panel.setAttribute('aria-hidden', open ? 'false' : 'true');
-    };
-    const sync = () => {
-        // The overlay only backs the partial side panel; the nav is full-screen.
-        if (overlay) overlay.classList.toggle('show', isPanelOpen());
-        document.body.classList.toggle('drawer-open', isNavOpen() || isPanelOpen());
+        document.body.classList.toggle('drawer-open', open);
     };
 
-    // Opening one drawer always closes the other.
-    const openNav = () => { setPanel(false); setNav(true); sync(); };
-    const openPanel = () => { setNav(false); setPanel(true); sync(); };
-    const closeAll = () => { setNav(false); setPanel(false); sync(); };
+    // Kept for the swipe handler below.
+    window.__drawers = { closeAll: () => setOpen(false), openNav: () => setOpen(true), isNavOpen, isPanelOpen: () => false };
 
-    // Expose for the swipe handler below.
-    window.__drawers = { openNav, openPanel, closeAll, isNavOpen, isPanelOpen };
-
-    if (toggle) toggle.addEventListener('click', () => (isNavOpen() ? closeAll() : openNav()));
-    if (logoBtn) logoBtn.addEventListener('click', (e) => { e.preventDefault(); isPanelOpen() ? closeAll() : openPanel(); });
-    if (closePanelBtn) closePanelBtn.addEventListener('click', closeAll);
-    if (overlay) overlay.addEventListener('click', closeAll);
-    if (nav) nav.querySelectorAll('.nav-link').forEach((link) => link.addEventListener('click', closeAll));
-
-    // Escape closes whichever drawer is open.
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && (isNavOpen() || isPanelOpen())) closeAll();
-    });
-
-    // Back to desktop width: make sure nothing stays stuck open.
-    window.addEventListener('resize', () => {
-        if (window.innerWidth > 800) closeAll();
-    });
+    toggle.addEventListener('click', () => setOpen(!isNavOpen()));
+    nav.querySelectorAll('.nav-link').forEach((link) => link.addEventListener('click', () => setOpen(false)));
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && isNavOpen()) setOpen(false); });
+    window.addEventListener('resize', () => { if (window.innerWidth > 800) setOpen(false); });
 });
 
 // === Swipe to DISMISS an open drawer (never to open — that fired accidentally
