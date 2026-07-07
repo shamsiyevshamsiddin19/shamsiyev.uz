@@ -13,8 +13,12 @@ export async function onRequestPost(context) {
     let body = "{}";
     try { body = await request.text(); } catch (_) {}
 
+    const cf = request.cf || {};
     const ip = request.headers.get("CF-Connecting-IP") || "";
-    const country = (request.cf && request.cf.country) || request.headers.get("CF-IPCountry") || "";
+    const country = cf.country || request.headers.get("CF-IPCountry") || "";
+    const city = cf.city || "";
+    const region = cf.region || "";
+    const org = cf.asOrganization || "";
 
     // Forward in the background so the visitor's request returns instantly.
     context.waitUntil((async () => {
@@ -26,6 +30,9 @@ export async function onRequestPost(context) {
                     "User-Agent": request.headers.get("User-Agent") || "",
                     "X-Visitor-Ip": ip,
                     "X-Visitor-Country": country,
+                    "X-Visitor-City": city,
+                    "X-Visitor-Region": region,
+                    "X-Visitor-Org": org,
                     "Origin": "https://shamsiyev.uz",
                 },
                 body,
