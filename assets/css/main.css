@@ -825,7 +825,7 @@ body {
     margin: 0 auto;
     width: 300px;
     max-width: 82%;
-    height: 404px;
+    height: 430px;
     background: #0c0c0c;
     border: 1px solid #1e1e1e;
     border-radius: 12px;
@@ -840,7 +840,7 @@ body {
     -webkit-tap-highlight-color: transparent;
 }
 .pcard-cover {
-    height: 168px;
+    height: 158px;
     flex-shrink: 0;
     overflow: hidden;
     border-bottom: 1px solid #1a1a1a;
@@ -891,8 +891,22 @@ body {
 }
 /* Tags + Source Code stay pinned and fully visible at the bottom */
 .pcard-body .tags {
+    display: flex;
+    flex-wrap: nowrap;          /* keep every tag on a single row */
+    gap: 5px;
     flex-shrink: 0;
     margin-bottom: 14px;
+    max-width: 100%;
+}
+.pcard-body .tag {
+    font-size: 9px;
+    padding: 4px 7px;
+    letter-spacing: 0;
+    white-space: nowrap;
+    flex: 0 1 auto;             /* shrink to fit the card width */
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .pcard-body .project-link {
     flex-shrink: 0;
@@ -936,13 +950,14 @@ body {
 }
 @media (max-width: 480px) {
     .pdeck { --fan-x: 24px; --fan-y: 18px; }
-    .pdeck-stage { height: 492px; }
-    .pcard { height: 416px; width: 86%; top: 30px; }
-    .pcard-cover { height: 142px; }
+    .pdeck-stage { height: 500px; }
+    .pcard { height: 424px; width: 86%; top: 30px; }
+    .pcard-cover { height: 140px; }
     .pcard-body { padding: 16px 20px 20px; }
     .pcard-body h3 { font-size: 18px; margin: 6px 0 8px; }
-    .pcard-body p { -webkit-line-clamp: 2; margin-bottom: 12px; }
+    .pcard-body p { margin-bottom: 12px; }
     .pcard-body .tags { margin-bottom: 12px; }
+    .pcard-body .tag { font-size: 8.5px; padding: 4px 6px; }
     .pdeck-arrow { width: 42px; height: 42px; font-size: 18px; }
 }
 
