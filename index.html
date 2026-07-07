@@ -349,6 +349,8 @@
                 <div class="contact-form">
                     <h2 data-i18n="cform_h">CONTACT FORM</h2>
                     <form id="contactForm">
+                        <!-- Honeypot: bots fill this, humans never see it; FormSubmit discards such submissions -->
+                        <input type="text" name="_honey" style="display:none !important" tabindex="-1" autocomplete="off" aria-hidden="true">
                         <div class="input-group">
                             <input type="text" name="name" data-i18n-ph="ph_name" placeholder="Name Surname" aria-label="Name Surname" required>
                         </div>
