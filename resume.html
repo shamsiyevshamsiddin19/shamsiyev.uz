@@ -19,12 +19,15 @@
 <body>
     <header class="header" style="padding: 30px 60px; display: flex; justify-content: space-between; align-items: center;">
         <a href="index.html" class="back-btn"><i class="ri-arrow-left-line"></i> BACK</a>
-        <div class="lang-switcher" id="langSwitcher" data-active="en">
+        <div style="display: flex; align-items: center; gap: 18px;">
+            <button class="print-btn" type="button" onclick="window.print()" aria-label="Download as PDF"><i class="ri-download-line" aria-hidden="true"></i> PDF</button>
+            <div class="lang-switcher" id="langSwitcher" data-active="en">
             <button class="lang-btn active" data-lang="en">EN</button>
             <span style="color: #444;">/</span>
             <button class="lang-btn" data-lang="ru">RU</button>
             <span style="color: #444;">/</span>
             <button class="lang-btn" data-lang="uz">UZ</button>
+        </div>
         </div>
     </header>
 
