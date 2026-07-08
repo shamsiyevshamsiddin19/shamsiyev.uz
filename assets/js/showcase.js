@@ -1,20 +1,26 @@
 "use strict";
 /*
- * showcase.js — data-driven Projects & Certificates.
+ * showcase.js — data-driven Projects & Certificates, localized (EN/RU/UZ).
  *
  * TO ADD A PROJECT: copy one { ... } block into the PROJECTS array below.
- *   title  – project name (shown as the card heading)
- *   desc   – one or two sentences
- *   tags   – array of short tech labels
- *   link   – URL opened by "Source Code"
+ *   title  – project name: a plain string (kept the same in every language,
+ *            e.g. a short brand-like name) OR {en,ru,uz} if it should read
+ *            differently per language
+ *   desc   – {en,ru,uz} sentence(s) describing the project
+ *   tags   – array of short tech labels (kept in Latin in every language —
+ *            that's normal convention for technology names)
+ *   link   – URL opened by the "Source Code" / "Open Bot" link
  *   icon   – cover icon: subtitle | cap | robot | desktop | api | database | web | mobile | star
  *   accent – hex colour for the cover glow/icon
- *   image  – (optional) path to a real screenshot; if set it is used instead of the generated cover
+ *   image  – (optional) path to a real screenshot/logo; overrides the generated cover
  *
  * TO ADD A CERTIFICATE: copy one { ... } block into the CERTIFICATES array.
- *   title  – certificate name
- *   issuer – who issued it
- *   date   – e.g. "2026"
+ *   title  – certificate name (kept as officially issued — usually English —
+ *            in every language, same as you'd list a real credential on a CV)
+ *   issuer – plain string (org/brand name, same in every language) OR
+ *            {en,ru,uz} for a descriptive (non-brand) issuer
+ *   date   – e.g. "Feb 2026"
+ *   desc   – {en,ru,uz} one-line summary
  *   link   – (optional) URL to the credential
  *   image  – (optional) path to the certificate image
  * Leave CERTIFICATES empty to show "Coming soon" placeholders.
@@ -23,7 +29,11 @@
 const PROJECTS = [
     {
         title: "Subtitr Bot",
-        desc: "AI-powered Telegram bot that generates dual-layer subtitles with a floating vocabulary mode. Supports YouTube, tariffs & payments, a background worker queue and a mini-app.",
+        desc: {
+            en: "AI-powered Telegram bot that generates dual-layer subtitles with a floating vocabulary mode. Supports YouTube, tariffs & payments, a background worker queue and a mini-app.",
+            ru: "Telegram-бот на основе ИИ, который создаёт двухслойные субтитры с режимом плавающего словаря. Поддерживает YouTube, тарифы и оплату, фоновую очередь задач и мини-приложение.",
+            uz: "AI asosidagi Telegram bot bo'lib, suzuvchi lug'at rejimi bilan ikki qatlamli subtitr yaratadi. YouTube, tariflar va to'lovlarni, fon vazifalar navbatini va mini-ilovani qo'llab-quvvatlaydi.",
+        },
         tags: ["Python", "aiogram", "PostgreSQL", "AI"],
         link: "https://github.com/shamsiyevshamsiddin19/vibe-coding/tree/main/subtitr-bot",
         image: "assets/images/projects/subtitr-bot.jpg",
@@ -31,8 +41,14 @@ const PROJECTS = [
         accent: "#38bdf8",
     },
     {
-        title: "Talaba Xizmatlari Bot",
-        desc: "Telegram bot for students that generates independent-study work with AI, handles payments and integrates with a web bridge. Backend built on Python with a PostgreSQL database.",
+        title: {
+            en: "Student Services Bot", ru: "Бот студенческих услуг", uz: "Talaba Xizmatlari Bot",
+        },
+        desc: {
+            en: "Telegram bot for students that generates independent-study work with AI, handles payments and integrates with a web bridge. Backend built on Python with a PostgreSQL database.",
+            ru: "Telegram-бот для студентов, который с помощью ИИ создаёт самостоятельные работы, обрабатывает платежи и интегрируется с веб-мостом. Backend написан на Python с базой данных PostgreSQL.",
+            uz: "Talabalar uchun Telegram bot bo'lib, AI yordamida mustaqil ishlarni yaratadi, to'lovlarni qayta ishlaydi va veb-ko'prik bilan integratsiyalashadi. Backend Python'da, PostgreSQL bazasi bilan qurilgan.",
+        },
         tags: ["Python", "FastAPI", "PostgreSQL", "AI"],
         link: "https://github.com/shamsiyevshamsiddin19/vibe-coding/tree/main/mustaqilbot",
         image: "assets/images/projects/mustaqilbot.jpg",
@@ -40,8 +56,12 @@ const PROJECTS = [
         accent: "#a78bfa",
     },
     {
-        title: "TATU LMS Bots",
-        desc: "A suite of Telegram bots built around a shared core, integrating with a university LMS to deliver course data and notifications to students.",
+        title: { en: "TATU LMS Bots", ru: "Боты TATU LMS", uz: "TATU LMS Botlari" },
+        desc: {
+            en: "A suite of Telegram bots built around a shared core, integrating with a university LMS to deliver course data and notifications to students.",
+            ru: "Набор Telegram-ботов на едином ядре, интегрированных с университетской LMS для доставки данных о курсах и уведомлений студентам.",
+            uz: "Umumiy yadro asosida qurilgan Telegram botlar to'plami bo'lib, universitet LMS tizimi bilan integratsiyalashib, talabalarga kurs ma'lumotlari va bildirishnomalarni yetkazadi.",
+        },
         tags: ["Python", "Telegram", "LMS"],
         link: "https://github.com/shamsiyevshamsiddin19/vibe-coding/tree/main/tatu-bots",
         image: "assets/images/projects/tatu-bots.jpg",
@@ -50,7 +70,11 @@ const PROJECTS = [
     },
     {
         title: "Subtitr Desktop",
-        desc: "Desktop application that produces dual subtitles offline, paired with a Chrome extension and a packaged Windows installer for one-click setup.",
+        desc: {
+            en: "Desktop application that produces dual subtitles offline, paired with a Chrome extension and a packaged Windows installer for one-click setup.",
+            ru: "Настольное приложение, создающее двойные субтитры офлайн, в паре с расширением для Chrome и установщиком для Windows для установки в один клик.",
+            uz: "Oflayn rejimda ikki qatlamli subtitr yaratadigan desktop ilova, Chrome kengaytmasi va bir marta bosish bilan o'rnatiladigan Windows o'rnatuvchisi bilan birga keladi.",
+        },
         tags: ["Python", "FFmpeg", "Desktop", "Chrome Ext"],
         link: "https://github.com/shamsiyevshamsiddin19/vibe-coding/tree/main/subtitr-desktop",
         image: "assets/images/projects/subtitr-desktop.jpg",
@@ -59,10 +83,14 @@ const PROJECTS = [
     },
     {
         title: "Quiz Bot",
-        desc: "Telegram quiz bot with a PostgreSQL-backed question bank and an admin panel for managing quizzes, questions and users.",
+        desc: {
+            en: "Telegram quiz bot with a PostgreSQL-backed question bank and an admin panel for managing quizzes, questions and users.",
+            ru: "Telegram-бот для викторин с базой вопросов на PostgreSQL и админ-панелью для управления викторинами, вопросами и пользователями.",
+            uz: "PostgreSQL asosidagi savollar bazasi va viktorinalar, savollar hamda foydalanuvchilarni boshqarish uchun admin panelli Telegram viktorina boti.",
+        },
         tags: ["Python", "aiogram", "PostgreSQL"],
         link: "https://t.me/tez_quizbot",
-        linkLabel: "Open Bot",
+        linkLabelKey: "open_bot",
         linkIcon: "ri-telegram-line",
         image: "assets/images/projects/quizbot.jpg",
         icon: "web",
@@ -73,9 +101,13 @@ const PROJECTS = [
 const CERTIFICATES = [
     {
         title: "Five Million AI Leaders",
-        issuer: "Gov. of Uzbekistan & UAE",
+        issuer: { en: "Gov. of Uzbekistan & UAE", ru: "Правительства Узбекистана и ОАЭ", uz: "O'zbekiston va BAA hukumati" },
         date: "Feb 2026",
-        desc: "Government initiative (Uzbekistan & UAE) training AI leaders in prompt engineering for AI systems.",
+        desc: {
+            en: "Government initiative (Uzbekistan & UAE) training AI leaders in prompt engineering for AI systems.",
+            ru: "Государственная инициатива (Узбекистан и ОАЭ) по подготовке лидеров в области ИИ и prompt-инжиниринга для ИИ-систем.",
+            uz: "AI tizimlari uchun prompt-injiniring bo'yicha AI yetakchilarini tayyorlaydigan davlat dasturi (O'zbekiston va BAA).",
+        },
         link: "",
         image: "assets/images/certificates/five-million-ai-leaders.jpg",
         accent: "#2f6bff",
@@ -84,7 +116,11 @@ const CERTIFICATES = [
         title: "Data Analysis with Python",
         issuer: "IBM",
         date: "May 2025",
-        desc: "Data analysis with Python — Pandas, NumPy, data cleaning and visualization.",
+        desc: {
+            en: "Data analysis with Python — Pandas, NumPy, data cleaning and visualization.",
+            ru: "Анализ данных на Python — Pandas, NumPy, очистка и визуализация данных.",
+            uz: "Python'da ma'lumotlarni tahlil qilish — Pandas, NumPy, ma'lumotlarni tozalash va vizualizatsiya.",
+        },
         link: "https://coursera.org/verify/0EGBV79CGC20",
         image: "assets/images/certificates/ibm-data-analysis-python.jpg",
         accent: "#1f70c1",
@@ -93,7 +129,11 @@ const CERTIFICATES = [
         title: "Introduction to Large Language Models",
         issuer: "Google Cloud",
         date: "May 2025",
-        desc: "How large language models work, their use cases and prompt design.",
+        desc: {
+            en: "How large language models work, their use cases and prompt design.",
+            ru: "Как работают большие языковые модели, их применение и разработка промптов.",
+            uz: "Katta til modellari qanday ishlashi, ularning qo'llanilishi va prompt yaratish.",
+        },
         link: "https://coursera.org/verify/64V4YNO2LTJF",
         image: "assets/images/certificates/gcp-large-language-models.jpg",
         accent: "#4285f4",
@@ -102,7 +142,11 @@ const CERTIFICATES = [
         title: "Introduction to Generative AI",
         issuer: "Google Cloud",
         date: "May 2025",
-        desc: "Foundations of generative AI — models, applications and Google Cloud tooling.",
+        desc: {
+            en: "Foundations of generative AI — models, applications and Google Cloud tooling.",
+            ru: "Основы генеративного ИИ — модели, применение и инструменты Google Cloud.",
+            uz: "Generativ AI asoslari — modellar, qo'llanilishi va Google Cloud vositalari.",
+        },
         link: "https://coursera.org/verify/N0A65Q2TO1AX",
         image: "assets/images/certificates/gcp-generative-ai.jpg",
         accent: "#4285f4",
@@ -111,7 +155,11 @@ const CERTIFICATES = [
         title: "Responsible AI: Applying AI Principles",
         issuer: "Google Cloud",
         date: "May 2025",
-        desc: "Applying Google's AI principles to build responsible AI systems.",
+        desc: {
+            en: "Applying Google's AI principles to build responsible AI systems.",
+            ru: "Применение принципов ИИ от Google для создания ответственных ИИ-систем.",
+            uz: "Mas'uliyatli AI tizimlarini yaratish uchun Google AI tamoyillarini qo'llash.",
+        },
         link: "https://coursera.org/verify/PIC628894E7X",
         image: "assets/images/certificates/gcp-responsible-ai-applying.jpg",
         accent: "#4285f4",
@@ -120,7 +168,11 @@ const CERTIFICATES = [
         title: "Introduction to Responsible AI",
         issuer: "Google Cloud",
         date: "May 2025",
-        desc: "Foundations of fair, transparent and responsible AI.",
+        desc: {
+            en: "Foundations of fair, transparent and responsible AI.",
+            ru: "Основы справедливого, прозрачного и ответственного ИИ.",
+            uz: "Adolatli, shaffof va mas'uliyatli AI asoslari.",
+        },
         link: "https://coursera.org/verify/VCFL16J43U4Z",
         image: "assets/images/certificates/gcp-intro-responsible-ai.jpg",
         accent: "#4285f4",
@@ -129,7 +181,11 @@ const CERTIFICATES = [
         title: "The Science of Well-Being",
         issuer: "Yale University",
         date: "Feb 2026",
-        desc: "Science-based habits for well-being, focus and productivity.",
+        desc: {
+            en: "Science-based habits for well-being, focus and productivity.",
+            ru: "Научно обоснованные привычки для благополучия, концентрации и продуктивности.",
+            uz: "Farovonlik, diqqat va samaradorlik uchun ilmiy asoslangan odatlar.",
+        },
         link: "https://coursera.org/verify/LA35MCYABAF8",
         image: "assets/images/certificates/yale-science-of-well-being.jpg",
         accent: "#5b8def",
@@ -138,7 +194,11 @@ const CERTIFICATES = [
         title: "Work Smarter, Not Harder: Time Management",
         issuer: "UC Irvine",
         date: "Feb 2026",
-        desc: "Time-management and productivity techniques for focused work.",
+        desc: {
+            en: "Time-management and productivity techniques for focused work.",
+            ru: "Техники тайм-менеджмента и продуктивности для сфокусированной работы.",
+            uz: "Diqqatli ish uchun vaqtni boshqarish va samaradorlik texnikalari.",
+        },
         link: "https://coursera.org/verify/51O1ENK8M9YK",
         image: "assets/images/certificates/uci-time-management.jpg",
         accent: "#2563eb",
@@ -147,7 +207,11 @@ const CERTIFICATES = [
         title: "Getting Started with Microsoft Excel",
         issuer: "Coursera Project",
         date: "Feb 2026",
-        desc: "Spreadsheet fundamentals — formulas, formatting and data basics.",
+        desc: {
+            en: "Spreadsheet fundamentals — formulas, formatting and data basics.",
+            ru: "Основы электронных таблиц — формулы, форматирование и работа с данными.",
+            uz: "Elektron jadvallar asoslari — formulalar, formatlash va ma'lumotlar bilan ishlash.",
+        },
         link: "https://coursera.org/verify/3A1G0HAN5Q5M",
         image: "assets/images/certificates/excel-getting-started.jpg",
         accent: "#21a366",
@@ -156,7 +220,11 @@ const CERTIFICATES = [
         title: "Build Your Business Brand Using Canva",
         issuer: "Coursera Project",
         date: "Feb 2026",
-        desc: "Building a business brand and visual identity with Canva.",
+        desc: {
+            en: "Building a business brand and visual identity with Canva.",
+            ru: "Создание бренда бизнеса и визуального стиля с помощью Canva.",
+            uz: "Canva yordamida biznes brendi va vizual uslubni yaratish.",
+        },
         link: "https://coursera.org/verify/I9Y6YOZMRQFY",
         image: "assets/images/certificates/canva-business-brand.jpg",
         accent: "#7d2ae8",
@@ -165,7 +233,11 @@ const CERTIFICATES = [
         title: "IQ Test Certificate (Score 118)",
         issuer: "myIQ",
         date: "May 2025",
-        desc: "Standardized cognitive assessment — measured IQ score of 118.",
+        desc: {
+            en: "Standardized cognitive assessment — measured IQ score of 118.",
+            ru: "Стандартизированная когнитивная оценка — измеренный IQ составил 118.",
+            uz: "Standartlashtirilgan kognitiv baholash — o'lchangan IQ ko'rsatkichi 118.",
+        },
         link: "",
         image: "assets/images/certificates/myiq-iq-test.jpg",
         accent: "#2563eb",
@@ -174,6 +246,27 @@ const CERTIFICATES = [
 
 // How many placeholder cards to show while CERTIFICATES is empty.
 const CERT_PLACEHOLDERS = 3;
+
+// UI strings used by the generated cards (project/certificate content itself
+// is localized via the {en,ru,uz} fields above).
+const UI = {
+    en: { source_code: "Source Code", open_bot: "Open Bot", view_credential: "View credential", view_certificate: "View certificate", coming_soon: "Coming soon", cert_title: "Certificate", cert_desc: "Professional certificates and achievements will appear here soon.", project_label: "Project", certificate_label: "Certificate" },
+    ru: { source_code: "Исходный код", open_bot: "Открыть бота", view_credential: "Посмотреть сертификат", view_certificate: "Посмотреть сертификат", coming_soon: "Скоро", cert_title: "Сертификат", cert_desc: "Профессиональные сертификаты и достижения скоро появятся здесь.", project_label: "Проект", certificate_label: "Сертификат" },
+    uz: { source_code: "Manba kodi", open_bot: "Botni ochish", view_credential: "Sertifikatni ko'rish", view_certificate: "Sertifikatni ko'rish", coming_soon: "Tez orada", cert_title: "Sertifikat", cert_desc: "Professional sertifikatlar va yutuqlar tez orada shu yerda paydo bo'ladi.", project_label: "Loyiha", certificate_label: "Sertifikat" },
+};
+
+function currentLang() {
+    const saved = localStorage.getItem("siteLang");
+    return (saved === "ru" || saved === "uz") ? saved : "en";
+}
+
+// A field is either a plain string (identical in every language — brand
+// names, technology names) or an {en,ru,uz} object.
+function pick(field, lang) {
+    if (field == null) return "";
+    if (typeof field === "string") return field;
+    return field[lang] || field.en || "";
+}
 
 // --- helpers -------------------------------------------------------------
 function esc(str) {
@@ -198,11 +291,11 @@ const ICONS = {
     star: () => `<path d="M0 -34 L10 -10 L36 -8 L16 8 L22 34 L0 20 L-22 34 L-16 8 L-36 -8 L-10 -10 Z"/>`,
 };
 
-function coverSVG(p, i) {
+function coverSVG(title, p, i) {
     const accent = p.accent || "#38bdf8";
     const label = esc((p.category || (p.tags || []).slice(0, 3).join(" · ")).toUpperCase());
     const draw = (ICONS[p.icon] || ICONS.star)(accent);
-    return `<svg class="cover-svg" viewBox="0 0 400 250" preserveAspectRatio="xMidYMid slice" role="img" aria-label="${esc(p.title)}">
+    return `<svg class="cover-svg" viewBox="0 0 400 250" preserveAspectRatio="xMidYMid slice" role="img" aria-label="${esc(title)}">
         <defs>
             <radialGradient id="cg${i}" cx="78%" cy="18%" r="75%">
                 <stop offset="0%" stop-color="${accent}" stop-opacity="0.30"/>
@@ -221,31 +314,45 @@ function coverSVG(p, i) {
     </svg>`;
 }
 
-function stackCard(p, i, total) {
+function stackCard(p, i, total, lang) {
+    const t = UI[lang];
+    const title = pick(p.title, lang);
+    const desc = pick(p.desc, lang);
     const cover = p.image
-        ? `<img src="${esc(p.image)}" alt="${esc(p.title)}" loading="eager" decoding="async">`
-        : coverSVG(p, i);
-    const tags = (p.tags || []).map((t) => `<span class="tag">${esc(t)}</span>`).join("");
+        ? `<img src="${esc(p.image)}" alt="${esc(title)}" loading="eager" decoding="async">`
+        : coverSVG(title, p, i);
+    const tags = (p.tags || []).map((tg) => `<span class="tag">${esc(tg)}</span>`).join("");
     const num = String(i + 1).padStart(2, "0");
     const tot = String(total).padStart(2, "0");
     const accent = p.accent || "#38bdf8";
     const linkIcon = p.linkIcon || "ri-github-line";
-    const linkLabel = p.linkLabel || "Source Code";
+    const linkLabel = p.linkLabelKey ? t[p.linkLabelKey] : t.source_code;
     return `<article class="pcard" style="--accent:${esc(accent)}">
         <div class="pcard-cover">${cover}</div>
         <div class="pcard-body">
             <div class="pcard-index">${num} / ${tot}</div>
-            <h3>${esc(p.title)}</h3>
-            <p>${esc(p.desc)}</p>
+            <h3>${esc(title)}</h3>
+            <p>${esc(desc)}</p>
             <div class="tags">${tags}</div>
             <a href="${esc(p.link)}" target="_blank" rel="noopener" class="project-link"><i class="${esc(linkIcon)}" aria-hidden="true"></i> ${esc(linkLabel)}</a>
         </div>
     </article>`;
 }
 
+// Strip any previously-bound listeners from a persistent element (arrow
+// buttons survive across re-renders when the language changes) by cloning
+// it and swapping it in — clones carry no JS listeners.
+function fresh(el) {
+    if (!el) return el;
+    const clone = el.cloneNode(true);
+    el.parentNode.replaceChild(clone, el);
+    return clone;
+}
+
 // Wire a two-sided "fan" deck: the front card sits centred & upright, the rest
 // fan out symmetrically to the left and right. Arrows, dots, clicking a side
 // card and swipe all cycle which card is in front. Reused by projects & certs.
+// Safe to call again (e.g. after a language switch re-renders the cards).
 function initFanDeck(deckId, stageId, dotsId, label) {
     const deck = document.getElementById(deckId);
     const stage = document.getElementById(stageId);
@@ -297,8 +404,11 @@ function initFanDeck(deckId, stageId, dotsId, label) {
     };
     const go = (step) => { front = (front + step + n) % n; render(); };
 
-    const prev = deck.querySelector(".pdeck-arrow.prev");
-    const next = deck.querySelector(".pdeck-arrow.next");
+    // Arrow buttons persist across re-renders (they live outside the stage
+    // that gets its innerHTML replaced), so clone-replace them first to
+    // guarantee we never stack up duplicate click listeners.
+    const prev = fresh(deck.querySelector(".pdeck-arrow.prev"));
+    const next = fresh(deck.querySelector(".pdeck-arrow.next"));
     if (prev) prev.addEventListener("click", () => go(-1));
     if (next) next.addEventListener("click", () => go(1));
     dots.forEach((dot, i) => dot.addEventListener("click", () => { front = i; render(); }));
@@ -320,74 +430,88 @@ function initFanDeck(deckId, stageId, dotsId, label) {
         });
     });
 
-    // Touch swipe on the stage
-    let sx = null;
-    stage.addEventListener("touchstart", (e) => { sx = e.changedTouches[0].screenX; }, { passive: true });
-    stage.addEventListener("touchend", (e) => {
-        if (sx == null) return;
-        const dx = e.changedTouches[0].screenX - sx;
-        if (Math.abs(dx) > 45) go(dx < 0 ? 1 : -1);
-        sx = null;
-    }, { passive: true });
+    // Touch swipe on the stage. The stage element itself persists across
+    // re-renders (only its children are replaced), so guard with a flag to
+    // avoid binding this listener more than once.
+    if (!stage.dataset.swipeBound) {
+        stage.dataset.swipeBound = "1";
+        let sx = null;
+        stage.addEventListener("touchstart", (e) => { sx = e.changedTouches[0].screenX; }, { passive: true });
+        stage.addEventListener("touchend", (e) => {
+            if (sx == null) return;
+            const dx = e.changedTouches[0].screenX - sx;
+            if (Math.abs(dx) > 45) go(dx < 0 ? 1 : -1);
+            sx = null;
+        }, { passive: true });
+    }
 
     // Only one card: nothing to navigate
-    if (n < 2) {
-        const controls = deck.querySelector(".pdeck-controls");
-        if (controls) controls.style.display = "none";
-    }
+    const controls = deck.querySelector(".pdeck-controls");
+    if (controls) controls.style.display = n < 2 ? "none" : "";
 
     render();
 }
 
-function certFanCard(c, i, total) {
+function certFanCard(c, i, total, lang) {
+    const t = UI[lang];
     const accent = (c && c.accent) || "#fbbf24";
     const num = String(i + 1).padStart(2, "0");
     const tot = String(total).padStart(2, "0");
     if (!c) {
-        const cover = coverSVG({ title: "Certificate", icon: "star", accent, tags: ["Coming soon"] }, "c" + i);
+        const cover = coverSVG(t.cert_title, { icon: "star", accent, tags: [t.coming_soon] }, "c" + i);
         return `<article class="pcard" style="--accent:${accent}" aria-disabled="true">
             <div class="pcard-cover">${cover}</div>
             <div class="pcard-body">
                 <div class="pcard-index">${num} / ${tot}</div>
-                <h3>Certificate</h3>
-                <p>Professional certificates and achievements will appear here soon.</p>
-                <span class="project-link" style="opacity:.65"><i class="ri-time-line" aria-hidden="true"></i> Coming soon</span>
+                <h3>${esc(t.cert_title)}</h3>
+                <p>${esc(t.cert_desc)}</p>
+                <span class="project-link" style="opacity:.65"><i class="ri-time-line" aria-hidden="true"></i> ${esc(t.coming_soon)}</span>
             </div>
         </article>`;
     }
+    const title = pick(c.title, lang);
+    const issuer = pick(c.issuer, lang);
+    const desc = pick(c.desc, lang);
     const cover = c.image
-        ? `<img src="${esc(c.image)}" alt="${esc(c.title)}" loading="${i === 0 ? "eager" : "lazy"}" decoding="async" style="object-position:top;background:#fff">`
-        : coverSVG({ title: c.title, icon: c.icon || "star", accent, category: c.issuer }, "c" + i);
+        ? `<img src="${esc(c.image)}" alt="${esc(title)}" loading="${i === 0 ? "eager" : "lazy"}" decoding="async" style="object-position:top;background:#fff">`
+        : coverSVG(title, { icon: c.icon || "star", accent, category: issuer }, "c" + i);
     const cta = c.link
-        ? `<a class="project-link" href="${esc(c.link)}" target="_blank" rel="noopener"><i class="ri-external-link-line" aria-hidden="true"></i> View credential</a>`
+        ? `<a class="project-link" href="${esc(c.link)}" target="_blank" rel="noopener"><i class="ri-external-link-line" aria-hidden="true"></i> ${esc(t.view_credential)}</a>`
         : c.image
-        ? `<a class="project-link" href="${esc(c.image)}" target="_blank" rel="noopener"><i class="ri-image-line" aria-hidden="true"></i> View certificate</a>`
-        : `<span class="project-link">${esc(c.issuer || "")}</span>`;
+        ? `<a class="project-link" href="${esc(c.image)}" target="_blank" rel="noopener"><i class="ri-image-line" aria-hidden="true"></i> ${esc(t.view_certificate)}</a>`
+        : `<span class="project-link">${esc(issuer)}</span>`;
     return `<article class="pcard" style="--accent:${accent}">
         <div class="pcard-cover">${cover}</div>
         <div class="pcard-body">
-            <div class="pcard-index">${esc(c.date || "")}${c.issuer ? " · " + esc(c.issuer) : ""}</div>
-            <h3>${esc(c.title)}</h3>
-            <p>${esc(c.desc || "")}</p>
+            <div class="pcard-index">${esc(c.date || "")}${issuer ? " · " + esc(issuer) : ""}</div>
+            <h3>${esc(title)}</h3>
+            <p>${esc(desc)}</p>
             ${cta}
         </div>
     </article>`;
 }
 
-// --- render (runs immediately, grids already exist above this script) ----
-(function render() {
+// --- render ----------------------------------------------------------------
+// Exposed globally so i18n.js can call it again whenever the language
+// switches (cards are generated from data, not static [data-i18n] text).
+function renderShowcase(lang) {
+    lang = lang || currentLang();
+    const t = UI[lang];
     const projectStage = document.getElementById("projectGrid");
     if (projectStage) {
-        projectStage.innerHTML = PROJECTS.map((p, i) => stackCard(p, i, PROJECTS.length)).join("");
-        initFanDeck("projectDeck", "projectGrid", "projectDots", "Project");
+        projectStage.innerHTML = PROJECTS.map((p, i) => stackCard(p, i, PROJECTS.length, lang)).join("");
+        initFanDeck("projectDeck", "projectGrid", "projectDots", t.project_label);
     }
     const certStage = document.getElementById("certGrid");
     if (certStage) {
         const total = CERTIFICATES.length || CERT_PLACEHOLDERS;
         const items = CERTIFICATES.length
-            ? CERTIFICATES.map((c, i) => certFanCard(c, i, total))
-            : Array.from({ length: CERT_PLACEHOLDERS }, (_, i) => certFanCard(null, i, total));
+            ? CERTIFICATES.map((c, i) => certFanCard(c, i, total, lang))
+            : Array.from({ length: CERT_PLACEHOLDERS }, (_, i) => certFanCard(null, i, total, lang));
         certStage.innerHTML = items.join("");
-        initFanDeck("certDeck", "certGrid", "certDots", "Certificate");
+        initFanDeck("certDeck", "certGrid", "certDots", t.certificate_label);
     }
-})();
+}
+window.renderShowcase = renderShowcase;
+
+renderShowcase(currentLang());
