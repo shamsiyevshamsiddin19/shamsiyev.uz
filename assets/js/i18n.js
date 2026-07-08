@@ -135,6 +135,9 @@ const I18N = {
         // Project/certificate cards are rendered by showcase.js from data
         // objects, not static [data-i18n] text, so re-render them too.
         if (typeof window.renderShowcase === "function") window.renderShowcase(lang);
+        // The hero name can render wider in another script (e.g. Cyrillic
+        // capitals) at the same font-size, so re-fit it to the container.
+        if (typeof window.fitHeroTitle === "function") window.fitHeroTitle();
     }
 
     document.addEventListener("DOMContentLoaded", () => {

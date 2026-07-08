@@ -310,3 +310,34 @@ document.addEventListener('DOMContentLoaded', () => {
     var y = document.getElementById('footerYear');
     if (y) y.textContent = new Date().getFullYear();
 })();
+
+// === Hero title: shrink to fit so any language/script never overflows ===
+// The name is shown at a huge viewport-relative size; different scripts
+// (e.g. Cyrillic capitals) can render wider than Latin at the same
+// font-size, so measure the actual rendered width and scale down if needed.
+(function () {
+    const el = document.querySelector('.main-title');
+    if (!el) return;
+
+    function fit() {
+        el.style.fontSize = ''; // reset to the CSS-defined (vw-based) size first
+        const container = el.closest('.hero-content') || el.parentElement;
+        if (!container) return;
+        const maxWidth = container.clientWidth;
+        const natural = parseFloat(getComputedStyle(el).fontSize);
+        const width = el.scrollWidth;
+        if (width > maxWidth && width > 0 && natural > 0) {
+            el.style.fontSize = (natural * (maxWidth / width)) + 'px';
+        }
+    }
+
+    window.fitHeroTitle = fit;
+    document.addEventListener('DOMContentLoaded', fit);
+    window.addEventListener('load', fit);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(fit, 120);
+    });
+})();
