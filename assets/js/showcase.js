@@ -26,6 +26,7 @@ const PROJECTS = [
         desc: "AI-powered Telegram bot that generates dual-layer subtitles with a floating vocabulary mode. Supports YouTube, tariffs & payments, a background worker queue and a mini-app.",
         tags: ["Python", "aiogram", "PostgreSQL", "AI"],
         link: "https://github.com/shamsiyevshamsiddin19/vibe-coding/tree/main/subtitr-bot",
+        image: "assets/images/projects/subtitr-bot.jpg",
         icon: "subtitle",
         accent: "#38bdf8",
     },
@@ -34,6 +35,7 @@ const PROJECTS = [
         desc: "Telegram bot for students that generates independent-study work with AI, handles payments and integrates with a web bridge. Backend built on Python with a PostgreSQL database.",
         tags: ["Python", "FastAPI", "PostgreSQL", "AI"],
         link: "https://github.com/shamsiyevshamsiddin19/vibe-coding/tree/main/mustaqilbot",
+        image: "assets/images/projects/mustaqilbot.jpg",
         icon: "cap",
         accent: "#a78bfa",
     },
@@ -42,6 +44,7 @@ const PROJECTS = [
         desc: "A suite of Telegram bots built around a shared core, integrating with a university LMS to deliver course data and notifications to students.",
         tags: ["Python", "Telegram", "LMS"],
         link: "https://github.com/shamsiyevshamsiddin19/vibe-coding/tree/main/tatu-bots",
+        image: "assets/images/projects/tatu-bots.jpg",
         icon: "robot",
         accent: "#fbbf24",
     },
@@ -50,6 +53,7 @@ const PROJECTS = [
         desc: "Desktop application that produces dual subtitles offline, paired with a Chrome extension and a packaged Windows installer for one-click setup.",
         tags: ["Python", "FFmpeg", "Desktop", "Chrome Ext"],
         link: "https://github.com/shamsiyevshamsiddin19/vibe-coding/tree/main/subtitr-desktop",
+        image: "assets/images/projects/subtitr-desktop.jpg",
         icon: "desktop",
         accent: "#34d399",
     },
@@ -60,6 +64,7 @@ const PROJECTS = [
         link: "https://t.me/tez_quizbot",
         linkLabel: "Open Bot",
         linkIcon: "ri-telegram-line",
+        image: "assets/images/projects/quizbot.jpg",
         icon: "web",
         accent: "#f472b6",
     },
@@ -218,7 +223,7 @@ function coverSVG(p, i) {
 
 function stackCard(p, i, total) {
     const cover = p.image
-        ? `<img src="${esc(p.image)}" alt="${esc(p.title)}" loading="lazy">`
+        ? `<img src="${esc(p.image)}" alt="${esc(p.title)}" loading="eager" decoding="async">`
         : coverSVG(p, i);
     const tags = (p.tags || []).map((t) => `<span class="tag">${esc(t)}</span>`).join("");
     const num = String(i + 1).padStart(2, "0");
