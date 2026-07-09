@@ -1409,6 +1409,44 @@ body.cursor-active .cursor-glow { opacity: 1; }
     .cursor-glow { display: none; }
 }
 
+/* --- Scroll progress bar --- */
+.scroll-progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px; width: 100%;
+    transform-origin: left center;
+    transform: scaleX(var(--sp, 0));
+    background: linear-gradient(90deg, #38bdf8, #a78bfa, #f472b6);
+    z-index: 250;
+    pointer-events: none;
+}
+@media (prefers-reduced-motion: reduce) { .scroll-progress { display: none; } }
+
+/* --- 3D tilt (JS adds .tilt to cards) --- */
+.tilt {
+    transform-style: preserve-3d;
+    transition: transform 0.25s cubic-bezier(0.22, 0.61, 0.36, 1), box-shadow 0.25s ease;
+    will-change: transform;
+}
+
+/* --- Cursor spotlight sheen inside cards (JS adds .spot) --- */
+.spot { position: relative; }
+.spot::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(220px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.10), transparent 46%);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+    z-index: 1;
+}
+.spot:hover::after { opacity: 1; }
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+    .spot::after { display: none; }
+}
+
 /* --- Nav: animated underline --- */
 .nav a { position: relative; }
 .nav a::after {

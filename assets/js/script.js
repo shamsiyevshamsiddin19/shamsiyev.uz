@@ -362,3 +362,58 @@ document.addEventListener('DOMContentLoaded', () => {
     }, { passive: true });
     document.addEventListener('mouseleave', () => document.body.classList.remove('cursor-active'));
 })();
+
+// === Premium pointer interactions: scroll progress, 3D tilt + spotlight, magnetic ===
+(function () {
+    // Scroll progress bar (always on, cheap)
+    const bar = document.querySelector('.scroll-progress');
+    if (bar) {
+        let queued = false;
+        const upd = () => {
+            queued = false;
+            const h = document.documentElement.scrollHeight - window.innerHeight;
+            bar.style.setProperty('--sp', h > 0 ? (window.scrollY / h).toFixed(4) : '0');
+        };
+        window.addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(upd); } }, { passive: true });
+        window.addEventListener('resize', upd, { passive: true });
+        upd();
+    }
+
+    // Pointer-driven effects only on precise pointers, and never with reduced motion
+    if (!window.matchMedia) return;
+    if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    // 3D tilt + cursor spotlight on grid cards (not the transformed deck cards)
+    document.querySelectorAll('.skill-card, .network-grid .network-card').forEach((el) => {
+        el.classList.add('tilt', 'spot');
+        let raf = false, ev = null;
+        el.addEventListener('mousemove', (e) => {
+            ev = e; if (raf) return; raf = true;
+            requestAnimationFrame(() => {
+                raf = false;
+                const r = el.getBoundingClientRect();
+                const px = (ev.clientX - r.left) / r.width;
+                const py = (ev.clientY - r.top) / r.height;
+                const rx = (0.5 - py) * 9;
+                const ry = (px - 0.5) * 11;
+                el.style.transform = `perspective(720px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) translateY(-6px)`;
+                el.style.setProperty('--mx', (px * 100).toFixed(1) + '%');
+                el.style.setProperty('--my', (py * 100).toFixed(1) + '%');
+            });
+        });
+        el.addEventListener('mouseleave', () => { el.style.transform = ''; });
+    });
+
+    // Magnetic hero buttons
+    document.querySelectorAll('.hero .btn').forEach((btn) => {
+        btn.style.transition = 'transform 0.2s cubic-bezier(0.22, 0.61, 0.36, 1)';
+        btn.addEventListener('mousemove', (e) => {
+            const r = btn.getBoundingClientRect();
+            const mx = e.clientX - r.left - r.width / 2;
+            const my = e.clientY - r.top - r.height / 2;
+            btn.style.transform = `translate(${(mx * 0.25).toFixed(1)}px, ${(my * 0.4).toFixed(1)}px)`;
+        });
+        btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
+    });
+})();
