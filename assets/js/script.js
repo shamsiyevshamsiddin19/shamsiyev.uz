@@ -341,3 +341,24 @@ document.addEventListener('DOMContentLoaded', () => {
         resizeTimer = setTimeout(fit, 120);
     });
 })();
+
+// === Cursor spotlight glow (desktop, motion-safe) ===
+(function () {
+    if (!window.matchMedia) return;
+    if (matchMedia('(hover: none), (pointer: coarse)').matches) return;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const glow = document.querySelector('.cursor-glow');
+    if (!glow) return;
+    let x = 0, y = 0, queued = false;
+    const apply = () => {
+        glow.style.setProperty('--cx', x + 'px');
+        glow.style.setProperty('--cy', y + 'px');
+        queued = false;
+    };
+    window.addEventListener('mousemove', (e) => {
+        x = e.clientX; y = e.clientY;
+        document.body.classList.add('cursor-active');
+        if (!queued) { queued = true; requestAnimationFrame(apply); }
+    }, { passive: true });
+    document.addEventListener('mouseleave', () => document.body.classList.remove('cursor-active'));
+})();

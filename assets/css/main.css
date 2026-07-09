@@ -1336,14 +1336,77 @@ html { scroll-padding-top: 120px; }
     50%      { opacity: 1;    transform: translate(-50%, -50%) scale(1.18); }
 }
 
-/* Subtle gradient sheen on the big title (supported browsers only) */
+/* Gradient sheen on the big title, with a slow light sweep (supported browsers only) */
 @supports ((-webkit-background-clip: text) or (background-clip: text)) {
     .main-title {
-        background: linear-gradient(180deg, #ffffff 0%, #c9c9c9 100%);
+        background: linear-gradient(100deg, #ffffff 0%, #ffffff 34%, #cfe8ff 50%, #ffffff 66%, #c9c9c9 100%);
+        background-size: 220% 100%;
         -webkit-background-clip: text;
         background-clip: text;
         -webkit-text-fill-color: transparent;
     }
+    @media (prefers-reduced-motion: no-preference) {
+        .main-title { animation: titleShimmer 7s ease-in-out infinite; }
+    }
+}
+@keyframes titleShimmer {
+    0%, 100% { background-position: 0% 0; }
+    50%      { background-position: 100% 0; }
+}
+
+/* --- Hero aurora: slow drifting colour glows behind the name --- */
+.hero-aurora { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+.hero-aurora::before,
+.hero-aurora::after {
+    content: '';
+    position: absolute;
+    width: 48vw; height: 48vw;
+    max-width: 620px; max-height: 620px;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.4;
+    will-change: transform;
+}
+.hero-aurora::before {
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.55), transparent 62%);
+    top: 4%; left: 10%;
+}
+.hero-aurora::after {
+    background: radial-gradient(circle, rgba(167, 139, 250, 0.5), transparent 62%);
+    bottom: 2%; right: 8%;
+}
+@media (prefers-reduced-motion: no-preference) {
+    .hero-aurora::before { animation: auroraA 17s ease-in-out infinite alternate; }
+    .hero-aurora::after  { animation: auroraB 21s ease-in-out infinite alternate; }
+}
+@keyframes auroraA {
+    from { transform: translate(-8%, -6%) scale(1); }
+    to   { transform: translate(16%, 12%) scale(1.28); }
+}
+@keyframes auroraB {
+    from { transform: translate(8%, 6%) scale(1.12); }
+    to   { transform: translate(-14%, -10%) scale(0.9); }
+}
+
+/* --- Cursor spotlight: a soft light that follows the pointer (desktop only) --- */
+.cursor-glow {
+    position: fixed;
+    top: 0; left: 0;
+    width: 520px; height: 520px;
+    margin: -260px 0 0 -260px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(130, 175, 255, 0.13), transparent 60%);
+    pointer-events: none;
+    z-index: 3;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    transform: translate3d(var(--cx, -9999px), var(--cy, -9999px), 0);
+    will-change: transform;
+    mix-blend-mode: screen;
+}
+body.cursor-active .cursor-glow { opacity: 1; }
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+    .cursor-glow { display: none; }
 }
 
 /* --- Nav: animated underline --- */
