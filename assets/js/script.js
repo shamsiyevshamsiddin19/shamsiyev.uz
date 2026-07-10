@@ -417,3 +417,18 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
     });
 })();
+
+// === Preloader: hide as soon as the page is ready (JS removes it entirely) ===
+(function () {
+    const p = document.querySelector('.preloader');
+    if (!p) return;
+    let gone = false;
+    const hide = () => {
+        if (gone) return; gone = true;
+        p.classList.add('done');
+        setTimeout(() => { if (p.parentNode) p.parentNode.removeChild(p); }, 650);
+    };
+    if (document.readyState === 'complete') { setTimeout(hide, 300); }
+    else { window.addEventListener('load', () => setTimeout(hide, 300)); }
+    setTimeout(hide, 3500); // absolute safety — never let it linger
+})();
