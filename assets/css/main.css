@@ -1346,7 +1346,13 @@ html { scroll-padding-top: 120px; }
         -webkit-text-fill-color: transparent;
     }
     @media (prefers-reduced-motion: no-preference) {
-        .main-title { animation: titleShimmer 7s ease-in-out infinite; }
+        /* Keep the hero entrance (heroUp reveals opacity 0 -> 1) AND add the
+           shimmer. A lone `animation` here would clobber heroUp and leave the
+           name stuck at opacity:0 (invisible). */
+        .main-title {
+            animation: heroUp 1s cubic-bezier(0.16, 1, 0.3, 1) 0.35s forwards,
+                       titleShimmer 7s ease-in-out 1.4s infinite;
+        }
     }
 }
 @keyframes titleShimmer {
