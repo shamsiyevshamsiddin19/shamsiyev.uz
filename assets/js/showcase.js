@@ -105,6 +105,7 @@ const PROJECTS = [
         },
         tags: ["Next.js", "TypeScript", "Prisma", "PostgreSQL"],
         link: "https://github.com/shamsiyevshamsiddin19/vibe-coding/tree/main/wstore",
+        image: "assets/images/projects/wstore.jpg",
         icon: "web",
         accent: "#10b981",
     },
