@@ -96,6 +96,54 @@ const PROJECTS = [
         icon: "web",
         accent: "#f472b6",
     },
+    {
+        title: "wstore",
+        desc: {
+            en: "Digital-products marketplace (wstore.uz) for selling code projects, bots and websites. Built with Next.js 15, Prisma and PostgreSQL, with Google auth, Payme/Click payments and admin & seller dashboards.",
+            ru: "Маркетплейс цифровых товаров (wstore.uz) для продажи кодовых проектов, ботов и сайтов. Построен на Next.js 15, Prisma и PostgreSQL: вход через Google, оплата Payme/Click, панели администратора и продавца.",
+            uz: "Kod loyihalari, botlar va saytlarni sotish uchun raqamli mahsulotlar marketpleysi (wstore.uz). Next.js 15, Prisma va PostgreSQL asosida: Google orqali kirish, Payme/Click to'lovlari, admin va sotuvchi panellari.",
+        },
+        tags: ["Next.js", "TypeScript", "Prisma", "PostgreSQL"],
+        link: "https://github.com/shamsiyevshamsiddin19/vibe-coding/tree/main/wstore",
+        icon: "web",
+        accent: "#10b981",
+    },
+    {
+        title: { en: "Document Convertor Bot", ru: "Бот конвертации документов", uz: "Hujjat Konvertor Bot" },
+        desc: {
+            en: "Telegram bot that converts documents: image/file → PDF/ZIP, Office → PDF, PDF ↔ DOCX, OCR, plus merge, split and watermark. Heavy conversions run off the event loop; the admin panel lives on the web.",
+            ru: "Telegram-бот для конвертации документов: изображение/файл → PDF/ZIP, Office → PDF, PDF ↔ DOCX, OCR, а также объединение, разделение и водяной знак. Тяжёлые конвертации вынесены из event-loop; админ-панель — в вебе.",
+            uz: "Hujjatlarni konvertatsiya qiluvchi Telegram bot: rasm/fayl → PDF/ZIP, Office → PDF, PDF ↔ DOCX, OCR, hamda birlashtirish, qirqish va watermark. Og'ir konvertatsiyalar event-loop'dan tashqarida; admin panel saytda.",
+        },
+        tags: ["Python", "aiogram", "PostgreSQL", "OCR"],
+        link: "https://github.com/shamsiyevshamsiddin19/vibe-coding/tree/main/document-convertor",
+        icon: "api",
+        accent: "#f97316",
+    },
+    {
+        title: "Kino Bot",
+        desc: {
+            en: "Telegram bot for searching and downloading movies and series, with inline search and a web admin panel. Migrated from PHP to Python (aiogram 3) with PostgreSQL.",
+            ru: "Telegram-бот для поиска и скачивания фильмов и сериалов с inline-поиском и веб-админкой. Перенесён с PHP на Python (aiogram 3) с PostgreSQL.",
+            uz: "Kino va seriallarni qidirish va yuklab olish uchun Telegram bot — inline qidiruv va web-admin panel bilan. PHP'dan Python'ga (aiogram 3) PostgreSQL bilan ko'chirilgan.",
+        },
+        tags: ["Python", "aiogram", "PostgreSQL"],
+        link: "https://github.com/shamsiyevshamsiddin19/vibe-coding/tree/main/kino-bot",
+        icon: "robot",
+        accent: "#ef4444",
+    },
+    {
+        title: { en: "Session Prep Bot", ru: "Бот подготовки к сессии", uz: "Sessiya Tayyorgarlik Bot" },
+        desc: {
+            en: "Telegram bot selling exam-session study materials, with Click payments, a referral system and HWID-based activation keys. Python + PostgreSQL, migrated from a PHP bot.",
+            ru: "Telegram-бот по продаже материалов для подготовки к сессии: оплата Click, реферальная система и ключи активации на основе HWID. Python + PostgreSQL, перенесён с PHP-бота.",
+            uz: "Sessiyaga tayyorgarlik materiallarini sotuvchi Telegram bot — Click to'lovlari, referal tizimi va HWID asosidagi faollashtirish kalitlari bilan. Python + PostgreSQL, PHP botdan ko'chirilgan.",
+        },
+        tags: ["Python", "aiogram", "PostgreSQL"],
+        link: "https://github.com/shamsiyevshamsiddin19/vibe-coding/tree/main/sessiyabot",
+        icon: "database",
+        accent: "#06b6d4",
+    },
 ];
 
 const CERTIFICATES = [
