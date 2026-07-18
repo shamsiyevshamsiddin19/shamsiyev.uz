@@ -26,9 +26,13 @@ export async function onRequestPost(context) {
     const org = cf.asOrganization || "";
 
     // Forward in the background so the visitor's request returns instantly.
+    // DIQQAT: vaqtincha tashxis loglari qo'shildi (console.log/error) —
+    // Cloudflare Dashboard > Workers & Pages > shamsiyev-uz > Logs (real-time)
+    // orqali ko'rinadi. Muammo topilgach olib tashlanadi.
+    console.log("track: onRequestPost keldi, upstream=", upstream);
     context.waitUntil((async () => {
         try {
-            await fetch(upstream + "/site/track", {
+            const resp = await fetch(upstream + "/site/track", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -42,7 +46,10 @@ export async function onRequestPost(context) {
                 },
                 body,
             });
-        } catch (_) {}
+            console.log("track: upstream javobi", resp.status);
+        } catch (e) {
+            console.error("track: upstream fetch xatosi", upstream, String(e), e && e.stack);
+        }
     })());
 
     return new Response(null, { status: 204 });
