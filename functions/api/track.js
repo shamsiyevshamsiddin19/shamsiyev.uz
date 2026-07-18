@@ -4,12 +4,19 @@
 // and forwards it to the analytics server. If the server's address ever
 // changes, update ONE Pages env var (TRACK_UPSTREAM) — the site never changes.
 //
-// Upstream is the Hetzner server's static IP (plain HTTP — this fetch runs
-// server-to-server on Cloudflare's edge, not in the visitor's browser, so
-// there's no mixed-content/CORS restriction). nginx's default site (any
+// Upstream is a DNS-only (grey-cloud, NOT Cloudflare-proxied) subdomain
+// pointing at the Hetzner server's IP. Using the bare IP directly triggers
+// Cloudflare error 1003 "Direct IP Access Not Allowed" — because that IP is
+// already a protected origin behind another Cloudflare-proxied domain
+// (wstore.uz) on this same server, so Cloudflare's edge blocks Workers/Pages
+// Functions from fetching it directly. A grey-cloud subdomain sidesteps
+// that: Cloudflare only resolves the DNS record and doesn't proxy/protect
+// it, so the fetch reaches the server normally. Plain HTTP is fine — this
+// runs server-to-server on Cloudflare's edge, not in the visitor's browser,
+// so there's no mixed-content/CORS restriction. nginx's default site (any
 // Host header) proxies /site/track to subtitr-bot's own admin app, which
 // records the visit into PostgreSQL (see web/site_analytics.py).
-const DEFAULT_UPSTREAM = "http://178.104.25.218";
+const DEFAULT_UPSTREAM = "http://track.shamsiyev.uz";
 
 export async function onRequestPost(context) {
     const { request, env } = context;
