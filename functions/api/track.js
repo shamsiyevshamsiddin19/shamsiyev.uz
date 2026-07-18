@@ -25,32 +25,50 @@ export async function onRequestPost(context) {
     const region = cf.region || "";
     const org = cf.asOrganization || "";
 
-    // Forward in the background so the visitor's request returns instantly.
-    // DIQQAT: vaqtincha tashxis loglari qo'shildi (console.log/error) —
-    // Cloudflare Dashboard > Workers & Pages > shamsiyev-uz > Logs (real-time)
-    // orqali ko'rinadi. Muammo topilgach olib tashlanadi.
-    console.log("track: onRequestPost keldi, upstream=", upstream);
-    context.waitUntil((async () => {
+    const doForward = () => fetch(upstream + "/site/track", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "User-Agent": request.headers.get("User-Agent") || "",
+            "X-Visitor-Ip": ip,
+            "X-Visitor-Country": country,
+            "X-Visitor-City": city,
+            "X-Visitor-Region": region,
+            "X-Visitor-Org": org,
+            "Origin": "https://shamsiyev.uz",
+        },
+        body,
+    });
+
+    // DIQQAT — VAQTINCHA TASHXIS REJIMI: ?debug=1 bilan chaqirilsa, fetch
+    // natijasini (yoki xatosini) TO'G'RIDAN-TO'G'RI javob tanasida qaytaradi
+    // — Cloudflare panel loglariga qaramasdan, oddiy curl bilan sababni
+    // ko'rish uchun. Oddiy (debug'siz) so'rovlar hamon tezkor 204 oladi,
+    // xulq-atvor o'zgarmaydi. Muammo topilgach bu blok olib tashlanadi.
+    const url = new URL(request.url);
+    if (url.searchParams.get("debug") === "1") {
         try {
-            const resp = await fetch(upstream + "/site/track", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "User-Agent": request.headers.get("User-Agent") || "",
-                    "X-Visitor-Ip": ip,
-                    "X-Visitor-Country": country,
-                    "X-Visitor-City": city,
-                    "X-Visitor-Region": region,
-                    "X-Visitor-Org": org,
-                    "Origin": "https://shamsiyev.uz",
-                },
-                body,
-            });
-            console.log("track: upstream javobi", resp.status);
+            const resp = await doForward();
+            const text = await resp.text();
+            return new Response(JSON.stringify({
+                ok: true,
+                upstream,
+                status: resp.status,
+                bodyPreview: text.slice(0, 200),
+            }), { status: 200, headers: { "Content-Type": "application/json" } });
         } catch (e) {
-            console.error("track: upstream fetch xatosi", upstream, String(e), e && e.stack);
+            return new Response(JSON.stringify({
+                ok: false,
+                upstream,
+                error: String(e),
+                name: e && e.name,
+                stack: e && e.stack,
+            }), { status: 200, headers: { "Content-Type": "application/json" } });
         }
-    })());
+    }
+
+    // Forward in the background so the visitor's request returns instantly.
+    context.waitUntil(doForward().catch(() => {}));
 
     return new Response(null, { status: 204 });
 }
