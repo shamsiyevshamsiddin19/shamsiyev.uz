@@ -221,3 +221,85 @@
 .lang-btn.active {
     color: #fff;
 }
+
+/* ============================================================
+   PREMIUM LAYER — tokenised polish for the document page.
+   Design tokens are inherited from main.css (loaded first).
+   Print resets keep the "Download as PDF" output clean.
+   ============================================================ */
+.doc-container {
+    max-width: 860px;
+    margin: 120px auto 90px;
+    padding: 56px 60px;
+    background: linear-gradient(180deg, var(--surface), var(--bg-2));
+    border: 1px solid var(--border);
+    border-radius: 22px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), var(--shadow);
+}
+.doc-text { color: var(--text-2); }
+.doc-container > .doc-text:first-child,
+.doc-header h1 {
+    background: var(--grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.5px;
+}
+.doc-section h2 {
+    border-bottom: none;
+    position: relative;
+    padding-bottom: 12px;
+    color: var(--text);
+}
+.doc-section h2::after {
+    content: '';
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 46px; height: 3px;
+    border-radius: 3px;
+    background: var(--grad);
+}
+.doc-item h3 { color: var(--text); }
+.doc-item .date { color: var(--accent); opacity: 0.9; }
+.doc-list li::before { color: var(--accent); }
+.skill-badge {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    border-radius: var(--r-pill);
+    color: var(--text-2);
+    transition: border-color 0.3s var(--ease), color 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.skill-badge:hover { border-color: var(--accent); color: var(--text); transform: translateY(-2px); }
+.lang-item {
+    background: linear-gradient(180deg, var(--surface-2), var(--surface));
+    border: 1px solid var(--border);
+    border-radius: var(--r-pill);
+}
+.back-btn:hover, .contact-item:hover { color: var(--accent); }
+.lang-btn:hover { color: var(--text); }
+.lang-btn.active { color: var(--accent); }
+
+@media (max-width: 768px) {
+    .doc-container { margin: 100px 16px 60px; padding: 32px 22px; border-radius: 18px; }
+}
+
+@media print {
+    .doc-container {
+        background: #fff !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        max-width: none !important;
+    }
+    .doc-container > .doc-text:first-child,
+    .doc-header h1 {
+        -webkit-text-fill-color: #000 !important;
+        color: #000 !important;
+        background: none !important;
+    }
+    .doc-section h2 { color: #000 !important; }
+    .doc-section h2::after { background: #000 !important; }
+    .skill-badge, .lang-item { background: #fff !important; border-color: #bbb !important; color: #000 !important; }
+    .doc-item .date, .doc-list li::before { color: #000 !important; }
+}

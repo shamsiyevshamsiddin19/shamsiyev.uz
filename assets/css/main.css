@@ -1,3 +1,50 @@
+/* ============================================================
+   DESIGN TOKENS — single source of truth for the premium theme.
+   Component rules below reference these; the PREMIUM LAYER at the
+   very end of this file layers the refined look on top.
+   ============================================================ */
+:root {
+    /* Surfaces */
+    --bg: #0a0a0c;
+    --bg-2: #0e0e12;
+    --surface: #131318;
+    --surface-2: #17171d;
+    --surface-3: #1d1d24;
+    --border: rgba(255, 255, 255, 0.08);
+    --border-2: rgba(255, 255, 255, 0.15);
+
+    /* Text */
+    --text: #f4f5f7;
+    --text-2: #9a9ba4;
+    --text-3: #6b6c75;
+
+    /* Accent + gradient */
+    --accent: #58c7ff;
+    --accent-2: #a78bfa;
+    --accent-3: #f472b6;
+    --grad: linear-gradient(100deg, var(--accent), var(--accent-2) 55%, var(--accent-3));
+
+    /* Radius */
+    --r-sm: 10px;
+    --r: 14px;
+    --r-lg: 20px;
+    --r-pill: 50px;
+
+    /* Shadow / glow */
+    --shadow-sm: 0 4px 16px rgba(0, 0, 0, 0.4);
+    --shadow: 0 14px 34px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 26px 60px rgba(0, 0, 0, 0.6);
+
+    /* Motion */
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --dur: 0.4s;
+
+    /* Fluid type scale */
+    --fs-eyebrow: 11px;
+    --fs-h2: clamp(1.75rem, 1.1rem + 2.4vw, 2.9rem);
+    --fs-h3: clamp(1.15rem, 1rem + 0.6vw, 1.4rem);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -7,14 +54,21 @@
 }
 
 body {
-    background-color: #0c0c0c;
-    color: #ffffff;
+    background-color: var(--bg);
+    background-image:
+        radial-gradient(1200px 720px at 80% -10%, rgba(88, 199, 255, 0.06), transparent 60%),
+        radial-gradient(1000px 720px at 8% 6%, rgba(167, 139, 250, 0.05), transparent 62%);
+    background-attachment: fixed;
+    color: var(--text);
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
 }
 
 ::selection {
-    background: #ffffff;
-    color: #000000;
+    background: var(--accent);
+    color: #05121b;
 }
 
 /* Header */
@@ -1985,3 +2039,208 @@ body.drawer-open {
     .site-lang { margin-left: 0; margin-top: 20px; }
     .site-lang-btn { font-size: 13px; padding: 6px 14px; }
 }
+
+/* ============================================================
+   PREMIUM REDESIGN LAYER (v18)
+   Tokenised polish appended last so it wins the cascade. Only
+   cosmetic properties are touched here — the JS-driven inline
+   transforms/opacity/filter on .pcard are never overridden.
+   ============================================================ */
+
+/* --- Subtler section alternation via tokens --- */
+.about, .contact { background: var(--bg-2); }
+.portfolio { background: var(--bg-2); }
+
+/* --- Frosted-glass header + hairline gradient border --- */
+.header {
+    padding: 24px 60px;
+    background: linear-gradient(to bottom, rgba(10, 10, 12, 0.7), rgba(10, 10, 12, 0));
+    -webkit-backdrop-filter: blur(16px) saturate(140%);
+    backdrop-filter: blur(16px) saturate(140%);
+}
+.header::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-2), transparent);
+    opacity: 0.7;
+}
+.logo, .footer-logo {
+    background: var(--grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* --- Nav: gradient underline --- */
+.nav a { color: var(--text-2); }
+.nav a:hover, .nav a.active { color: var(--text); }
+.nav a::after { height: 2px; border-radius: 2px; background: var(--grad); }
+
+/* --- Section headings: fluid scale + gradient accent bar --- */
+.about-text h2, .skills-container h2, .portfolio-info h2 {
+    font-size: var(--fs-h2);
+    letter-spacing: -0.5px;
+}
+.contact-info h2, .contact-form h2 {
+    font-size: clamp(1.5rem, 1.2rem + 1vw, 1.9rem);
+    letter-spacing: -0.3px;
+}
+.skills-container h2::after, .portfolio-info h2::after {
+    content: '';
+    display: block;
+    width: 56px; height: 3px;
+    margin: 18px auto 0;
+    border-radius: 3px;
+    background: var(--grad);
+}
+.about-text h2::after {
+    content: '';
+    display: block;
+    width: 56px; height: 3px;
+    margin: 16px 0 0;
+    border-radius: 3px;
+    background: var(--grad);
+}
+
+/* --- Unified premium card surface --- */
+.skill-card, .network-card, .blog-card, .contact-form {
+    position: relative;
+    background: linear-gradient(180deg, var(--surface-2), var(--surface));
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06), var(--shadow-sm);
+    transition: transform var(--dur) var(--ease), border-color var(--dur) var(--ease),
+                box-shadow var(--dur) var(--ease), background var(--dur) var(--ease);
+}
+.skill-card:hover,
+.network-grid .network-card:hover,
+.blog-card:hover {
+    border-color: var(--border-2);
+    background: linear-gradient(180deg, var(--surface-3), var(--surface-2));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), var(--shadow-lg), 0 0 42px rgba(88, 199, 255, 0.08);
+}
+.friend-card {
+    background: linear-gradient(180deg, var(--surface), var(--bg-2));
+    border: 1px solid var(--border);
+}
+.friend-card:hover { border-color: var(--border-2); }
+
+/* Accent glow on skill icons */
+.skill-card i { color: var(--text-3); }
+.skill-card:hover i {
+    color: var(--accent);
+    filter: drop-shadow(0 0 12px rgba(88, 199, 255, 0.5));
+}
+
+/* --- Project / certificate deck cards (cosmetic only) --- */
+.pcard {
+    background: linear-gradient(180deg, var(--surface-2), var(--bg-2));
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.05), 0 22px 48px rgba(0, 0, 0, 0.55);
+}
+.pcard[data-front="1"] {
+    border-color: var(--border-2);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), var(--shadow-lg), 0 0 46px rgba(88, 199, 255, 0.10);
+}
+.pcard-index { color: var(--accent); }
+.pdeck-arrow {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--border);
+}
+.pdeck-arrow:hover {
+    background: rgba(88, 199, 255, 0.10);
+    border-color: var(--accent);
+    color: var(--text);
+}
+.spot-dot { background: var(--surface-3); }
+.spot-dot.active { background: var(--grad); }
+
+/* --- Tags → glass pills --- */
+.tag, .pcard-body .tag {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    color: var(--text-2);
+    border-radius: var(--r-pill);
+}
+
+/* --- Stats: gradient numbers --- */
+.stat h3 {
+    font-size: clamp(1.8rem, 1.4rem + 1.4vw, 2.2rem);
+    background: var(--grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* --- Buttons: primary gradient pill + glass secondary --- */
+.btn {
+    border-radius: var(--r-pill);
+    border: 1px solid transparent;
+    background: var(--grad);
+    color: #06121b;
+    font-weight: 700;
+    box-shadow: 0 10px 30px rgba(88, 199, 255, 0.18);
+    transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), filter 0.3s var(--ease);
+}
+.btn:hover {
+    background: var(--grad);
+    color: #06121b;
+    transform: translateY(-3px);
+    box-shadow: 0 16px 42px rgba(88, 199, 255, 0.32);
+    filter: brightness(1.06);
+}
+/* Secondary — the ghost hero button + the contact-form button */
+.btn-ghost, .contact-form .btn {
+    background: rgba(255, 255, 255, 0.03) !important;
+    color: var(--text) !important;
+    border: 1px solid var(--border-2) !important;
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    box-shadow: none;
+}
+.btn-ghost:hover, .contact-form .btn:hover {
+    background: rgba(255, 255, 255, 0.08) !important;
+    color: var(--text) !important;
+    border-color: var(--accent) !important;
+    transform: translateY(-3px);
+}
+
+/* --- Contact form: filled fields with focus glow --- */
+.input-group input, .input-group textarea {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid var(--border);
+    border-radius: var(--r-sm);
+    padding: 14px 16px;
+    color: var(--text);
+    transition: border-color 0.3s var(--ease), box-shadow 0.3s var(--ease), background 0.3s var(--ease);
+}
+.input-group input:focus, .input-group textarea:focus {
+    border-color: var(--accent);
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 0 3px rgba(88, 199, 255, 0.15);
+}
+.input-group input::placeholder, .input-group textarea::placeholder { color: var(--text-3); }
+
+/* --- Contact detail + project/network links --- */
+.detail-item h3 { color: var(--text); }
+.network-link:hover, .project-link:hover { color: var(--accent); }
+.social-links a:hover, .footer-socials a:hover { color: var(--accent); }
+
+/* --- Footer surface --- */
+.footer { background: var(--bg); border-top: 1px solid var(--border); }
+.footer-bottom, .footer-inner { border-color: var(--border); }
+
+/* --- Scrollbar --- */
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(var(--accent), var(--accent-2));
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover { background: linear-gradient(var(--accent-2), var(--accent-3)); }
+
+/* --- Language switcher active pill --- */
+.site-lang-btn.active { background: var(--grad); color: #06121b; }
+.site-lang { border-color: var(--border); }
