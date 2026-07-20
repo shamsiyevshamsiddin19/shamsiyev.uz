@@ -1477,8 +1477,8 @@ body.cursor-active .cursor-glow { opacity: 1; }
 .cursor-ring {
     position: fixed;
     top: 0; left: 0;
-    width: 28px; height: 28px;
-    margin: -14px 0 0 -14px;
+    width: 18px; height: 18px;
+    margin: -9px 0 0 -9px;
     border-radius: 50%;
     border: 1px solid rgba(255, 255, 255, 0.55);
     pointer-events: none;
