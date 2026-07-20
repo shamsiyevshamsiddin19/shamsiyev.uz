@@ -363,6 +363,52 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('mouseleave', () => document.body.classList.remove('cursor-active'));
 })();
 
+// === Rolls-Royce-style trailing ring cursor (desktop, motion-safe) ===
+// A crisp dot sits exactly under the pointer; a thin ring follows with easing
+// (the signature lag), growing over interactive elements. The native cursor is
+// only hidden once this is confirmed running, via the .cursor-ready body class.
+(function () {
+    if (!window.matchMedia) return;
+    if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const ring = document.querySelector('.cursor-ring');
+    const dot = document.querySelector('.cursor-dot');
+    if (!ring || !dot) return;
+
+    document.body.classList.add('cursor-ready');
+
+    let mx = window.innerWidth / 2, my = window.innerHeight / 2; // pointer target
+    let rx = mx, ry = my;                                        // eased ring position
+    let seen = false;
+
+    window.addEventListener('mousemove', (e) => {
+        mx = e.clientX; my = e.clientY;
+        dot.style.transform = `translate3d(${mx}px, ${my}px, 0)`;
+        if (!seen) { seen = true; document.body.classList.add('cursor-active'); }
+    }, { passive: true });
+
+    document.addEventListener('mouseleave', () => document.body.classList.remove('cursor-active'));
+    document.addEventListener('mouseenter', () => document.body.classList.add('cursor-active'));
+    document.addEventListener('mousedown', () => document.body.classList.add('cursor-down'));
+    document.addEventListener('mouseup', () => document.body.classList.remove('cursor-down'));
+
+    // Grow the ring over anything clickable / interactive
+    const HOT = 'a, button, .btn, .nav-link, .site-lang-btn, .skill-card, .network-card, .friend-card, .pcard, .pdeck-arrow, .spot-dot, .social-links a, .footer-socials a, input, textarea, [role="button"]';
+    document.addEventListener('mouseover', (e) => {
+        if (e.target.closest && e.target.closest(HOT)) document.body.classList.add('cursor-hover');
+    });
+    document.addEventListener('mouseout', (e) => {
+        if (e.target.closest && e.target.closest(HOT)) document.body.classList.remove('cursor-hover');
+    });
+
+    (function loop() {
+        rx += (mx - rx) * 0.18;   // easing — the signature trailing lag
+        ry += (my - ry) * 0.18;
+        ring.style.transform = `translate3d(${rx}px, ${ry}px, 0)`;
+        requestAnimationFrame(loop);
+    })();
+})();
+
 // === Premium pointer interactions: scroll progress, 3D tilt + spotlight, magnetic ===
 (function () {
     // Scroll progress bar (always on, cheap)

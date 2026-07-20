@@ -1469,6 +1469,67 @@ body.cursor-active .cursor-glow { opacity: 1; }
     .cursor-glow { display: none; }
 }
 
+/* --- Rolls-Royce-style cursor: a thin ring that trails the pointer with
+   easing, plus a crisp dot at the exact position. The ring grows and
+   brightens over interactive elements. Desktop + motion-safe only; the
+   native cursor is hidden only once JS confirms it's live (.cursor-ready),
+   so a JS failure safely falls back to the OS cursor. --- */
+.cursor-ring,
+.cursor-dot {
+    position: fixed;
+    top: 0; left: 0;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    opacity: 0;
+    transform: translate3d(-100px, -100px, 0);
+    will-change: transform;
+}
+.cursor-ring {
+    width: 36px; height: 36px;
+    margin: -18px 0 0 -18px;
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    transition: opacity 0.35s ease, width 0.28s var(--ease), height 0.28s var(--ease),
+                margin 0.28s var(--ease), border-color 0.28s ease, background 0.28s ease;
+}
+.cursor-dot {
+    width: 5px; height: 5px;
+    margin: -2.5px 0 0 -2.5px;
+    background: #fff;
+    transition: opacity 0.3s ease;
+}
+body.cursor-active .cursor-ring,
+body.cursor-active .cursor-dot { opacity: 1; }
+/* Grow + brighten over interactive targets; hide the centre dot inside it */
+body.cursor-hover .cursor-ring {
+    width: 62px; height: 62px;
+    margin: -31px 0 0 -31px;
+    border-color: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.06);
+}
+body.cursor-hover .cursor-dot { opacity: 0; }
+/* Subtle press feedback */
+body.cursor-down .cursor-ring {
+    border-color: #fff;
+    background: rgba(255, 255, 255, 0.12);
+}
+/* Hide the native cursor only when the custom one is live */
+@media (hover: hover) and (pointer: fine) {
+    body.cursor-ready,
+    body.cursor-ready a,
+    body.cursor-ready button,
+    body.cursor-ready .btn,
+    body.cursor-ready .pcard,
+    body.cursor-ready .skill-card,
+    body.cursor-ready .site-lang-btn { cursor: none; }
+    body.cursor-ready input,
+    body.cursor-ready textarea,
+    body.cursor-ready [contenteditable] { cursor: text; }
+}
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+    .cursor-ring, .cursor-dot { display: none; }
+}
+
 /* --- Preloader: brief branded intro, self-hides even without JS --- */
 .preloader {
     position: fixed;
