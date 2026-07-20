@@ -364,16 +364,15 @@ document.addEventListener('DOMContentLoaded', () => {
 })();
 
 // === Rolls-Royce-style trailing ring cursor (desktop, motion-safe) ===
-// A crisp dot sits exactly under the pointer; a thin ring follows with easing
-// (the signature lag), growing over interactive elements. The native cursor is
-// only hidden once this is confirmed running, via the .cursor-ready body class.
+// A thin ring follows the pointer with easing (the signature lag), growing
+// over interactive elements. The native cursor is only hidden once this is
+// confirmed running, via the .cursor-ready body class.
 (function () {
     if (!window.matchMedia) return;
     if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const ring = document.querySelector('.cursor-ring');
-    const dot = document.querySelector('.cursor-dot');
-    if (!ring || !dot) return;
+    if (!ring) return;
 
     document.body.classList.add('cursor-ready');
 
@@ -383,7 +382,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('mousemove', (e) => {
         mx = e.clientX; my = e.clientY;
-        dot.style.transform = `translate3d(${mx}px, ${my}px, 0)`;
         if (!seen) { seen = true; document.body.classList.add('cursor-active'); }
     }, { passive: true });
 
