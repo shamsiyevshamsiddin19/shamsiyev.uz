@@ -364,9 +364,10 @@ document.addEventListener('DOMContentLoaded', () => {
 })();
 
 // === Rolls-Royce-style trailing ring cursor (desktop, motion-safe) ===
-// A thin ring follows the pointer with easing (the signature lag), growing
-// over interactive elements. The native cursor is only hidden once this is
-// confirmed running, via the .cursor-ready body class.
+// A thin ring follows the pointer with easing (the signature lag). It keeps a
+// fixed size; on press the ring fills with the accent gradient (.cursor-down).
+// The native cursor is only hidden once this is confirmed running, via the
+// .cursor-ready body class.
 (function () {
     if (!window.matchMedia) return;
     if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
@@ -389,15 +390,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('mouseenter', () => document.body.classList.add('cursor-active'));
     document.addEventListener('mousedown', () => document.body.classList.add('cursor-down'));
     document.addEventListener('mouseup', () => document.body.classList.remove('cursor-down'));
-
-    // Grow the ring over anything clickable / interactive
-    const HOT = 'a, button, .btn, .nav-link, .site-lang-btn, .skill-card, .network-card, .friend-card, .pcard, .pdeck-arrow, .spot-dot, .social-links a, .footer-socials a, input, textarea, [role="button"]';
-    document.addEventListener('mouseover', (e) => {
-        if (e.target.closest && e.target.closest(HOT)) document.body.classList.add('cursor-hover');
-    });
-    document.addEventListener('mouseout', (e) => {
-        if (e.target.closest && e.target.closest(HOT)) document.body.classList.remove('cursor-hover');
-    });
 
     (function loop() {
         rx += (mx - rx) * 0.18;   // easing — the signature trailing lag
