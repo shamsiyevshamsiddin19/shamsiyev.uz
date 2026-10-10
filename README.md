@@ -7,7 +7,7 @@ Live: https://shamsiyev.uz
 ## Stack
 
 - Static **HTML / CSS / vanilla JavaScript** (no framework).
-- Fonts via Google Fonts, icons via RemixIcon (CDN).
+- Fonts via Google Fonts, icons via RemixIcon (CDN). 
 - Movies page pulls data from the TMDB API.
 - Contact form is handled by [FormSubmit](https://formsubmit.co).
 - Homepage supports EN / RU / UZ (see `assets/js/i18n.js`).
