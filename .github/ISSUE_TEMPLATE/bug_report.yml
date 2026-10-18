@@ -1,0 +1,21 @@
+name: "🐛 Xatolik haqida xabar (Bug Report)"
+description: "Loyihadagi xatolik yoki kamchilik haqida xabar berish"
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: "Xatolik haqida xabar berib loyiha rivojiga hissa qo'shayotganingiz uchun rahmat!"
+  - type: textarea
+    id: description
+    attributes:
+      label: "Xatolik tavsifi"
+      description: "Qanday muammo yuz berdi?"
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: "Qayta tiklash qadamlari"
+      description: "Xatolikni takrorlash uchun nima qilish kerak?"
+    validations:
+      required: true
