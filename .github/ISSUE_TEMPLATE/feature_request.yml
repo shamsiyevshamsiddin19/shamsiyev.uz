@@ -1,0 +1,14 @@
+name: "💡 Yangi imkoniyat taklifi (Feature Request)"
+description: "Loyihaga yangi xususiyat yoki taklif kiritish"
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: "Loyihani yaxshilash bo'yicha yangi takliflaringizni kutamiz!"
+  - type: textarea
+    id: feature-description
+    attributes:
+      label: "G'oya tavsifi"
+      description: "Ushbu taklif qanday muammoni hal qiladi va nima uchun kerak?"
+    validations:
+      required: true
